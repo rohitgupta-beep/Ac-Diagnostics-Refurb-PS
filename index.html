@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AC Pressure Diagnostic — Workshop Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06080a;--bg2:#0c0f12;--bg3:#111518;
+  --surface:#161b20;--surface2:#1c2228;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);
+  --text:#dde3e8;--text2:#8a99a8;--text3:#4a5a68;
+  --cyan:#00d4ff;--cyan-dim:rgba(0,212,255,0.1);
+  --green:#00e676;--green-dim:rgba(0,230,118,0.1);
+  --amber:#ffab00;--amber-dim:rgba(255,171,0,0.1);
+  --red:#ff4444;--red-dim:rgba(255,68,68,0.1);
+  --purple:#c084fc;--purple-dim:rgba(192,132,252,0.1);
+  --r:8px;--rl:14px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;line-height:1.6}
+header{border-bottom:1px solid var(--border);padding:0 clamp(16px,4vw,48px);height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,8,10,0.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20}
+.logo{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:0.08em;color:var(--cyan)}
+.header-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:0.06em}
+main{max-width:920px;margin:0 auto;padding:clamp(24px,4vw,48px) clamp(16px,4vw,32px) 80px}
+.hero{margin-bottom:32px}
+.hero-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px}
+.hero h1{font-size:clamp(22px,4vw,34px);font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.2}
+.hero h1 span{color:var(--cyan)}
+.hero p{font-size:14px;color:var(--text2);max-width:500px;line-height:1.7}
+.slabel{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:'';flex:1;height:1px;background:var(--border)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:22px;margin-bottom:14px}
+.tgroup{display:flex;gap:5px;background:var(--bg3);padding:3px;border-radius:999px;border:1px solid var(--border);width:fit-content}
+.tbtn{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:5px 18px;border-radius:999px;border:none;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.18s;letter-spacing:0.04em}
+.tbtn.active{background:var(--cyan);color:#06080a}
+.config-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:20px}
+.cfg{display:flex;flex-direction:column;gap:8px}
+.cfg label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)}
+.inputs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+@media(max-width:600px){.inputs-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:380px){.inputs-grid{grid-template-columns:1fr}}
+.ig{display:flex;flex-direction:column;gap:6px}
+.ig label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)}
+.ig label span{color:var(--red);margin-left:2px}
+.iw{position:relative}
+.iw input,.iw select{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:11px 44px 11px 13px;font-size:19px;font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text);outline:none;transition:border-color 0.2s;-moz-appearance:textfield}
+.iw input::-webkit-inner-spin-button,.iw input::-webkit-outer-spin-button{-webkit-appearance:none}
+.iw input:focus,.iw select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,0.08)}
+.iw input.err{border-color:var(--red) !important}
+.iw .utag{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);pointer-events:none}
+/* car number */
+.car-wrap{position:relative;margin-bottom:14px}
+.car-wrap input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:13px 50px 13px 16px;font-size:22px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--text);outline:none;transition:border-color 0.2s;text-transform:uppercase;letter-spacing:0.12em}
+.car-wrap input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,0.08)}
+.car-wrap input.valid{border-color:var(--green)}
+.car-wrap input.invalid{border-color:var(--red)}
+.car-status{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600}
+.car-hint{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);margin-top:5px}
+/* select */
+.sel-wrap select{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:11px 13px;font-size:13px;font-family:'IBM Plex Mono',monospace;color:var(--text);outline:none;cursor:pointer;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;width:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5a68' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.sel-wrap select:focus{border-color:var(--cyan)}
+/* blackness */
+.black-row{display:flex;align-items:center;gap:12px;padding:13px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:14px}
+.black-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text2);flex:1;line-height:1.5}
+.black-lbl strong{color:var(--amber);display:block;font-size:9px;margin-bottom:2px;letter-spacing:0.08em;text-transform:uppercase}
+/* history pill */
+.hist-pill{background:var(--amber-dim);border:1px solid rgba(255,171,0,0.3);border-radius:var(--r);padding:13px 16px;margin-bottom:14px;display:none}
+.hist-pill.show{display:block}
+.hist-pill-title{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px}
+.hist-pill-body{font-size:12px;color:var(--text2);line-height:1.6}
+.hist-pill-body b{color:var(--text)}
+/* run btn */
+.run-btn{width:100%;padding:14px;background:var(--cyan);color:#06080a;border:none;border-radius:var(--r);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:0.06em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.run-btn:hover{background:#33ddff;transform:translateY(-1px)}
+.run-btn:active{transform:translateY(0)}
+/* condition note */
+.cond-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber);background:rgba(255,171,0,0.07);border:1px solid rgba(255,171,0,0.2);border-radius:6px;padding:8px 12px;margin-bottom:14px;display:none}
+.cond-note.show{display:block}
+/* bars */
+.bars-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+@media(max-width:480px){.bars-grid{grid-template-columns:1fr}}
+.bar-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:14px}
+.bar-card-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:0.1em;margin-bottom:10px}
+.bar-track{height:5px;background:var(--bg3);border-radius:3px;position:relative;overflow:visible;margin-bottom:6px}
+.bar-lz{position:absolute;height:100%;background:rgba(255,68,68,0.35);border-radius:3px 0 0 3px;left:0}
+.bar-oz{position:absolute;height:100%;border-radius:3px}
+.bar-pin{position:absolute;width:2px;height:13px;top:-4px;border-radius:1px;transition:left 0.45s cubic-bezier(0.34,1.56,0.64,1)}
+.bar-rlbl{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:4px}
+.bar-val{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500}
+.bar-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3)}
+.leg-item{display:flex;align-items:center;gap:5px}
+.leg-sw{width:8px;height:8px;border-radius:2px}
+/* result */
+.result-card{border-radius:var(--rl);padding:22px;border:1px solid;display:none;animation:slideIn 0.3s ease;margin-bottom:14px}
+.result-card.show{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.result-card.ok{background:var(--green-dim);border-color:rgba(0,230,118,0.25)}
+.result-card.warn{background:var(--amber-dim);border-color:rgba(255,171,0,0.25)}
+.result-card.danger{background:var(--red-dim);border-color:rgba(255,68,68,0.25)}
+.result-card.critical{background:rgba(255,68,68,0.05);border-color:rgba(255,68,68,0.4);box-shadow:0 0 30px rgba(255,68,68,0.08)}
+.result-card.info{background:var(--purple-dim);border-color:rgba(192,132,252,0.25)}
+.res-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.res-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.ok .res-icon{background:rgba(0,230,118,0.15);color:var(--green)}
+.warn .res-icon{background:rgba(255,171,0,0.15);color:var(--amber)}
+.danger .res-icon{background:rgba(255,68,68,0.15);color:var(--red)}
+.critical .res-icon{background:rgba(255,68,68,0.2);color:var(--red)}
+.info .res-icon{background:rgba(192,132,252,0.15);color:var(--purple)}
+.res-title{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;margin-bottom:4px}
+.ok .res-title{color:var(--green)}.warn .res-title{color:var(--amber)}.danger .res-title{color:var(--red)}.critical .res-title{color:var(--red)}.info .res-title{color:var(--purple)}
+.res-sub{font-size:13px;color:var(--text2);line-height:1.6}
+.ca-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+@media(max-width:560px){.ca-grid{grid-template-columns:1fr}}
+.ca-box{background:rgba(255,255,255,0.03);border-radius:var(--r);padding:13px;border:1px solid var(--border)}
+.ca-box-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px}
+.cause .ca-box-lbl{color:var(--amber)}.action .ca-box-lbl{color:var(--cyan)}
+.ca-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.ca-list li{font-size:12px;color:var(--text);padding-left:14px;position:relative;line-height:1.5}
+.ca-list li::before{content:'—';position:absolute;left:0;color:var(--text3)}
+.retest-escalation{background:rgba(255,68,68,0.06);border:1px solid rgba(255,68,68,0.25);border-radius:var(--r);padding:13px;margin-bottom:14px;display:none}
+.retest-escalation.show{display:block}
+.retest-escalation-title{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--red);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px}
+.retest-escalation-body{font-size:12px;color:var(--text2);line-height:1.6}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.badge{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:4px 12px;border-radius:999px;border:1px solid;letter-spacing:0.06em}
+.badge-red{color:var(--red);border-color:rgba(255,68,68,0.4);background:rgba(255,68,68,0.08)}
+.badge-amber{color:var(--amber);border-color:rgba(255,171,0,0.4);background:rgba(255,171,0,0.08)}
+.badge-cyan{color:var(--cyan);border-color:rgba(0,212,255,0.4);background:rgba(0,212,255,0.08)}
+.badge-green{color:var(--green);border-color:rgba(0,230,118,0.4);background:rgba(0,230,118,0.08)}
+/* matrix */
+.matrix-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:20px}
+@media(max-width:580px){.matrix-grid{grid-template-columns:1fr}}
+.mc{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:12px;transition:all 0.2s}
+.mc.hit{border-color:var(--cyan);background:rgba(0,212,255,0.05)}
+.mc-state{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:4px}
+.mc-state .hp{color:#60a5fa}.mc-state .lp{color:#a78bfa}
+.mc-action{font-size:12px;color:var(--text2);line-height:1.5}
+.mc.hit .mc-action{color:var(--text)}
+/* table */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:440px}
+th{text-align:left;color:var(--text3);font-weight:400;padding:7px 10px;border-bottom:1px solid var(--border)}
+td{padding:7px 10px;color:var(--text2);border-bottom:1px solid var(--border)}
+td.hi{color:var(--text);font-weight:500}
+td.grn{color:var(--green);font-weight:500}
+td.red{color:var(--red)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.015)}
+.divider{height:1px;background:var(--border);margin:20px 0}
+footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.shake{animation:shake 0.35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">AC DIAGNOSTIC</div>
+  <div class="header-tag">WORKSHOP TOOL v3.0</div>
+</header>
+<main>
+  <div class="hero">
+    <div class="hero-tag">Refrigerant Pressure Analysis</div>
+    <h1>AC System<br><span>Pressure Diagnostic</span></h1>
+    <p>Enter vehicle details and gauge readings for instant AC system diagnosis and repair guidance.</p>
+  </div>
+
+  <!-- CAR NUMBER -->
+  <div class="card">
+    <div class="slabel">Vehicle identification</div>
+    <div class="car-wrap">
+      <input type="text" id="car-num" placeholder="MH 12 AB 1234" maxlength="13" autocomplete="off" oninput="validateCar(this)"/>
+      <span class="car-status" id="car-status"></span>
+    </div>
+    <div class="car-hint" id="car-hint">Enter Indian registration number — Standard format: XX 00 XX 0000 or BH series</div>
+  </div>
+
+  <!-- PREVIOUS HISTORY PILL -->
+  <div class="hist-pill" id="hist-pill">
+    <div class="hist-pill-title">⟳ Previous inspection found for this vehicle</div>
+    <div class="hist-pill-body" id="hist-pill-body"></div>
+  </div>
+
+  <!-- CONFIGURATION -->
+  <div class="card">
+    <div class="slabel">Configuration</div>
+    <div class="config-grid">
+      <div class="cfg">
+        <label>Fuel type</label>
+        <div class="tgroup" id="fuel-grp">
+          <button class="tbtn active" onclick="setFuel('petrol')">Petrol</button>
+          <button class="tbtn" onclick="setFuel('diesel')">Diesel</button>
+        </div>
+      </div>
+      <div class="cfg">
+        <label>Pressure unit</label>
+        <div class="tgroup" id="unit-grp">
+          <button class="tbtn active" onclick="setUnit('kpa')">kPa</button>
+          <button class="tbtn" onclick="setUnit('psi')">psi</button>
+        </div>
+      </div>
+    </div>
+    <div class="slabel" style="margin-top:4px">Test conditions</div>
+    <div class="config-grid">
+      <div class="cfg">
+        <label>Engine RPM</label>
+        <div class="sel-wrap"><select id="rpm" onchange="checkCondNote()">
+          <option value="1500">1500 RPM — Standard</option>
+          <option value="idle">Idle (~750 RPM)</option>
+        </select></div>
+      </div>
+      <div class="cfg">
+        <label>Blower speed</label>
+        <div class="sel-wrap"><select id="blower" onchange="checkCondNote()">
+          <option value="max">Maximum — Standard</option>
+          <option value="mid">Medium</option>
+          <option value="min">Minimum</option>
+        </select></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cond-note" id="cond-note">⚠ Non-standard test conditions. Standard requires 1500 RPM + MAX blower. Readings at idle or lower blower will be lower than spec — results are indicative only.</div>
+
+  <!-- READINGS -->
+  <div class="card">
+    <div class="slabel">Pressure & temperature readings</div>
+    <div class="inputs-grid">
+      <div class="ig">
+        <label>Ambient Temp<span>*</span></label>
+        <div class="iw"><input type="number" id="amb" placeholder="30" min="25" max="45"/><span class="utag">°C</span></div>
+      </div>
+      <div class="ig">
+        <label>High Pressure<span>*</span></label>
+        <div class="iw"><input type="number" id="hp" placeholder="1380"/><span class="utag" id="hp-utag">kPa</span></div>
+      </div>
+      <div class="ig">
+        <label>Low Pressure<span>*</span></label>
+        <div class="iw"><input type="number" id="lp" placeholder="295"/><span class="utag" id="lp-utag">kPa</span></div>
+      </div>
+      <div class="ig">
+        <label>Vent Temperature<span>*</span></label>
+        <div class="iw"><input type="number" id="vent" placeholder="14"/><span class="utag">°C</span></div>
+      </div>
+      <div class="ig" style="grid-column:span 2">
+        <label>LP line behaviour<span>*</span></label>
+        <div class="sel-wrap"><select id="lp-beh">
+          <option value="stable">Stable — steady reading</option>
+          <option value="fluctuating">Fluctuating — swings to negative pressure</option>
+          <option value="negative">Negative pressure — reads below zero</option>
+          <option value="frost-lp">Frost / heavy dew on LP tubing</option>
+          <option value="lp-not-cold">LP tubing not cold to touch</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="slabel">Refrigerant quality</div>
+    <div class="black-row">
+      <div class="black-lbl">
+        <strong>Blackness / Metal particles check</strong>
+        Press service valve momentarily — observe refrigerant colour. Black or dark oily discharge = metal particles from compressor wear.
+      </div>
+      <div class="tgroup" id="black-grp">
+        <button class="tbtn active" onclick="setBlack(false)">Clean</button>
+        <button class="tbtn" onclick="setBlack(true)">Black / Particles</button>
+      </div>
+    </div>
+    <button class="run-btn" onclick="diagnose()">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Run Diagnostic
+    </button>
+  </div>
+
+  <!-- BARS -->
+  <div id="bars-sec" style="display:none;margin-bottom:14px">
+    <div class="bar-legend">
+      <div class="leg-item"><div class="leg-sw" style="background:rgba(255,68,68,0.4)"></div>Leak zone (&lt;33% of min)</div>
+      <div class="leg-item"><div class="leg-sw" style="background:rgba(0,230,118,0.5)"></div>Acceptable range</div>
+      <div class="leg-item"><div class="leg-sw" style="background:rgba(0,230,118,0.2)"></div>+15% upper tolerance</div>
+    </div>
+    <div class="bars-grid">
+      <div class="bar-card">
+        <div class="bar-card-label">HIGH PRESSURE LINE</div>
+        <div class="bar-track"><div class="bar-lz" id="hp-lz"></div><div class="bar-oz" id="hp-oz"></div><div class="bar-pin" id="hp-pin"></div></div>
+        <div class="bar-rlbl"><span id="hp-lz-lbl" style="color:var(--red);font-size:8px"></span><span id="hp-mn-lbl"></span><span id="hp-mx-lbl"></span></div>
+        <div class="bar-val" id="hp-val"></div>
+      </div>
+      <div class="bar-card">
+        <div class="bar-card-label">LOW PRESSURE LINE</div>
+        <div class="bar-track"><div class="bar-lz" id="lp-lz"></div><div class="bar-oz" id="lp-oz"></div><div class="bar-pin" id="lp-pin"></div></div>
+        <div class="bar-rlbl"><span id="lp-lz-lbl" style="color:var(--red);font-size:8px"></span><span id="lp-mn-lbl"></span><span id="lp-mx-lbl"></span></div>
+        <div class="bar-val" id="lp-val"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RETEST ESCALATION -->
+  <div class="retest-escalation" id="retest-box">
+    <div class="retest-escalation-title">⟳ Retest — Escalated Diagnosis</div>
+    <div class="retest-escalation-body" id="retest-body"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result-card" class="result-card">
+    <div class="res-head">
+      <div class="res-icon" id="res-icon"></div>
+      <div><div class="res-title" id="res-title"></div><div class="res-sub" id="res-sub"></div></div>
+    </div>
+    <div class="ca-grid" id="ca-grid"></div>
+    <div class="badges" id="res-badges"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MATRIX -->
+  <div class="slabel">Diagnostic condition matrix</div>
+  <div class="matrix-grid" id="matrix"></div>
+
+  <div class="divider"></div>
+
+  <!-- REFERENCE TABLE -->
+  <div class="slabel">Pressure reference — <span id="ref-fuel-lbl">Petrol</span> · <span id="ref-unit-lbl">kPa</span> · at 30°C ambient</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Ambient °C</th><th>High P. min</th><th>High P. max</th><th>High P. +15%</th><th>High P. target</th>
+        <th>Low P. min</th><th>Low P. max</th><th>Low P. +15%</th><th>Low P. target</th>
+        <th>Leak threshold</th>
+      </tr></thead>
+      <tbody id="ref-tbody"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    <span>AC PRESSURE DIAGNOSTIC</span>
+    <span>WORKSHOP TOOL v3.0</span>
+  </footer>
+</main>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────
+const BASE = {
+  petrol:{ hpMin:1220, hpMax:1540, lpMin:240, lpMax:350 },
+  diesel:{ hpMin:1320, hpMax:1650, lpMin:210, lpMax:290 }
+};
+
+const KPA_TO_PSI = 0.14504;
+let fuel='petrol', unit='kpa', blackness=false;
+
+function scale(val,amb){ return Math.round(val*(1+(amb-30)*0.025)); }
+function toPsi(k){ return Math.round(k*KPA_TO_PSI*10)/10; }
+function toKpa(p){ return Math.round(p/KPA_TO_PSI); }
+function fmt(k){ return unit==='psi'?toPsi(k):k; }
+function uu(){ return unit==='psi'?'psi':'kPa'; }
+function mid(a,b){ return Math.round((a+b)/2); }
+function leakTh(mn){ return Math.round(mn*0.67); }
+function getOEM(amb){ const b=BASE[fuel]; return {hpMin:scale(b.hpMin,amb),hpMax:scale(b.hpMax,amb),lpMin:scale(b.lpMin,amb),lpMax:scale(b.lpMax,amb)}; }
+
+function setFuel(f){ fuel=f; document.querySelectorAll('#fuel-grp .tbtn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===f)); document.getElementById('ref-fuel-lbl').textContent=f.charAt(0).toUpperCase()+f.slice(1); refreshTable(); }
+function setUnit(u){ unit=u; document.querySelectorAll('#unit-grp .tbtn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===u)); document.getElementById('hp-utag').textContent=uu(); document.getElementById('lp-utag').textContent=uu(); document.getElementById('ref-unit-lbl').textContent=uu(); document.getElementById('hp').placeholder=u==='psi'?'200':'1380'; document.getElementById('lp').placeholder=u==='psi'?'43':'295'; refreshTable(); }
+function setBlack(v){ blackness=v; document.querySelectorAll('#black-grp .tbtn').forEach((b,i)=>b.classList.toggle('active',i===(v?1:0))); }
+function checkCondNote(){ const r=document.getElementById('rpm').value; const bl=document.getElementById('blower').value; document.getElementById('cond-note').classList.toggle('show',r==='idle'||bl!=='max'); }
+
+// ── CAR NUMBER VALIDATION ─────────────────────────────────────────
+// Standard Indian formats:
+// Regular: XX 00 X 0000, XX 00 XX 0000 (state + district + series + number)
+// BH series: 00 BH 0000 XX
+const PATTERNS = [
+  /^[A-Z]{2}\s?\d{2}\s?[A-Z]{1,3}\s?\d{1,4}$/,   // standard
+  /^\d{2}\s?BH\s?\d{4}\s?[A-Z]{1,2}$/              // BH series
+];
+let carValid = false;
+
+function validateCar(input){
+  const raw = input.value.toUpperCase().replace(/\s+/g,' ').trim();
+  input.value = raw;
+  const clean = raw.replace(/\s/g,'');
+  const valid = PATTERNS.some(p=>p.test(raw)||p.test(clean));
+  const status = document.getElementById('car-status');
+  const hint = document.getElementById('car-hint');
+  if(raw.length<4){ status.textContent=''; input.className=''; hint.textContent='Format: XX 00 XX 0000 or BH series: 00 BH 0000 XX'; carValid=false; return; }
+  if(valid){
+    input.classList.remove('invalid'); input.classList.add('valid');
+    status.textContent='✓'; status.style.color='var(--green)';
+    hint.textContent='Valid registration number';
+    carValid=true;
+    loadHistory(clean);
+  } else {
+    input.classList.remove('valid'); input.classList.add('invalid');
+    status.textContent='✗'; status.style.color='var(--red)';
+    hint.textContent='Invalid format. Examples: MH12AB1234 · DL3CAB1234 · 22BH1234AB';
+    carValid=false;
+    document.getElementById('hist-pill').classList.remove('show');
+  }
+}
+
+// ── STORAGE ───────────────────────────────────────────────────────
+async function saveTest(carNum, testData){
+  const key = 'test:'+carNum;
+  try {
+    // Load existing tests for this car
+    let existing = [];
+    try { const r=await window.storage.get(key,true); if(r) existing=JSON.parse(r.value); } catch(e){}
+    existing.push(testData);
+    // Keep last 10 tests per car
+    if(existing.length>10) existing=existing.slice(-10);
+    await window.storage.set(key, JSON.stringify(existing), true);
+    // Also update index of all cars
+    let index=[];
+    try { const r=await window.storage.get('car-index',true); if(r) index=JSON.parse(r.value); } catch(e){}
+    if(!index.includes(carNum)) index.push(carNum);
+    await window.storage.set('car-index', JSON.stringify(index), true);
+  } catch(e){ console.error('Storage error:',e); }
+}
+
+async function loadHistory(carNum){
+  const pill=document.getElementById('hist-pill');
+  const body=document.getElementById('hist-pill-body');
+  try {
+    const r = await window.storage.get('test:'+carNum, true);
+    if(!r){ pill.classList.remove('show'); return; }
+    const tests = JSON.parse(r.value);
+    if(!tests||tests.length===0){ pill.classList.remove('show'); return; }
+    const last = tests[tests.length-1];
+    const count = tests.length;
+    const date = new Date(last.timestamp).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    body.innerHTML=`<b>${count} previous inspection${count>1?'s':''} found.</b> Last on ${date}.<br>Last diagnosis: <b>${last.diagCode}</b> — ${last.diagTitle}<br>Previous readings: HP ${last.hp} · LP ${last.lp} · Vent ${last.vent}°C · Fuel: ${last.fuel}`;
+    pill.classList.add('show');
+  } catch(e){ pill.classList.remove('show'); }
+}
+
+async function getPrevTests(carNum){
+  try {
+    const r = await window.storage.get('test:'+carNum, true);
+    if(!r) return [];
+    return JSON.parse(r.value)||[];
+  } catch(e){ return []; }
+}
+
+// ── RETEST ESCALATION LOGIC ───────────────────────────────────────
+// Maps diagCode → what to say if same code repeats after assumed repair
+const ESCALATION = {
+  'BOTH_LOW':      { title:'Gas top-up did not resolve the issue', body:'Previous diagnosis: insufficient refrigerant — gas top-up was performed. Pressure still low. This confirms an active leak in the system. Do not top up again without finding and repairing the leak first. Use electronic leak detector on all fittings, hoses, and compressor seals.' },
+  'OVERCHARGED':   { title:'Overcharge condition persists after recovery', body:'System was previously overcharged and gas was recovered. High pressures persist — the issue is not overcharge. Likely cause: dirty/blocked condenser or faulty radiator cooling fan preventing adequate heat dissipation. Inspect condenser fins and fan operation.' },
+  'CONDENSER':     { title:'Condenser cleaning did not resolve high pressure', body:'Condenser was previously cleaned. High pressure persists. Escalated cause: compressor malfunction (insufficient oil, internal wear) or engine overheat. Inspect compressor and engine cooling system.' },
+  'COMP_INTERNAL': { title:'Compressor replacement did not equalise pressures', body:'Compressor was previously replaced for internal leak. Issue persists — check new compressor installation, drive belt tension, and magnet clutch clearance (0.3–0.6mm spec).' },
+  'EXP_VALVE':     { title:'Expansion valve replacement did not resolve the fault', body:'Expansion valve was replaced. Issue persists. Escalated: check for moisture still in system (replace receiver/dryer), check for partial blockage in refrigerant passages, and verify refrigerant charge is to specification.' },
+  'COMP_HP_LOW':   { title:'Compressor issue persists after inspection', body:'Compressor was previously inspected. High pressure remains low. Escalated: compressor requires replacement. Also check drive belt tension and magnet clutch operation.' },
+  'LP_LOW':        { title:'LP top-up did not hold — active leak confirmed', body:'Low pressure was topped up previously but is low again. This confirms an active leak on the suction side. Full leak detection required before any further top-up.' },
+  'COOLING_LOW':   { title:'AC cooling low persists after maintenance', body:'Cooling low maintenance was performed. Vent temp still high. Escalated: check for clogged/frosted evaporator, air leakage from HVAC unit or ducts, or temperature control door malfunction.' },
+  'CRITICAL_LEAK': { title:'Critical leak not resolved — system still empty', body:'System was evacuated and recharged after leak repair. Pressure is critically low again. The leak repair was incomplete or there is an additional leak point. Full system pressure test required.' },
+  'MOISTURE':      { title:'Expansion valve replacement did not cure moisture issue', body:'Expansion valve and condenser were replaced. Moisture symptoms persist. Evacuate for longer (minimum 30 minutes) to remove all moisture, replace receiver/dryer if not already done.' },
+  'AIR_IN_SYSTEM': { title:'Air in system persists after evacuation', body:'System was evacuated and recharged. Air contamination symptoms persist. The vacuum pump may not be achieving adequate vacuum (must reach below -100 kPa). Check vacuum pump and manifold gauge set connections.' },
+  'FULL_OVERHAUL': { title:'Full overhaul components replaced — issue persists', body:'Full system overhaul was completed. Issue persists. Escalated: check new compressor installation quality, verify all O-rings replaced, ensure refrigerant passages are fully flushed, and verify correct refrigerant quantity charged.' },
+};
+
+function getEscalation(diagCode, prevTests){
+  if(!prevTests||prevTests.length<1) return null;
+  const last=prevTests[prevTests.length-1];
+  if(last.diagCode===diagCode){
+    const daysDiff=(Date.now()-new Date(last.timestamp).getTime())/(1000*60*60*24);
+    if(ESCALATION[diagCode]){ return { ...ESCALATION[diagCode], daysAgo:Math.round(daysDiff), lastDate:new Date(last.timestamp).toLocaleDateString('en-IN') }; }
+  }
+  return null;
+}
+
+function showEscalation(esc){
+  const box=document.getElementById('retest-box');
+  const body=document.getElementById('retest-body');
+  if(esc){
+    box.classList.add('show');
+    body.innerHTML=`Previous test: <b>${esc.lastDate}</b> (${esc.daysAgo} days ago)<br><br>${esc.body}`;
+    document.getElementById('retest-box').querySelector('.retest-escalation-title').textContent=`⟳ Retest — ${esc.title}`;
+  } else {
+    box.classList.remove('show');
+  }
+}
+
+// ── MAIN DIAGNOSE ─────────────────────────────────────────────────
+async function diagnose(){
+  // Validate car number
+  if(!carValid){
+    const inp=document.getElementById('car-num');
+    inp.classList.add('shake');
+    setTimeout(()=>inp.classList.remove('shake'),600);
+    alert('Please enter a valid Indian vehicle registration number to proceed.');
+    return;
+  }
+  const carNum=document.getElementById('car-num').value.replace(/\s/g,'').toUpperCase();
+
+  const amb=parseFloat(document.getElementById('amb').value);
+  const hpRaw=parseFloat(document.getElementById('hp').value);
+  const lpRaw=parseFloat(document.getElementById('lp').value);
+  const vent=parseFloat(document.getElementById('vent').value);
+  const lpBeh=document.getElementById('lp-behaviour')?document.getElementById('lp-behaviour').value:document.getElementById('lp-beh').value;
+
+  let err=false;
+  ['amb','hp','lp','vent'].forEach(id=>{
+    if(isNaN(parseFloat(document.getElementById(id).value))){
+      document.getElementById(id).classList.add('shake','err');
+      setTimeout(()=>document.getElementById(id).classList.remove('shake','err'),600);
+      err=true;
+    }
+  });
+  if(err) return;
+  if(amb<25||amb>45){ alert('Ambient temperature must be between 25°C and 45°C.'); return; }
+
+  const hpKpa=unit==='psi'?toKpa(hpRaw):hpRaw;
+  const lpKpa=unit==='psi'?toKpa(lpRaw):lpRaw;
+  const oem=getOEM(amb);
+  const {hpMin,hpMax,lpMin,lpMax}=oem;
+  const hpMaxTol=Math.round(hpMax*1.15), lpMaxTol=Math.round(lpMax*1.15);
+  const hpMid=mid(hpMin,hpMax), lpMid=mid(lpMin,lpMax);
+  const hpLeak=leakTh(hpMin), lpLeak=leakTh(lpMin);
+
+  const hpSevere=hpKpa<hpLeak, lpSevere=lpKpa<lpLeak;
+  const hpLow=hpKpa<hpMin, hpHigh=hpKpa>hpMaxTol;
+  const lpLow=lpKpa<lpMin, lpHigh=lpKpa>lpMaxTol;
+  const hpOk=!hpLow&&!hpHigh, lpOk=!lpLow&&!lpHigh;
+  const u=uu();
+  const hpD=fmt(hpKpa), lpD=fmt(lpKpa);
+  const hpMnD=fmt(hpMin), hpMxD=fmt(hpMax), hpMxTD=fmt(hpMaxTol), hpMdD=fmt(hpMid);
+  const lpMnD=fmt(lpMin), lpMxD=fmt(lpMax), lpMxTD=fmt(lpMaxTol), lpMdD=fmt(lpMid);
+
+  drawBars(hpKpa,lpKpa,hpMin,hpMaxTol,lpMin,lpMaxTol,hpLeak,lpLeak);
+
+  // Get previous tests for this car
+  const prevTests = await getPrevTests(carNum);
+
+  let diagCode='', diagTitle='', type='', sub='', causes=[], actions=[], badges=[], matrixId='';
+
+  if(blackness){
+    diagCode='FULL_OVERHAUL'; diagTitle='Full System Overhaul Required'; type='critical';
+    sub='Metal particles detected in refrigerant. Severe internal compressor wear — entire circuit contaminated.';
+    causes=['Compressor internal failure (scroll/piston wear)','Contaminated compressor oil','Circuit-wide metal contamination'];
+    actions=['Replace A/C compressor assembly','Replace condenser with integrated receiver/dryer','Replace expansion valve','Flush entire refrigerant circuit','Full evacuation (min 15 min, below -100 kPa)','Recharge to specification'];
+    badges=['CRITICAL','FULL SYSTEM REPLACEMENT']; matrixId='mc-black';
+  } else if(lpBeh==='fluctuating'){
+    diagCode='MOISTURE'; diagTitle='Expansion Valve Frozen — Moisture in System'; type='danger';
+    sub=`LP fluctuates between normal and negative pressure. HP also fluctuates. OEM signature: moisture-frozen expansion valve.`;
+    causes=['Expansion valve frozen due to moisture in system','Moisture in A/C circuit causing ice blockage'];
+    actions=['Replace expansion valve','Replace condenser assembly (receiver/dryer removes moisture)','Full system evacuation','Recharge with fresh refrigerant'];
+    badges=['MOISTURE IN SYSTEM','EXPANSION VALVE']; matrixId='mc-fluc';
+  } else if(lpBeh==='negative'){
+    diagCode='MOISTURE'; diagTitle='Expansion Valve Blocked — Dust or Ice'; type='danger';
+    sub=`LP reads negative, HP extremely low. Frost present around condenser and expansion valve tubing.`;
+    causes=['Dust particles or ice blocking expansion valve','Frost around condenser/expansion valve tubing'];
+    actions=['Replace expansion valve','Replace condenser assembly','Full system evacuation','Recharge with fresh refrigerant'];
+    badges=['EXPANSION VALVE BLOCKED']; matrixId='mc-neg';
+  } else if(lpBeh==='frost-lp'){
+    diagCode='EXP_VALVE'; diagTitle='Expansion Valve Fault — Unregulated Flow'; type='danger';
+    sub=`Frost/dew on LP tubing with high pressures. Expansion valve not regulating refrigerant flow properly.`;
+    causes=['Expansion valve malfunction — opening incorrectly','Refrigerant flow not regulated'];
+    actions=['Replace expansion valve','System evacuation and recharge'];
+    badges=['EXPANSION VALVE FAULTY']; matrixId='mc-frost';
+  } else if(lpBeh==='lp-not-cold'&&lpHigh&&hpHigh){
+    diagCode='AIR_IN_SYSTEM'; diagTitle='Air in System — Improper Evacuation'; type='danger';
+    sub=`Both HP and LP high with LP tubing not cold. Air contamination from improper evacuation.`;
+    causes=['Air (non-condensable gas) in A/C system','Improperly evacuated during previous service'];
+    actions=['Replace condenser assembly','Check compressor oil quantity','Full evacuation (min 15 min below -100 kPa)','Recharge with fresh refrigerant'];
+    badges=['AIR IN SYSTEM']; matrixId='mc-air';
+  } else if(lpHigh&&hpLow){
+    diagCode='COMP_INTERNAL'; diagTitle='Compressor Internal Leak'; type='danger';
+    sub=`HP low (${hpD} ${u}) with LP high (${lpD} ${u}). Pressures equalise when A/C switched off — internal compressor valve failure.`;
+    causes=['Internal compressor valve failure','Compressor not building high-side pressure'];
+    actions=['Inspect A/C compressor','Replace compressor if internal leak confirmed','System evacuation and recharge after replacement'];
+    badges=['COMPRESSOR FAILURE','INTERNAL LEAK']; matrixId='mc-compleak';
+  } else if((hpSevere||lpSevere)&&hpLow&&lpLow){
+    diagCode='CRITICAL_LEAK'; diagTitle='Critical Refrigerant Loss — Severe Leak'; type='critical';
+    sub=`HP ${hpD} ${u} and LP ${lpD} ${u} — both critically below 33% of minimum. System nearly empty.`;
+    causes=['Major refrigerant leak','Possible fitting/hose rupture or compressor seal failure'];
+    actions=['Use electronic leak detector — locate and repair all leaks','System evacuation','Recharge to specification','Re-check for leaks after recharge'];
+    badges=['CRITICAL LEAK','DO NOT TOP UP WITHOUT FIXING LEAK']; matrixId='mc-both-low';
+  } else if(hpLow&&lpLow){
+    diagCode='BOTH_LOW'; diagTitle='Gas Top-Up Required — Insufficient Refrigerant'; type='warn';
+    sub=`HP ${hpD} ${u} and LP ${lpD} ${u} both below range. Output air slightly cold. Possible slow leak.`;
+    causes=['Low refrigerant charge','Possible slow leak'];
+    actions=['Check for refrigerant leaks','Top up refrigerant to specification','Target: HP ~'+hpMdD+' '+u+' | LP ~'+lpMdD+' '+u];
+    badges=['GAS TOP-UP REQUIRED']; matrixId='mc-both-low';
+  } else if(hpHigh&&lpHigh){
+    diagCode='OVERCHARGED'; diagTitle='System Overcharged or Condenser Fault'; type='danger';
+    sub=`HP ${hpD} ${u} and LP ${lpD} ${u} both high. Three OEM causes: overcharged, dirty condenser, or faulty cooling fan.`;
+    causes=['Refrigerant overcharged','Dirty or clogged condenser fins','Faulty radiator cooling fan'];
+    actions=['Inspect condenser fins — clean if clogged','Check radiator cooling fan operation','If overcharged: recover and recharge to specification','Target: HP ~'+hpMdD+' '+u+' | LP ~'+lpMdD+' '+u];
+    badges=['OVERCHARGE / CONDENSER FAULT']; matrixId='mc-both-high';
+  } else if(hpHigh&&lpOk){
+    diagCode='EXP_VALVE'; diagTitle='Expansion Valve Fault — Not Opening'; type='warn';
+    sub=`HP ${hpD} ${u} above range. LP normal ${lpD} ${u}. Expansion valve not opening correctly.`;
+    causes=['Expansion valve not opening sufficiently','Partial blockage or valve malfunction'];
+    actions=['Inspect expansion valve — replace if faulty','Target HP → ~'+hpMdD+' '+u];
+    badges=['EXPANSION VALVE']; matrixId='mc-hp-high-lp-ok';
+  } else if(hpOk&&lpHigh){
+    diagCode='EXP_VALVE'; diagTitle='LP High — Expansion Valve or Compressor'; type='warn';
+    sub=`LP ${lpD} ${u} above range. HP normal ${hpD} ${u}. Expansion valve opening too wide or compressor fault.`;
+    causes=['Expansion valve opens too wide','A/C compressor insufficient compression'];
+    actions=['Check expansion valve — replace if faulty','Inspect compressor operation','Target LP → ~'+lpMdD+' '+u];
+    badges=['EXPANSION VALVE / COMPRESSOR']; matrixId='mc-hp-ok-lp-high';
+  } else if(hpLow&&lpOk){
+    diagCode='COMP_HP_LOW'; diagTitle='High Pressure Low — Compressor Issue'; type='warn';
+    sub=`HP ${hpD} ${u} below range. LP normal. High pressure cannot be directly topped up.`;
+    causes=['Compressor not building adequate discharge pressure','Possible drive belt slippage'];
+    actions=['Check compressor drive belt tension','Inspect magnet clutch operation','Check compressor — replace if faulty'];
+    badges=['COMPRESSOR CHECK']; matrixId='mc-hp-low-lp-ok';
+  } else if(hpOk&&lpLow){
+    if(lpSevere){
+      diagCode='CRITICAL_LEAK'; diagTitle='LP Critically Low — Leak on Suction Side'; type='danger';
+      sub=`LP ${lpD} ${u} critically low. HP normal. Significant refrigerant loss on low pressure side.`;
+      causes=['Significant refrigerant loss on low side','Clogged suction passage or expansion valve too narrow'];
+      actions=['Electronic leak check on LP circuit','Inspect suction pipe for damage','Check expansion valve','Repair leak, evacuate, recharge to specification'];
+      badges=['LEAK CHECK','LP CIRCUIT']; matrixId='mc-hp-ok-lp-low';
+    } else {
+      diagCode='LP_LOW'; diagTitle='LP Low — Gas Top-Up Required'; type='warn';
+      sub=`LP ${lpD} ${u} below range. HP normal. Insufficient refrigerant or expansion valve restricting flow.`;
+      causes=['Low refrigerant on suction side','Expansion valve opening too narrow'];
+      actions=['Check for slow leak','Top up refrigerant — target LP → ~'+lpMdD+' '+u,'Inspect expansion valve if top-up does not hold'];
+      badges=['GAS TOP-UP']; matrixId='mc-hp-ok-lp-low';
+    }
+  } else if(hpOk&&lpOk){
+    if(vent>12){
+      diagCode='COOLING_LOW'; diagTitle='Pressures Normal — AC Cooling Low'; type='warn';
+      sub=`HP (${hpD} ${u}) and LP (${lpD} ${u}) within range for ${amb}°C. Vent temp ${vent}°C above 12°C — inadequate cooling despite normal pressures.`;
+      causes=['Dirty/clogged evaporator fins','Air leakage from HVAC unit or ducts','Temperature control door malfunction','Blower motor fault','Compressor fault'];
+      actions=['Inspect and clean evaporator fins','Check for air leaks from HVAC unit','Check blower motor operation','Inspect temperature control door and cable','Raise maintenance request — AC cooling low'];
+      badges=['AC COOLING LOW','MAINTENANCE REQUIRED']; matrixId='mc-ok';
+    } else {
+      diagCode='NORMAL'; diagTitle='AC System Normal'; type='ok';
+      sub=`HP (${hpD} ${u}) and LP (${lpD} ${u}) within specification for ${amb}°C. Vent temp ${vent}°C ≤ 12°C confirms adequate cooling.`;
+      causes=[]; actions=[]; badges=['NO ACTION REQUIRED']; matrixId='mc-ok';
+    }
+  }
+
+  // Check escalation
+  const esc = diagCode!=='NORMAL' ? getEscalation(diagCode, prevTests) : null;
+  showEscalation(esc);
+
+  // Show result
+  showResult(type,diagTitle,sub,causes,actions,badges,matrixId);
+
+  // Save to storage
+  const testData = {
+    timestamp: new Date().toISOString(),
+    carNum, fuel,
+    rpm: document.getElementById('rpm').value,
+    blower: document.getElementById('blower').value,
+    amb, hp: fmt(hpKpa), lp: fmt(lpKpa), unit: uu(), vent,
+    lpBeh, blackness,
+    diagCode, diagTitle,
+    hpStatus: hpLow?'LOW':hpHigh?'HIGH':'NORMAL',
+    lpStatus: lpLow?'LOW':lpHigh?'HIGH':'NORMAL',
+    isRetest: prevTests.length>0,
+    testCount: prevTests.length+1
+  };
+  await saveTest(carNum, testData);
+}
+
+const ICONS={ok:'✓',warn:'△',danger:'✕',critical:'⚠',info:'ℹ'};
+function showResult(type,title,sub,causes,actions,badges,matrixId){
+  const card=document.getElementById('result-card');
+  card.className='result-card show '+type;
+  document.getElementById('res-icon').textContent=ICONS[type]||'';
+  document.getElementById('res-title').textContent=title;
+  document.getElementById('res-sub').textContent=sub;
+  const cag=document.getElementById('ca-grid'); cag.innerHTML='';
+  if(causes.length){ const cb=document.createElement('div'); cb.className='ca-box cause'; cb.innerHTML='<div class="ca-box-lbl">Probable cause</div><ul class="ca-list">'+causes.map(c=>`<li>${c}</li>`).join('')+'</ul>'; cag.appendChild(cb); }
+  if(actions.length){ const ab=document.createElement('div'); ab.className='ca-box action'; ab.innerHTML='<div class="ca-box-lbl">Required actions</div><ul class="ca-list">'+actions.map(a=>`<li>${a}</li>`).join('')+'</ul>'; cag.appendChild(ab); }
+  const brow=document.getElementById('res-badges'); brow.innerHTML='';
+  badges.forEach((b,i)=>{ const s=document.createElement('span'); s.className='badge '+(i===0?'badge-red':i===1?'badge-amber':'badge-cyan'); s.textContent=b; brow.appendChild(s); });
+  card.scrollIntoView({behavior:'smooth',block:'nearest'});
+  document.querySelectorAll('.mc').forEach(m=>m.classList.remove('hit'));
+  document.getElementById(matrixId)?.classList.add('hit');
+}
+
+function drawBars(hpKpa,lpKpa,hpMn,hpMxT,lpMn,lpMxT,hpLk,lpLk){
+  document.getElementById('bars-sec').style.display='block';
+  function bar(p,val,mn,mxT,lk){
+    const span=mxT*1.7;
+    document.getElementById(p+'-lz').style.width=(lk/span*100).toFixed(1)+'%';
+    document.getElementById(p+'-oz').style.left=(mn/span*100).toFixed(1)+'%';
+    document.getElementById(p+'-oz').style.width=((mxT-mn)/span*100).toFixed(1)+'%';
+    const sv=val<lk,low=val<mn,high=val>mxT;
+    document.getElementById(p+'-oz').style.background=sv?'rgba(0,230,118,0.1)':'rgba(0,230,118,0.45)';
+    const pct=Math.max(0,Math.min(100,val/span*100)).toFixed(1);
+    const pin=document.getElementById(p+'-pin');
+    pin.style.left='calc('+pct+'% - 1px)';
+    pin.style.background=sv?'#ff4444':low?'#ffab00':high?'#ffab00':'#00e676';
+    document.getElementById(p+'-lz-lbl').textContent=fmt(lk)+' '+uu();
+    document.getElementById(p+'-mn-lbl').textContent=fmt(mn)+' '+uu();
+    document.getElementById(p+'-mx-lbl').textContent=fmt(mxT)+' '+uu();
+    const el=document.getElementById(p+'-val');
+    el.textContent=fmt(val)+' '+uu()+' — '+(sv?'critically low':low?'below range':high?'above range':'within range');
+    el.style.color=sv?'#ff4444':low?'#ffab00':high?'#ffab00':'#00e676';
+  }
+  bar('hp',hpKpa,hpMn,hpMxT,hpLk); bar('lp',lpKpa,lpMn,lpMxT,lpLk);
+}
+
+// ── MATRIX ────────────────────────────────────────────────────────
+const MATRIX=[
+  {id:'mc-ok',       hp:'NORMAL',     lp:'NORMAL',          act:'Normal — if vent >12°C raise maintenance for cooling low.'},
+  {id:'mc-both-low', hp:'LOW',        lp:'LOW',             act:'Insufficient refrigerant. Check for leak, top up to specification.'},
+  {id:'mc-compleak', hp:'LOW',        lp:'HIGH',            act:'Compressor internal leak. Pressures equalise on shutdown.'},
+  {id:'mc-both-high',hp:'HIGH',       lp:'HIGH',            act:'Overcharged / dirty condenser / cooling fan fault.'},
+  {id:'mc-hp-high-lp-ok',hp:'HIGH',   lp:'NORMAL',          act:'Expansion valve not opening. Inspect and replace.'},
+  {id:'mc-hp-ok-lp-high',hp:'NORMAL', lp:'HIGH',            act:'Expansion valve opens too wide or compressor fault.'},
+  {id:'mc-hp-low-lp-ok',hp:'LOW',     lp:'NORMAL',          act:'Compressor not building HP. Inspect compressor and belt.'},
+  {id:'mc-hp-ok-lp-low',hp:'NORMAL',  lp:'LOW',             act:'LP insufficient. Top up gas or check expansion valve.'},
+  {id:'mc-neg',      hp:'VERY LOW',   lp:'NEGATIVE',        act:'Expansion valve blocked by dust/ice. Replace valve + condenser.'},
+  {id:'mc-fluc',     hp:'FLUCTUATING',lp:'FLUCTUATING',     act:'Moisture-frozen expansion valve. Replace valve + condenser, evacuate.'},
+  {id:'mc-frost',    hp:'HIGH',       lp:'HIGH + FROST',    act:'Expansion valve faulty — unregulated flow. Replace valve.'},
+  {id:'mc-air',      hp:'HIGH',       lp:'HIGH (not cold)', act:'Air in system from improper evacuation. Replace condenser, re-evacuate.'},
+  {id:'mc-black',    hp:'ANY',        lp:'ANY',             act:'Metal particles detected. Full system overhaul required.'},
+];
+function buildMatrix(){ const g=document.getElementById('matrix'); g.innerHTML=''; MATRIX.forEach(item=>{ const d=document.createElement('div'); d.className='mc'; d.id=item.id; d.innerHTML=`<div class="mc-state"><span class="hp">HP: ${item.hp}</span> · <span class="lp">LP: ${item.lp}</span></div><div class="mc-action">${item.act}</div>`; g.appendChild(d); }); }
+
+// ── REFERENCE TABLE ───────────────────────────────────────────────
+function refreshTable(){
+  const body=document.getElementById('ref-tbody'); body.innerHTML='';
+  const b=BASE[fuel];
+  [25,30,35,40,45].forEach(t=>{
+    const hMn=scale(b.hpMin,t),hMx=scale(b.hpMax,t),lMn=scale(b.lpMin,t),lMx=scale(b.lpMax,t);
+    const hMxT=Math.round(hMx*1.15),lMxT=Math.round(lMx*1.15);
+    const hMd=mid(hMn,hMx),lMd=mid(lMn,lMx);
+    const hLk=leakTh(hMn),lLk=leakTh(lMn);
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${t}°C</td><td>${fmt(hMn)}</td><td>${fmt(hMx)}</td><td class="grn">${fmt(hMxT)}</td><td class="hi">${fmt(hMd)}</td><td>${fmt(lMn)}</td><td>${fmt(lMx)}</td><td class="grn">${fmt(lMxT)}</td><td class="hi">${fmt(lMd)}</td><td class="red">${fmt(hLk)} / ${fmt(lLk)}</td>`;
+    body.appendChild(tr);
+  });
+  document.getElementById('ref-fuel-lbl').textContent=fuel.charAt(0).toUpperCase()+fuel.slice(1);
+  document.getElementById('ref-unit-lbl').textContent=uu();
+}
+
+buildMatrix();
+refreshTable();
+</script>
+</body>
+</html>
