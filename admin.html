@@ -9,8 +9,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#06080a;--bg2:#0c0f12;--bg3:#111518;
-  --surface:#161b20;--surface2:#1c2228;
+  --bg:#06080a;--bg3:#111518;--surface:#161b20;--surface2:#1c2228;
   --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);
   --text:#dde3e8;--text2:#8a99a8;--text3:#4a5a68;
   --cyan:#00d4ff;--cyan-dim:rgba(0,212,255,0.1);
@@ -20,12 +19,12 @@
   --r:8px;--rl:14px;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;line-height:1.6}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh}
 
-/* LOGIN SCREEN */
-#login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:100;flex-direction:column;gap:20px}
+/* LOGIN */
+#login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:100}
 .login-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rl);padding:36px 32px;width:min(380px,90vw);text-align:center}
-.login-logo{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan);margin-bottom:20px;letter-spacing:0.08em}
+.login-logo{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan);margin-bottom:20px}
 .login-title{font-size:18px;font-weight:600;margin-bottom:6px}
 .login-sub{font-size:13px;color:var(--text2);margin-bottom:24px}
 .login-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:12px 16px;font-size:18px;font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text);outline:none;text-align:center;letter-spacing:0.2em;margin-bottom:14px;transition:border-color 0.2s}
@@ -35,33 +34,36 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
 .login-btn:hover{background:#33ddff}
 .login-err{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red);margin-top:8px;display:none}
 
-/* MAIN DASHBOARD */
+/* DASHBOARD */
 #dashboard{display:none}
 header{border-bottom:1px solid var(--border);padding:0 clamp(16px,4vw,48px);height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,8,10,0.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20}
 .logo{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan);display:flex;align-items:center;gap:10px}
 .logo-badge{background:var(--red-dim);border:1px solid rgba(255,68,68,0.3);color:var(--red);font-size:10px;padding:2px 8px;border-radius:4px;letter-spacing:0.1em}
-.header-right{display:flex;align-items:center;gap:16px}
+.header-right{display:flex;align-items:center;gap:14px}
 .header-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3)}
 .logout-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);background:none;border:1px solid var(--border2);padding:4px 12px;border-radius:6px;cursor:pointer;transition:all 0.2s}
 .logout-btn:hover{color:var(--red);border-color:rgba(255,68,68,0.3)}
 
-main{max-width:1200px;margin:0 auto;padding:clamp(20px,4vw,40px) clamp(16px,4vw,32px) 80px}
+main{max-width:1280px;margin:0 auto;padding:clamp(20px,4vw,40px) clamp(16px,4vw,32px) 80px}
+
+/* LOADING */
+.loading-screen{text-align:center;padding:80px 20px;font-family:'IBM Plex Mono',monospace;color:var(--text3)}
+.loading-spinner{width:32px;height:32px;border:2px solid var(--border2);border-top-color:var(--cyan);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* STATS */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:18px}
 .stat-val{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:600;color:var(--text);margin-bottom:4px}
 .stat-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)}
-.stat-card.cyan .stat-val{color:var(--cyan)}
-.stat-card.green .stat-val{color:var(--green)}
-.stat-card.amber .stat-val{color:var(--amber)}
-.stat-card.red .stat-val{color:var(--red)}
+.stat-card.cyan .stat-val{color:var(--cyan)}.stat-card.green .stat-val{color:var(--green)}.stat-card.amber .stat-val{color:var(--amber)}.stat-card.red .stat-val{color:var(--red)}
 
 /* FILTERS */
-.filters{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
-.filter-input{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text);outline:none;transition:border-color 0.2s}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+.filter-input{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text);outline:none;transition:border-color 0.2s;min-width:180px}
 .filter-input:focus{border-color:var(--cyan)}
 .filter-select{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text);outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234a5a68' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.filter-select:focus{border-color:var(--cyan)}
 .export-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.3);color:var(--cyan);padding:8px 16px;border-radius:var(--r);cursor:pointer;transition:all 0.2s;margin-left:auto}
 .export-btn:hover{background:rgba(0,212,255,0.2)}
 .refresh-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--surface);border:1px solid var(--border2);color:var(--text2);padding:8px 14px;border-radius:var(--r);cursor:pointer;transition:all 0.2s}
@@ -74,15 +76,15 @@ main{max-width:1200px;margin:0 auto;padding:clamp(20px,4vw,40px) clamp(16px,4vw,
 
 /* TABLE */
 .table-outer{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl)}
-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:960px}
+table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:1000px}
 th{text-align:left;color:var(--text3);font-weight:400;padding:10px 12px;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;cursor:pointer;user-select:none;transition:color 0.15s}
 th:hover{color:var(--cyan)}
 th.sort-asc::after{content:' ↑';color:var(--cyan)}
 th.sort-desc::after{content:' ↓';color:var(--cyan)}
-td{padding:10px 12px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;font-size:11px}
+td{padding:10px 12px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:rgba(255,255,255,0.015)}
-.car-num-cell{color:var(--text);font-weight:500;letter-spacing:0.06em}
+.car-cell{color:var(--text);font-weight:500;letter-spacing:0.06em}
 .diag-badge{display:inline-block;font-size:9px;font-weight:600;padding:2px 8px;border-radius:4px;letter-spacing:0.04em;border:1px solid}
 .diag-ok{color:var(--green);border-color:rgba(0,230,118,0.3);background:rgba(0,230,118,0.07)}
 .diag-warn{color:var(--amber);border-color:rgba(255,171,0,0.3);background:rgba(255,171,0,0.07)}
@@ -93,19 +95,18 @@ tr:hover td{background:rgba(255,255,255,0.015)}
 /* CAR HISTORY PANEL */
 .car-panel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-top:20px;display:none}
 .car-panel.show{display:block}
-.car-panel-title{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan);margin-bottom:16px}
+.car-panel-title{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.panel-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:0 4px}
+.panel-close:hover{color:var(--red)}
 .timeline{display:flex;flex-direction:column;gap:10px}
-.tl-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:14px;position:relative;padding-left:20px}
-.tl-item::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border)}
-.tl-item:first-child::before{top:50%}
-.tl-item:last-child::before{bottom:50%}
-.tl-dot{position:absolute;left:4px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;border:2px solid;background:var(--bg3)}
+.tl-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:14px 14px 14px 22px;position:relative}
+.tl-dot{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;border:2px solid}
 .tl-item.ok .tl-dot{border-color:var(--green);background:rgba(0,230,118,0.2)}
 .tl-item.warn .tl-dot{border-color:var(--amber);background:rgba(255,171,0,0.2)}
-.tl-item.danger,.tl-item.critical{}.tl-item.danger .tl-dot,.tl-item.critical .tl-dot{border-color:var(--red);background:rgba(255,68,68,0.2)}
+.tl-item.danger .tl-dot,.tl-item.critical .tl-dot{border-color:var(--red);background:rgba(255,68,68,0.2)}
 .tl-date{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:4px}
 .tl-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px}
-.tl-details{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);display:flex;gap:16px;flex-wrap:wrap}
+.tl-details{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);display:flex;gap:14px;flex-wrap:wrap}
 .tl-details span{color:var(--text2)}
 
 /* NO DATA */
@@ -144,84 +145,89 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
     <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 </header>
-
 <main>
-  <!-- STATS -->
-  <div class="stats-grid" id="stats-grid"></div>
-
-  <!-- FILTERS -->
-  <div class="filters">
-    <input type="text" class="filter-input" id="f-car" placeholder="Search car number..." oninput="applyFilters()"/>
-    <select class="filter-select" id="f-fuel" onchange="applyFilters()">
-      <option value="">All fuel types</option>
-      <option value="petrol">Petrol</option>
-      <option value="diesel">Diesel</option>
-    </select>
-    <select class="filter-select" id="f-diag" onchange="applyFilters()">
-      <option value="">All diagnoses</option>
-      <option value="NORMAL">Normal</option>
-      <option value="BOTH_LOW">Gas Top-Up</option>
-      <option value="OVERCHARGED">Overcharged</option>
-      <option value="COMP_INTERNAL">Compressor Internal Leak</option>
-      <option value="COMP_HP_LOW">Compressor HP Low</option>
-      <option value="EXP_VALVE">Expansion Valve</option>
-      <option value="CRITICAL_LEAK">Critical Leak</option>
-      <option value="COOLING_LOW">Cooling Low</option>
-      <option value="MOISTURE">Moisture/Expansion Valve Frozen</option>
-      <option value="AIR_IN_SYSTEM">Air in System</option>
-      <option value="FULL_OVERHAUL">Full Overhaul</option>
-      <option value="LP_LOW">LP Low</option>
-    </select>
-    <select class="filter-select" id="f-retest" onchange="applyFilters()">
-      <option value="">All tests</option>
-      <option value="retest">Retests only</option>
-      <option value="first">First tests only</option>
-    </select>
-    <select class="filter-select" id="f-days" onchange="applyFilters()">
-      <option value="">All time</option>
-      <option value="7">Last 7 days</option>
-      <option value="30">Last 30 days</option>
-      <option value="90">Last 90 days</option>
-    </select>
-    <button class="refresh-btn" onclick="loadData()">⟳ Refresh</button>
-    <button class="export-btn" onclick="exportCSV()">↓ Export CSV</button>
+  <div id="loading-view" class="loading-screen">
+    <div class="loading-spinner"></div>
+    <div>Loading inspection data from Google Sheets...</div>
   </div>
 
-  <div class="slabel">Inspections <span class="count" id="result-count"></span></div>
+  <div id="data-view" style="display:none">
+    <!-- STATS -->
+    <div class="stats-grid" id="stats-grid"></div>
 
-  <!-- TABLE -->
-  <div class="table-outer">
-    <table>
-      <thead>
-        <tr>
-          <th onclick="sortBy('timestamp')" id="th-timestamp">Date & Time</th>
-          <th onclick="sortBy('carNum')" id="th-carNum">Car Number</th>
-          <th onclick="sortBy('fuel')" id="th-fuel">Fuel</th>
-          <th onclick="sortBy('amb')" id="th-amb">Ambient °C</th>
-          <th onclick="sortBy('hp')" id="th-hp">High P.</th>
-          <th onclick="sortBy('lp')" id="th-lp">Low P.</th>
-          <th onclick="sortBy('vent')" id="th-vent">Vent °C</th>
-          <th onclick="sortBy('rpm')" id="th-rpm">RPM</th>
-          <th onclick="sortBy('blower')" id="th-blower">Blower</th>
+    <!-- FILTERS -->
+    <div class="filters">
+      <input type="text" class="filter-input" id="f-car" placeholder="Search car number..." oninput="applyFilters()"/>
+      <select class="filter-select" id="f-fuel" onchange="applyFilters()">
+        <option value="">All fuel types</option>
+        <option value="petrol">Petrol</option>
+        <option value="diesel">Diesel</option>
+      </select>
+      <select class="filter-select" id="f-diag" onchange="applyFilters()">
+        <option value="">All diagnoses</option>
+        <option value="NORMAL">Normal</option>
+        <option value="BOTH_LOW">Gas Top-Up</option>
+        <option value="OVERCHARGED">Overcharged</option>
+        <option value="COMP_INTERNAL">Compressor Internal Leak</option>
+        <option value="COMP_HP_LOW">Compressor HP Low</option>
+        <option value="EXP_VALVE">Expansion Valve</option>
+        <option value="CRITICAL_LEAK">Critical Leak</option>
+        <option value="COOLING_LOW">Cooling Low</option>
+        <option value="MOISTURE">Moisture/Exp.Valve Frozen</option>
+        <option value="AIR_IN_SYSTEM">Air in System</option>
+        <option value="FULL_OVERHAUL">Full Overhaul</option>
+        <option value="LP_LOW">LP Low</option>
+      </select>
+      <select class="filter-select" id="f-retest" onchange="applyFilters()">
+        <option value="">All tests</option>
+        <option value="YES">Retests only</option>
+        <option value="NO">First tests only</option>
+      </select>
+      <select class="filter-select" id="f-days" onchange="applyFilters()">
+        <option value="">All time</option>
+        <option value="7">Last 7 days</option>
+        <option value="30">Last 30 days</option>
+        <option value="90">Last 90 days</option>
+      </select>
+      <button class="refresh-btn" onclick="loadData()">⟳ Refresh</button>
+      <button class="export-btn" onclick="exportCSV()">↓ Export CSV</button>
+    </div>
+
+    <div class="slabel">Inspections <span class="count" id="result-count"></span></div>
+
+    <div class="table-outer">
+      <table>
+        <thead><tr>
+          <th onclick="sortBy('Timestamp')" id="th-Timestamp">Date & Time</th>
+          <th onclick="sortBy('Car Number')" id="th-Car Number">Car Number</th>
+          <th onclick="sortBy('Fuel')" id="th-Fuel">Fuel</th>
+          <th onclick="sortBy('Ambient °C')" id="th-Ambient °C">Ambient</th>
+          <th onclick="sortBy('High Pressure')" id="th-High Pressure">High P.</th>
+          <th onclick="sortBy('Low Pressure')" id="th-Low Pressure">Low P.</th>
+          <th onclick="sortBy('Vent °C')" id="th-Vent °C">Vent °C</th>
+          <th>RPM</th>
+          <th>Blower</th>
           <th>LP Behaviour</th>
           <th>Blackness</th>
-          <th onclick="sortBy('diagCode')" id="th-diagCode">Diagnosis</th>
-          <th onclick="sortBy('testCount')" id="th-testCount">Test #</th>
-          <th>Detail</th>
-        </tr>
-      </thead>
-      <tbody id="main-tbody"></tbody>
-    </table>
-  </div>
-  <div id="no-data" class="no-data" style="display:none"><div class="no-data-icon">📋</div>No inspections found matching your filters.</div>
-  <div class="pagination" id="pagination"></div>
+          <th onclick="sortBy('Diagnosis Code')" id="th-Diagnosis Code">Diagnosis</th>
+          <th onclick="sortBy('Test Number')" id="th-Test Number">Test #</th>
+          <th>History</th>
+        </tr></thead>
+        <tbody id="main-tbody"></tbody>
+      </table>
+    </div>
+    <div id="no-data" class="no-data" style="display:none"><div class="no-data-icon">📋</div>No inspections found matching your filters.</div>
+    <div class="pagination" id="pagination"></div>
 
-  <!-- CAR HISTORY PANEL -->
-  <div class="car-panel" id="car-panel">
-    <div class="car-panel-title" id="car-panel-title"></div>
-    <div class="timeline" id="car-timeline"></div>
+    <!-- CAR HISTORY PANEL -->
+    <div class="car-panel" id="car-panel">
+      <div class="car-panel-title">
+        <span id="car-panel-title">Vehicle History</span>
+        <button class="panel-close" onclick="document.getElementById('car-panel').classList.remove('show')">✕</button>
+      </div>
+      <div class="timeline" id="car-timeline"></div>
+    </div>
   </div>
-
 </main>
 <footer>
   <span>AC DIAGNOSTIC ADMIN</span>
@@ -230,26 +236,21 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
 </div>
 
 <script>
-const ADMIN_PIN = '1234'; // Change this PIN before deploying
+const ADMIN_PIN = '1234'; // ← Change this before deploying
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbww_vyo8GEmais19mpgHgEfj0sHDa6U2-B-mpiCdqkkoSu5RyXixE-Yd4nLaBaEQQvzfw/exec';
 const PAGE_SIZE = 20;
 
-let allTests = [];
-let filtered = [];
-let currentPage = 1;
-let sortCol = 'timestamp';
-let sortDir = 'desc';
+let allData=[], filtered=[], currentPage=1, sortCol='Timestamp', sortDir='desc';
 
 function doLogin(){
-  const pin = document.getElementById('pin-input').value;
-  if(pin === ADMIN_PIN){
+  const pin=document.getElementById('pin-input').value;
+  if(pin===ADMIN_PIN){
     document.getElementById('login-screen').style.display='none';
     document.getElementById('dashboard').style.display='block';
     loadData();
   } else {
-    const inp = document.getElementById('pin-input');
-    inp.classList.add('err');
-    document.getElementById('login-err').style.display='block';
-    inp.value='';
+    const inp=document.getElementById('pin-input');
+    inp.classList.add('err'); document.getElementById('login-err').style.display='block'; inp.value='';
     setTimeout(()=>{ inp.classList.remove('err'); document.getElementById('login-err').style.display='none'; },2000);
   }
 }
@@ -258,54 +259,39 @@ function logout(){
   document.getElementById('login-screen').style.display='flex';
   document.getElementById('dashboard').style.display='none';
   document.getElementById('pin-input').value='';
-  allTests=[];
+  allData=[];
 }
 
 async function loadData(){
-  allTests=[];
+  document.getElementById('loading-view').style.display='block';
+  document.getElementById('data-view').style.display='none';
   try {
-    // Load car index
-    let carIndex=[];
-    try { const r=await window.storage.get('car-index',true); if(r) carIndex=JSON.parse(r.value); } catch(e){}
-
-    // Load all tests for all cars
-    for(const car of carIndex){
-      try {
-        const r=await window.storage.get('test:'+car,true);
-        if(r){
-          const tests=JSON.parse(r.value);
-          tests.forEach(t=>{ if(!t.carNum) t.carNum=car; allTests.push(t); });
-        }
-      } catch(e){}
-    }
-  } catch(e){ console.error('Load error:',e); }
-
-  // Sort by timestamp desc by default
-  allTests.sort((a,b)=>new Date(b.timestamp)-new Date(a.timestamp));
-
-  const now = new Date();
-  document.getElementById('last-refresh').textContent='Last refreshed: '+now.toLocaleTimeString('en-IN');
-
-  buildStats();
-  applyFilters();
+    const resp=await fetch(SHEET_URL+'?t='+Date.now());
+    const json=await resp.json();
+    allData=json.rows||[];
+    document.getElementById('last-refresh').textContent='Refreshed: '+new Date().toLocaleTimeString('en-IN');
+  } catch(e){
+    allData=[];
+    document.getElementById('last-refresh').textContent='⚠ Could not load data';
+  }
+  document.getElementById('loading-view').style.display='none';
+  document.getElementById('data-view').style.display='block';
+  buildStats(); applyFilters();
 }
 
 function buildStats(){
-  const total=allTests.length;
-  const unique=new Set(allTests.map(t=>t.carNum)).size;
-  const retests=allTests.filter(t=>t.isRetest).length;
-  const critical=allTests.filter(t=>['CRITICAL_LEAK','FULL_OVERHAUL','COMP_INTERNAL'].includes(t.diagCode)).length;
-  const today=allTests.filter(t=>new Date(t.timestamp).toDateString()===new Date().toDateString()).length;
-
-  const stats=[
-    {val:total,     lbl:'Total Inspections', cls:'cyan'},
-    {val:unique,    lbl:'Unique Vehicles',   cls:'green'},
-    {val:retests,   lbl:'Retests',           cls:'amber'},
-    {val:critical,  lbl:'Critical Cases',    cls:'red'},
-    {val:today,     lbl:'Today',             cls:''},
-  ];
-  const g=document.getElementById('stats-grid');
-  g.innerHTML=stats.map(s=>`<div class="stat-card ${s.cls}"><div class="stat-val">${s.val}</div><div class="stat-lbl">${s.lbl}</div></div>`).join('');
+  const total=allData.length;
+  const unique=new Set(allData.map(r=>(r['Car Number']||'').replace(/\s/g,''))).size;
+  const retests=allData.filter(r=>r['Is Retest']==='YES').length;
+  const critical=allData.filter(r=>['CRITICAL_LEAK','FULL_OVERHAUL','COMP_INTERNAL'].includes(r['Diagnosis Code'])).length;
+  const today=allData.filter(r=>{ try{ return new Date(r['Timestamp']).toDateString()===new Date().toDateString(); }catch(e){ return false; } }).length;
+  document.getElementById('stats-grid').innerHTML=[
+    {v:total,l:'Total Inspections',c:'cyan'},
+    {v:unique,l:'Unique Vehicles',c:'green'},
+    {v:retests,l:'Retests',c:'amber'},
+    {v:critical,l:'Critical Cases',c:'red'},
+    {v:today,l:'Today',c:''},
+  ].map(s=>`<div class="stat-card ${s.c}"><div class="stat-val">${s.v}</div><div class="stat-lbl">${s.l}</div></div>`).join('');
 }
 
 function applyFilters(){
@@ -316,21 +302,18 @@ function applyFilters(){
   const fDays=parseInt(document.getElementById('f-days').value)||0;
   const cutoff=fDays?new Date(Date.now()-fDays*86400000):null;
 
-  filtered=allTests.filter(t=>{
-    if(fCar && !(t.carNum||'').includes(fCar)) return false;
-    if(fFuel && t.fuel!==fFuel) return false;
-    if(fDiag && t.diagCode!==fDiag) return false;
-    if(fRetest==='retest' && !t.isRetest) return false;
-    if(fRetest==='first' && t.isRetest) return false;
-    if(cutoff && new Date(t.timestamp)<cutoff) return false;
+  filtered=allData.filter(r=>{
+    if(fCar && !(r['Car Number']||'').replace(/\s/g,'').toUpperCase().includes(fCar)) return false;
+    if(fFuel && (r['Fuel']||'').toLowerCase()!==fFuel) return false;
+    if(fDiag && r['Diagnosis Code']!==fDiag) return false;
+    if(fRetest && r['Is Retest']!==fRetest) return false;
+    if(cutoff){ try{ if(new Date(r['Timestamp'])<cutoff) return false; }catch(e){} }
     return true;
   });
 
-  // Sort
   filtered.sort((a,b)=>{
-    let va=a[sortCol]||'', vb=b[sortCol]||'';
-    if(sortCol==='timestamp'){ va=new Date(va); vb=new Date(vb); }
-    else if(['amb','hp','lp','vent','testCount'].includes(sortCol)){ va=parseFloat(va)||0; vb=parseFloat(vb)||0; }
+    let va=a[sortCol]||'',vb=b[sortCol]||'';
+    if(['Ambient °C','High Pressure','Low Pressure','Vent °C','Test Number'].includes(sortCol)){ va=parseFloat(va)||0; vb=parseFloat(vb)||0; }
     if(va<vb) return sortDir==='asc'?-1:1;
     if(va>vb) return sortDir==='asc'?1:-1;
     return 0;
@@ -338,7 +321,7 @@ function applyFilters(){
 
   currentPage=1;
   document.getElementById('result-count').textContent='('+filtered.length+')';
-  document.getElementById('footer-count').textContent=filtered.length+' records';
+  document.getElementById('footer-count').textContent=filtered.length+' records shown of '+allData.length+' total';
   renderTable();
 }
 
@@ -351,67 +334,43 @@ function sortBy(col){
   applyFilters();
 }
 
-const DIAG_LABELS={
-  'NORMAL':'Normal','BOTH_LOW':'Gas Top-Up','OVERCHARGED':'Overcharged',
-  'COMP_INTERNAL':'Compressor Leak','COMP_HP_LOW':'Compressor HP Low',
-  'EXP_VALVE':'Expansion Valve','CRITICAL_LEAK':'Critical Leak',
-  'COOLING_LOW':'Cooling Low','MOISTURE':'Moisture/Exp.Valve',
-  'AIR_IN_SYSTEM':'Air in System','FULL_OVERHAUL':'Full Overhaul',
-  'LP_LOW':'LP Low'
-};
-const DIAG_CLASS={
-  'NORMAL':'diag-ok','BOTH_LOW':'diag-warn','OVERCHARGED':'diag-danger',
-  'COMP_INTERNAL':'diag-critical','COMP_HP_LOW':'diag-warn','EXP_VALVE':'diag-warn',
-  'CRITICAL_LEAK':'diag-critical','COOLING_LOW':'diag-warn','MOISTURE':'diag-danger',
-  'AIR_IN_SYSTEM':'diag-danger','FULL_OVERHAUL':'diag-critical','LP_LOW':'diag-warn'
-};
-const LP_BEH_LABELS={
-  'stable':'Stable','fluctuating':'Fluctuating','negative':'Negative pressure',
-  'frost-lp':'Frost on LP','lp-not-cold':'Not cold'
-};
+const DIAG_LABELS={'NORMAL':'Normal','BOTH_LOW':'Gas Top-Up','OVERCHARGED':'Overcharged','COMP_INTERNAL':'Compressor Leak','COMP_HP_LOW':'Compressor HP Low','EXP_VALVE':'Expansion Valve','CRITICAL_LEAK':'Critical Leak','COOLING_LOW':'Cooling Low','MOISTURE':'Moisture/Exp.Valve','AIR_IN_SYSTEM':'Air in System','FULL_OVERHAUL':'Full Overhaul','LP_LOW':'LP Low'};
+const DIAG_CLASS={'NORMAL':'diag-ok','BOTH_LOW':'diag-warn','OVERCHARGED':'diag-danger','COMP_INTERNAL':'diag-critical','COMP_HP_LOW':'diag-warn','EXP_VALVE':'diag-warn','CRITICAL_LEAK':'diag-critical','COOLING_LOW':'diag-warn','MOISTURE':'diag-danger','AIR_IN_SYSTEM':'diag-danger','FULL_OVERHAUL':'diag-critical','LP_LOW':'diag-warn'};
+const LP_BEH={'stable':'Stable','fluctuating':'Fluctuating','negative':'Negative','frost-lp':'Frost on LP','lp-not-cold':'Not cold'};
 
 function renderTable(){
-  const tbody=document.getElementById('main-tbody');
-  tbody.innerHTML='';
-  const start=(currentPage-1)*PAGE_SIZE, end=start+PAGE_SIZE;
-  const page=filtered.slice(start,end);
+  const tbody=document.getElementById('main-tbody'); tbody.innerHTML='';
+  const start=(currentPage-1)*PAGE_SIZE, page=filtered.slice(start,start+PAGE_SIZE);
+  document.getElementById('no-data').style.display=filtered.length===0?'block':'none';
+  if(!filtered.length){ document.getElementById('pagination').innerHTML=''; return; }
 
-  if(filtered.length===0){
-    document.getElementById('no-data').style.display='block';
-    document.getElementById('pagination').innerHTML='';
-    return;
-  }
-  document.getElementById('no-data').style.display='none';
-
-  page.forEach((t,i)=>{
-    const dt=new Date(t.timestamp);
-    const dateStr=dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'});
-    const timeStr=dt.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
-    const dcls=DIAG_CLASS[t.diagCode]||'diag-warn';
-    const dlbl=DIAG_LABELS[t.diagCode]||t.diagCode||'—';
-    const retest=t.isRetest?`<span class="retest-dot"></span>`:'';
-    const black=t.blackness?`<span style="color:var(--red);font-weight:600">YES</span>`:`<span style="color:var(--text3)">No</span>`;
-    const hpStatus=t.hpStatus==='LOW'?`<span style="color:var(--red)">LOW</span>`:t.hpStatus==='HIGH'?`<span style="color:var(--amber)">HIGH</span>`:`<span style="color:var(--green)">OK</span>`;
-    const lpStatus=t.lpStatus==='LOW'?`<span style="color:var(--red)">LOW</span>`:t.lpStatus==='HIGH'?`<span style="color:var(--amber)">HIGH</span>`:`<span style="color:var(--green)">OK</span>`;
+  page.forEach(r=>{
+    const dc=r['Diagnosis Code']||'';
+    const dcls=DIAG_CLASS[dc]||'diag-warn';
+    const dlbl=DIAG_LABELS[dc]||dc||'—';
+    const retest=r['Is Retest']==='YES'?'<span class="retest-dot"></span>':'';
+    const black=r['Blackness']==='YES'?`<span style="color:var(--red);font-weight:600">YES</span>`:`<span style="color:var(--text3)">No</span>`;
+    const hpSt=r['HP Status']==='LOW'?`<span style="color:var(--red)"> ↓</span>`:r['HP Status']==='HIGH'?`<span style="color:var(--amber)"> ↑</span>`:'';
+    const lpSt=r['LP Status']==='LOW'?`<span style="color:var(--red)"> ↓</span>`:r['LP Status']==='HIGH'?`<span style="color:var(--amber)"> ↑</span>`:'';
+    const carEsc=(r['Car Number']||'').replace(/'/g,"\\'");
     const tr=document.createElement('tr');
     tr.innerHTML=`
-      <td>${dateStr}<br><span style="color:var(--text3);font-size:9px">${timeStr}</span></td>
-      <td class="car-num-cell">${t.carNum||'—'}</td>
-      <td>${(t.fuel||'').charAt(0).toUpperCase()+(t.fuel||'').slice(1)}</td>
-      <td>${t.amb||'—'}°C</td>
-      <td>${t.hp||'—'} ${t.unit||''} ${hpStatus}</td>
-      <td>${t.lp||'—'} ${t.unit||''} ${lpStatus}</td>
-      <td>${t.vent||'—'}°C</td>
-      <td style="font-size:9px">${t.rpm||'—'}</td>
-      <td style="font-size:9px;text-transform:capitalize">${t.blower||'—'}</td>
-      <td style="font-size:9px">${LP_BEH_LABELS[t.lpBeh]||t.lpBeh||'—'}</td>
+      <td>${r['Timestamp']||'—'}</td>
+      <td class="car-cell">${r['Car Number']||'—'}</td>
+      <td style="text-transform:capitalize">${r['Fuel']||'—'}</td>
+      <td>${r['Ambient °C']||'—'}°C</td>
+      <td>${r['High Pressure']||'—'} ${r['Unit']||''}${hpSt}</td>
+      <td>${r['Low Pressure']||'—'} ${r['Unit']||''}${lpSt}</td>
+      <td>${r['Vent °C']||'—'}°C</td>
+      <td style="font-size:9px">${r['RPM']||'—'}</td>
+      <td style="font-size:9px;text-transform:capitalize">${r['Blower']||'—'}</td>
+      <td style="font-size:9px">${LP_BEH[r['LP Behaviour']]||r['LP Behaviour']||'—'}</td>
       <td>${black}</td>
       <td>${retest}<span class="diag-badge ${dcls}">${dlbl}</span></td>
-      <td style="color:${t.isRetest?'var(--amber)':'var(--text3)'}">${t.testCount||1}</td>
-      <td><button onclick="showCarHistory('${t.carNum}')" style="font-family:'IBM Plex Mono',monospace;font-size:9px;background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2);color:var(--cyan);padding:3px 9px;border-radius:4px;cursor:pointer">View</button></td>`;
+      <td style="color:${r['Is Retest']==='YES'?'var(--amber)':'var(--text3)'}">${r['Test Number']||1}</td>
+      <td><button onclick="showCarHistory('${carEsc}')" style="font-family:'IBM Plex Mono',monospace;font-size:9px;background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2);color:var(--cyan);padding:3px 9px;border-radius:4px;cursor:pointer">View</button></td>`;
     tbody.appendChild(tr);
   });
-
   renderPagination();
 }
 
@@ -422,77 +381,53 @@ function renderPagination(){
   let html=`<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>←</button>`;
   for(let i=1;i<=total;i++){
     if(i===1||i===total||Math.abs(i-currentPage)<=2) html+=`<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
-    else if(Math.abs(i-currentPage)===3) html+=`<span style="color:var(--text3)">…</span>`;
+    else if(Math.abs(i-currentPage)===3) html+=`<span>…</span>`;
   }
   html+=`<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===total?'disabled':''}>→</button>`;
-  html+=`<span style="margin-left:8px;color:var(--text3)">${filtered.length} records</span>`;
   pg.innerHTML=html;
 }
+function goPage(p){ const t=Math.ceil(filtered.length/PAGE_SIZE); if(p<1||p>t) return; currentPage=p; renderTable(); document.querySelector('.table-outer').scrollIntoView({behavior:'smooth',block:'nearest'}); }
 
-function goPage(p){
-  const total=Math.ceil(filtered.length/PAGE_SIZE);
-  if(p<1||p>total) return;
-  currentPage=p;
-  renderTable();
-  document.querySelector('.table-outer').scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-
-async function showCarHistory(carNum){
+function showCarHistory(carNum){
   const panel=document.getElementById('car-panel');
-  const title=document.getElementById('car-panel-title');
+  document.getElementById('car-panel-title').textContent='Vehicle History — '+carNum;
+  const carTests=allData.filter(r=>(r['Car Number']||'').replace(/\s/g,'').toUpperCase()===carNum.replace(/\s/g,'').toUpperCase());
   const timeline=document.getElementById('car-timeline');
-  title.textContent='Vehicle History — '+carNum;
-  timeline.innerHTML='<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11px;color:var(--text3)">Loading...</div>';
+  if(!carTests.length){ timeline.innerHTML='<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11px;color:var(--text3)">No history found for this vehicle.</div>'; panel.classList.add('show'); return; }
+  timeline.innerHTML=[...carTests].reverse().map((r,i)=>{
+    const dc=r['Diagnosis Code']||'';
+    const type=dc==='NORMAL'?'ok':['CRITICAL_LEAK','FULL_OVERHAUL','COMP_INTERNAL'].includes(dc)?'critical':'warn';
+    const dlbl=DIAG_LABELS[dc]||dc;
+    const retest=r['Is Retest']==='YES'?`<span style="color:var(--amber);font-size:9px;margin-left:8px">RETEST #${r['Test Number']||''}</span>`:'';
+    return `<div class="tl-item ${type}"><div class="tl-dot"></div>
+      <div class="tl-date">${r['Timestamp']||'—'}${retest}</div>
+      <div class="tl-title">${r['Diagnosis Title']||dlbl}</div>
+      <div class="tl-details">
+        <span>Fuel: <b>${(r['Fuel']||'').toUpperCase()}</b></span>
+        <span>HP: <b>${r['High Pressure']||'—'} ${r['Unit']||''}</b></span>
+        <span>LP: <b>${r['Low Pressure']||'—'} ${r['Unit']||''}</b></span>
+        <span>Vent: <b>${r['Vent °C']||'—'}°C</b></span>
+        <span>Ambient: <b>${r['Ambient °C']||'—'}°C</b></span>
+        <span>RPM: <b>${r['RPM']||'—'}</b></span>
+        ${r['Blackness']==='YES'?'<span style="color:var(--red)">⚠ Blackness</span>':''}
+      </div>
+    </div>`;
+  }).join('');
   panel.classList.add('show');
   panel.scrollIntoView({behavior:'smooth',block:'nearest'});
-
-  try {
-    const r=await window.storage.get('test:'+carNum,true);
-    if(!r){ timeline.innerHTML='<div class="no-data"><div class="no-data-icon">📋</div>No history found.</div>'; return; }
-    const tests=JSON.parse(r.value);
-    const reversed=[...tests].reverse();
-    timeline.innerHTML=reversed.map((t,i)=>{
-      const dt=new Date(t.timestamp);
-      const dateStr=dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
-      const type=t.diagCode==='NORMAL'?'ok':['CRITICAL_LEAK','FULL_OVERHAUL','COMP_INTERNAL'].includes(t.diagCode)?'critical':'warn';
-      const dlbl=DIAG_LABELS[t.diagCode]||t.diagCode||'Unknown';
-      const escalated=t.isRetest&&t.diagCode!=='NORMAL'?`<span style="color:var(--amber);font-size:9px;font-family:'IBM Plex Mono',monospace;margin-left:8px">RETEST #${t.testCount}</span>`:'';
-      return `<div class="tl-item ${type}"><div class="tl-dot"></div>
-        <div class="tl-date">${dateStr}${escalated}</div>
-        <div class="tl-title">${t.diagTitle||dlbl}</div>
-        <div class="tl-details">
-          <span>Fuel: <b>${(t.fuel||'').toUpperCase()}</b></span>
-          <span>HP: <b>${t.hp} ${t.unit||'kPa'}</b></span>
-          <span>LP: <b>${t.lp} ${t.unit||'kPa'}</b></span>
-          <span>Vent: <b>${t.vent}°C</b></span>
-          <span>Ambient: <b>${t.amb}°C</b></span>
-          <span>RPM: <b>${t.rpm||'—'}</b></span>
-          ${t.blackness?'<span style="color:var(--red)">⚠ Blackness detected</span>':''}
-        </div>
-      </div>`;
-    }).join('');
-  } catch(e){ timeline.innerHTML='<div style="color:var(--red);font-size:12px">Error loading history.</div>'; }
 }
 
 function exportCSV(){
-  if(filtered.length===0){ alert('No data to export.'); return; }
-  const headers=['Timestamp','Car Number','Fuel','Ambient °C','High Pressure','Low Pressure','Unit','Vent °C','RPM','Blower','LP Behaviour','Blackness','Diagnosis Code','Diagnosis','HP Status','LP Status','Test Number','Is Retest'];
-  const rows=filtered.map(t=>[
-    new Date(t.timestamp).toLocaleString('en-IN'),
-    t.carNum||'',t.fuel||'',t.amb||'',t.hp||'',t.lp||'',t.unit||'kPa',t.vent||'',
-    t.rpm||'',t.blower||'',t.lpBeh||'',t.blackness?'YES':'NO',
-    t.diagCode||'',t.diagTitle||'',t.hpStatus||'',t.lpStatus||'',
-    t.testCount||1,t.isRetest?'YES':'NO'
-  ].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(','));
-  const csv=[headers.join(','),...rows].join('\n');
+  if(!filtered.length){ alert('No data to export.'); return; }
+  const headers=Object.keys(filtered[0]);
+  const rows=filtered.map(r=>headers.map(h=>'"'+String(r[h]||'').replace(/"/g,'""')+'"').join(','));
+  const csv=[headers.map(h=>'"'+h+'"').join(','),...rows].join('\n');
   const blob=new Blob([csv],{type:'text/csv'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url; a.download='ac-diagnostics-'+new Date().toISOString().slice(0,10)+'.csv';
+  const a=document.createElement('a'); a.href=url; a.download='ac-diagnostics-'+new Date().toISOString().slice(0,10)+'.csv';
   a.click(); URL.revokeObjectURL(url);
 }
 
-// Enter key on PIN
 document.getElementById('pin-input').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
 </script>
 </body>
