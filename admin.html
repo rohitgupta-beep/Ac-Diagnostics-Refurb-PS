@@ -5,121 +5,122 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>AC Diagnostic — Admin Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#06080a;--bg3:#111518;--surface:#161b20;--surface2:#1c2228;
-  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);
-  --text:#dde3e8;--text2:#8a99a8;--text3:#4a5a68;
-  --cyan:#00d4ff;--cyan-dim:rgba(0,212,255,0.1);
-  --green:#00e676;--green-dim:rgba(0,230,118,0.1);
-  --amber:#ffab00;--amber-dim:rgba(255,171,0,0.1);
-  --red:#ff4444;--red-dim:rgba(255,68,68,0.1);
-  --r:8px;--rl:14px;
+  --bg:#f7f7fb;--bg2:#f0f0f8;--surface:#fff;--surface2:#f5f5fc;
+  --border:#e2e2ef;--border2:#d0d0e8;
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#9090b0;
+  --purple:#6c3bdb;--purple-light:#ede8fb;--purple-dark:#4c1d95;
+  --green:#16a34a;--green-light:#dcfce7;
+  --amber:#b45309;--amber-light:#fef3c7;
+  --red:#dc2626;--red-light:#fee2e2;
+  --shadow:0 1px 3px rgba(0,0,0,0.08);--shadow-md:0 4px 6px rgba(0,0,0,0.07);
+  --r:10px;--rl:16px;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
 
 /* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:100}
-.login-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rl);padding:36px 32px;width:min(380px,90vw);text-align:center}
-.login-logo{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan);margin-bottom:20px}
-.login-title{font-size:18px;font-weight:600;margin-bottom:6px}
+.login-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:40px 32px;width:min(380px,90vw);text-align:center;box-shadow:var(--shadow-md)}
+.login-logo{font-weight:700;font-size:15px;color:var(--purple);margin-bottom:24px;letter-spacing:-0.01em}
+.login-title{font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px}
 .login-sub{font-size:13px;color:var(--text2);margin-bottom:24px}
-.login-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:12px 16px;font-size:18px;font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text);outline:none;text-align:center;letter-spacing:0.2em;margin-bottom:14px;transition:border-color 0.2s}
-.login-input:focus{border-color:var(--cyan)}
-.login-input.err{border-color:var(--red)}
-.login-btn{width:100%;padding:13px;background:var(--cyan);color:#06080a;border:none;border-radius:var(--r);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:0.06em;cursor:pointer;transition:all 0.2s}
-.login-btn:hover{background:#33ddff}
-.login-err{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red);margin-top:8px;display:none}
+.login-input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:13px 16px;font-size:20px;font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--text);outline:none;text-align:center;letter-spacing:0.3em;margin-bottom:14px;transition:all 0.2s}
+.login-input:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 3px rgba(108,59,219,0.1)}
+.login-input.err{border-color:var(--red);background:var(--red-light)}
+.login-btn{width:100%;padding:13px;background:var(--purple);color:#fff;border:none;border-radius:var(--r);font-family:'Inter',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 14px rgba(108,59,219,0.3)}
+.login-btn:hover{background:var(--purple-dark)}
+.login-err{font-size:12px;color:var(--red);margin-top:8px;display:none}
 
 /* DASHBOARD */
 #dashboard{display:none}
-header{border-bottom:1px solid var(--border);padding:0 clamp(16px,4vw,48px);height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,8,10,0.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20}
-.logo{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan);display:flex;align-items:center;gap:10px}
-.logo-badge{background:var(--red-dim);border:1px solid rgba(255,68,68,0.3);color:var(--red);font-size:10px;padding:2px 8px;border-radius:4px;letter-spacing:0.1em}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 clamp(16px,4vw,48px);height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;box-shadow:var(--shadow)}
+.logo{font-weight:700;font-size:15px;color:var(--purple);letter-spacing:-0.01em;display:flex;align-items:center;gap:10px}
+.logo-badge{background:var(--red-light);border:1.5px solid #fca5a5;color:var(--red);font-size:10px;padding:2px 8px;border-radius:4px;letter-spacing:0.06em;font-weight:700}
 .header-right{display:flex;align-items:center;gap:14px}
-.header-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3)}
-.logout-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);background:none;border:1px solid var(--border2);padding:4px 12px;border-radius:6px;cursor:pointer;transition:all 0.2s}
-.logout-btn:hover{color:var(--red);border-color:rgba(255,68,68,0.3)}
+.header-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)}
+.logout-btn{font-size:12px;font-weight:500;color:var(--text2);background:none;border:1.5px solid var(--border2);padding:5px 14px;border-radius:var(--r);cursor:pointer;transition:all 0.2s}
+.logout-btn:hover{color:var(--red);border-color:#fca5a5;background:var(--red-light)}
 
-main{max-width:1280px;margin:0 auto;padding:clamp(20px,4vw,40px) clamp(16px,4vw,32px) 80px}
+main{max-width:1280px;margin:0 auto;padding:clamp(20px,4vw,36px) clamp(16px,4vw,32px) 80px}
 
-/* LOADING */
-.loading-screen{text-align:center;padding:80px 20px;font-family:'IBM Plex Mono',monospace;color:var(--text3)}
-.loading-spinner{width:32px;height:32px;border:2px solid var(--border2);border-top-color:var(--cyan);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+.loading-screen{text-align:center;padding:80px 20px;color:var(--text3)}
+.loading-spinner{width:32px;height:32px;border:3px solid var(--border2);border-top-color:var(--purple);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:14px;color:var(--text2)}
 
 /* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:18px}
-.stat-val{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:600;color:var(--text);margin-bottom:4px}
-.stat-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)}
-.stat-card.cyan .stat-val{color:var(--cyan)}.stat-card.green .stat-val{color:var(--green)}.stat-card.amber .stat-val{color:var(--amber)}.stat-card.red .stat-val{color:var(--red)}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px;box-shadow:var(--shadow)}
+.stat-val{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:600;color:var(--text);margin-bottom:4px}
+.stat-lbl{font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em}
+.stat-card.purple .stat-val{color:var(--purple)}
+.stat-card.green .stat-val{color:var(--green)}
+.stat-card.amber .stat-val{color:var(--amber)}
+.stat-card.red .stat-val{color:var(--red)}
 
 /* FILTERS */
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
-.filter-input{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text);outline:none;transition:border-color 0.2s;min-width:180px}
-.filter-input:focus{border-color:var(--cyan)}
-.filter-select{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text);outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234a5a68' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
-.filter-select:focus{border-color:var(--cyan)}
-.export-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.3);color:var(--cyan);padding:8px 16px;border-radius:var(--r);cursor:pointer;transition:all 0.2s;margin-left:auto}
-.export-btn:hover{background:rgba(0,212,255,0.2)}
-.refresh-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--surface);border:1px solid var(--border2);color:var(--text2);padding:8px 14px;border-radius:var(--r);cursor:pointer;transition:all 0.2s}
-.refresh-btn:hover{color:var(--cyan);border-color:rgba(0,212,255,0.3)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);box-shadow:var(--shadow)}
+.filter-input{background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:8px 14px;font-family:'Inter',sans-serif;font-size:12px;color:var(--text);outline:none;transition:all 0.2s;min-width:180px}
+.filter-input:focus{border-color:var(--purple);background:#fff}
+.filter-select{background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:8px 14px;font-family:'Inter',sans-serif;font-size:12px;color:var(--text);outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239090b0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;transition:all 0.2s}
+.filter-select:focus{border-color:var(--purple);background:#fff}
+.btn-export{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;background:var(--purple);color:#fff;border:none;padding:9px 18px;border-radius:var(--r);cursor:pointer;transition:all 0.2s;margin-left:auto;box-shadow:0 2px 8px rgba(108,59,219,0.25)}
+.btn-export:hover{background:var(--purple-dark)}
+.btn-refresh{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;background:var(--bg2);border:1.5px solid var(--border2);color:var(--text2);padding:8px 16px;border-radius:var(--r);cursor:pointer;transition:all 0.2s}
+.btn-refresh:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
 
-/* SLABEL */
-.slabel{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.slabel{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .slabel::after{content:'';flex:1;height:1px;background:var(--border)}
-.slabel .count{color:var(--cyan);font-size:10px}
+.slabel .count{color:var(--purple);font-size:10px;font-weight:600}
 
 /* TABLE */
-.table-outer{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl)}
-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:1000px}
-th{text-align:left;color:var(--text3);font-weight:400;padding:10px 12px;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;cursor:pointer;user-select:none;transition:color 0.15s}
-th:hover{color:var(--cyan)}
-th.sort-asc::after{content:' ↑';color:var(--cyan)}
-th.sort-desc::after{content:' ↓';color:var(--cyan)}
-td{padding:10px 12px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap}
+.table-outer{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11px;min-width:1000px}
+th{text-align:left;color:var(--text3);font-weight:500;padding:11px 12px;border-bottom:1px solid var(--border);background:var(--bg2);white-space:nowrap;cursor:pointer;user-select:none;transition:color 0.15s}
+th:hover{color:var(--purple)}
+th.sort-asc::after{content:' ↑';color:var(--purple)}
+th.sort-desc::after{content:' ↓';color:var(--purple)}
+td{padding:11px 12px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:rgba(255,255,255,0.015)}
-.car-cell{color:var(--text);font-weight:500;letter-spacing:0.06em}
-.diag-badge{display:inline-block;font-size:9px;font-weight:600;padding:2px 8px;border-radius:4px;letter-spacing:0.04em;border:1px solid}
-.diag-ok{color:var(--green);border-color:rgba(0,230,118,0.3);background:rgba(0,230,118,0.07)}
-.diag-warn{color:var(--amber);border-color:rgba(255,171,0,0.3);background:rgba(255,171,0,0.07)}
-.diag-danger{color:var(--red);border-color:rgba(255,68,68,0.3);background:rgba(255,68,68,0.07)}
-.diag-critical{color:var(--red);border-color:rgba(255,68,68,0.5);background:rgba(255,68,68,0.12);font-weight:700}
-.retest-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--amber);margin-right:5px;vertical-align:middle}
+tr:hover td{background:var(--bg2)}
+.car-cell{color:var(--text);font-weight:700;letter-spacing:0.08em}
+.diag-badge{display:inline-block;font-size:9px;font-weight:700;padding:3px 9px;border-radius:4px;letter-spacing:0.04em;border:1.5px solid}
+.diag-ok{color:var(--green);border-color:#86efac;background:var(--green-light)}
+.diag-warn{color:var(--amber);border-color:#fcd34d;background:var(--amber-light)}
+.diag-danger{color:var(--red);border-color:#fca5a5;background:var(--red-light)}
+.diag-critical{color:#fff;border-color:var(--purple);background:var(--purple);font-weight:700}
+.retest-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber);margin-right:5px;vertical-align:middle}
 
-/* CAR HISTORY PANEL */
-.car-panel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-top:20px;display:none}
+/* CAR PANEL */
+.car-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:22px;margin-top:16px;display:none;box-shadow:var(--shadow-md)}
 .car-panel.show{display:block}
-.car-panel-title{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
-.panel-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:0 4px}
-.panel-close:hover{color:var(--red)}
+.car-panel-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.panel-close{background:none;border:1px solid var(--border2);color:var(--text3);cursor:pointer;font-size:14px;padding:3px 10px;border-radius:6px}
+.panel-close:hover{border-color:#fca5a5;color:var(--red);background:var(--red-light)}
 .timeline{display:flex;flex-direction:column;gap:10px}
-.tl-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:14px 14px 14px 22px;position:relative}
-.tl-dot{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;border:2px solid}
-.tl-item.ok .tl-dot{border-color:var(--green);background:rgba(0,230,118,0.2)}
-.tl-item.warn .tl-dot{border-color:var(--amber);background:rgba(255,171,0,0.2)}
-.tl-item.danger .tl-dot,.tl-item.critical .tl-dot{border-color:var(--red);background:rgba(255,68,68,0.2)}
-.tl-date{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:4px}
-.tl-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px}
-.tl-details{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);display:flex;gap:14px;flex-wrap:wrap}
+.tl-item{border:1.5px solid var(--border);border-radius:var(--r);padding:14px 14px 14px 20px;position:relative;background:var(--surface2)}
+.tl-dot{position:absolute;left:7px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;border:2px solid}
+.tl-item.ok .tl-dot{border-color:var(--green);background:var(--green-light)}
+.tl-item.warn .tl-dot{border-color:#d97706;background:var(--amber-light)}
+.tl-item.danger .tl-dot,.tl-item.critical .tl-dot{border-color:var(--red);background:var(--red-light)}
+.tl-date{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:4px}
+.tl-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px}
+.tl-details{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);display:flex;gap:14px;flex-wrap:wrap}
 .tl-details span{color:var(--text2)}
 
-/* NO DATA */
-.no-data{text-align:center;padding:60px 20px;font-family:'IBM Plex Mono',monospace;color:var(--text3);font-size:12px}
-.no-data-icon{font-size:32px;margin-bottom:12px}
+.no-data{text-align:center;padding:60px 20px;font-family:'JetBrains Mono',monospace;color:var(--text3);font-size:12px}
+.no-data-icon{font-size:36px;margin-bottom:12px}
 
-/* PAGINATION */
-.pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3)}
-.page-btn{background:var(--surface);border:1px solid var(--border2);color:var(--text2);padding:5px 12px;border-radius:6px;cursor:pointer;transition:all 0.15s}
-.page-btn:hover,.page-btn.active{background:var(--cyan-dim);border-color:rgba(0,212,255,0.3);color:var(--cyan)}
+.pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3)}
+.page-btn{background:var(--surface);border:1.5px solid var(--border2);color:var(--text2);padding:6px 13px;border-radius:var(--r);cursor:pointer;transition:all 0.15s}
+.page-btn:hover,.page-btn.active{background:var(--purple-light);border-color:rgba(108,59,219,0.3);color:var(--purple)}
 .page-btn:disabled{opacity:0.3;cursor:not-allowed}
 
-footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 </style>
 </head>
 <body>
@@ -127,19 +128,19 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
-    <div class="login-logo">AC DIAGNOSTIC · ADMIN</div>
-    <div class="login-title">Admin Access</div>
-    <div class="login-sub">Enter PIN to view inspection data</div>
+    <div class="login-logo">⚡ AC DIAGNOSTIC · ADMIN</div>
+    <div class="login-title">Admin Dashboard</div>
+    <div class="login-sub">PIN enter karo inspection data dekhne ke liye</div>
     <input type="password" class="login-input" id="pin-input" placeholder="••••" maxlength="8" onkeydown="if(event.key==='Enter')doLogin()"/>
-    <button class="login-btn" onclick="doLogin()">Enter Dashboard</button>
-    <div class="login-err" id="login-err">Incorrect PIN. Please try again.</div>
+    <button class="login-btn" onclick="doLogin()">Dashboard Kholo</button>
+    <div class="login-err" id="login-err">Galat PIN. Dobara try karo.</div>
   </div>
 </div>
 
 <!-- DASHBOARD -->
 <div id="dashboard">
 <header>
-  <div class="logo">AC DIAGNOSTIC <span class="logo-badge">ADMIN</span></div>
+  <div class="logo">⚡ AC DIAGNOSTIC <span class="logo-badge">ADMIN</span></div>
   <div class="header-right">
     <div class="header-tag" id="last-refresh"></div>
     <button class="logout-btn" onclick="logout()">Logout</button>
@@ -148,49 +149,47 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
 <main>
   <div id="loading-view" class="loading-screen">
     <div class="loading-spinner"></div>
-    <div>Loading inspection data from Google Sheets...</div>
+    <div class="loading-text">Google Sheets se data load ho raha hai...</div>
   </div>
 
   <div id="data-view" style="display:none">
-    <!-- STATS -->
     <div class="stats-grid" id="stats-grid"></div>
 
-    <!-- FILTERS -->
     <div class="filters">
-      <input type="text" class="filter-input" id="f-car" placeholder="Search car number..." oninput="applyFilters()"/>
+      <input type="text" class="filter-input" id="f-car" placeholder="🔍 Car number search..." oninput="applyFilters()"/>
       <select class="filter-select" id="f-fuel" onchange="applyFilters()">
-        <option value="">All fuel types</option>
+        <option value="">All Fuel</option>
         <option value="petrol">Petrol</option>
         <option value="diesel">Diesel</option>
       </select>
       <select class="filter-select" id="f-diag" onchange="applyFilters()">
-        <option value="">All diagnoses</option>
-        <option value="NORMAL">Normal</option>
-        <option value="BOTH_LOW">Gas Top-Up</option>
+        <option value="">All Diagnoses</option>
+        <option value="NORMAL">Normal / Theek</option>
+        <option value="BOTH_LOW">Gas Low — Top Up</option>
+        <option value="LP_LOW">LP Low</option>
         <option value="OVERCHARGED">Overcharged</option>
         <option value="COMP_INTERNAL">Compressor Internal Leak</option>
         <option value="COMP_HP_LOW">Compressor HP Low</option>
         <option value="EXP_VALVE">Expansion Valve</option>
         <option value="CRITICAL_LEAK">Critical Leak</option>
         <option value="COOLING_LOW">Cooling Low</option>
-        <option value="MOISTURE">Moisture/Exp.Valve Frozen</option>
+        <option value="MOISTURE">Moisture/Expansion Valve Frozen</option>
         <option value="AIR_IN_SYSTEM">Air in System</option>
-        <option value="FULL_OVERHAUL">Full Overhaul</option>
-        <option value="LP_LOW">LP Low</option>
+        <option value="FULL_OVERHAUL">Black Death — Full Overhaul</option>
       </select>
       <select class="filter-select" id="f-retest" onchange="applyFilters()">
-        <option value="">All tests</option>
-        <option value="YES">Retests only</option>
-        <option value="NO">First tests only</option>
+        <option value="">All Tests</option>
+        <option value="YES">Retests Only</option>
+        <option value="NO">First Tests Only</option>
       </select>
       <select class="filter-select" id="f-days" onchange="applyFilters()">
-        <option value="">All time</option>
-        <option value="7">Last 7 days</option>
-        <option value="30">Last 30 days</option>
-        <option value="90">Last 90 days</option>
+        <option value="">All Time</option>
+        <option value="7">Last 7 Days</option>
+        <option value="30">Last 30 Days</option>
+        <option value="90">Last 90 Days</option>
       </select>
-      <button class="refresh-btn" onclick="loadData()">⟳ Refresh</button>
-      <button class="export-btn" onclick="exportCSV()">↓ Export CSV</button>
+      <button class="btn-refresh" onclick="loadData()">⟳ Refresh</button>
+      <button class="btn-export" onclick="exportCSV()">↓ Export CSV</button>
     </div>
 
     <div class="slabel">Inspections <span class="count" id="result-count"></span></div>
@@ -216,67 +215,45 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
         <tbody id="main-tbody"></tbody>
       </table>
     </div>
-    <div id="no-data" class="no-data" style="display:none"><div class="no-data-icon">📋</div>No inspections found matching your filters.</div>
+    <div id="no-data" class="no-data" style="display:none"><div class="no-data-icon">📋</div>Koi inspection nahi mila filters ke saath.</div>
     <div class="pagination" id="pagination"></div>
 
-    <!-- CAR HISTORY PANEL -->
     <div class="car-panel" id="car-panel">
       <div class="car-panel-title">
         <span id="car-panel-title">Vehicle History</span>
-        <button class="panel-close" onclick="document.getElementById('car-panel').classList.remove('show')">✕</button>
+        <button class="panel-close" onclick="document.getElementById('car-panel').classList.remove('show')">✕ Close</button>
       </div>
       <div class="timeline" id="car-timeline"></div>
     </div>
   </div>
 </main>
 <footer>
-  <span>AC DIAGNOSTIC ADMIN</span>
+  <span>AC DIAGNOSTIC ADMIN · Spinny Workshop</span>
   <span id="footer-count"></span>
 </footer>
 </div>
 
 <script>
-const ADMIN_PIN = '1234'; // ← Change this before deploying
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbww_vyo8GEmais19mpgHgEfj0sHDa6U2-B-mpiCdqkkoSu5RyXixE-Yd4nLaBaEQQvzfw/exec';
-const PAGE_SIZE = 20;
-
-let allData=[], filtered=[], currentPage=1, sortCol='Timestamp', sortDir='desc';
+const ADMIN_PIN='1234'; // ← Deploy se pehle yeh badlo
+const SHEET_URL='https://script.google.com/macros/s/AKfycbww_vyo8GEmais19mpgHgEfj0sHDa6U2-B-mpiCdqkkoSu5RyXixE-Yd4nLaBaEQQvzfw/exec';
+const PAGE_SIZE=20;
+let allData=[],filtered=[],currentPage=1,sortCol='Timestamp',sortDir='desc';
 
 function doLogin(){
   const pin=document.getElementById('pin-input').value;
-  if(pin===ADMIN_PIN){
-    document.getElementById('login-screen').style.display='none';
-    document.getElementById('dashboard').style.display='block';
-    loadData();
-  } else {
-    const inp=document.getElementById('pin-input');
-    inp.classList.add('err'); document.getElementById('login-err').style.display='block'; inp.value='';
-    setTimeout(()=>{ inp.classList.remove('err'); document.getElementById('login-err').style.display='none'; },2000);
-  }
+  if(pin===ADMIN_PIN){document.getElementById('login-screen').style.display='none';document.getElementById('dashboard').style.display='block';loadData();}
+  else{const inp=document.getElementById('pin-input');inp.classList.add('err');document.getElementById('login-err').style.display='block';inp.value='';setTimeout(()=>{inp.classList.remove('err');document.getElementById('login-err').style.display='none';},2000);}
 }
-
-function logout(){
-  document.getElementById('login-screen').style.display='flex';
-  document.getElementById('dashboard').style.display='none';
-  document.getElementById('pin-input').value='';
-  allData=[];
-}
+function logout(){document.getElementById('login-screen').style.display='flex';document.getElementById('dashboard').style.display='none';document.getElementById('pin-input').value='';allData=[];}
 
 async function loadData(){
   document.getElementById('loading-view').style.display='block';
   document.getElementById('data-view').style.display='none';
-  try {
-    const resp=await fetch(SHEET_URL+'?t='+Date.now());
-    const json=await resp.json();
-    allData=json.rows||[];
-    document.getElementById('last-refresh').textContent='Refreshed: '+new Date().toLocaleTimeString('en-IN');
-  } catch(e){
-    allData=[];
-    document.getElementById('last-refresh').textContent='⚠ Could not load data';
-  }
+  try{const resp=await fetch(SHEET_URL+'?t='+Date.now());const json=await resp.json();allData=json.rows||[];document.getElementById('last-refresh').textContent='Refreshed: '+new Date().toLocaleTimeString('en-IN');}
+  catch(e){allData=[];document.getElementById('last-refresh').textContent='⚠ Data load nahi hua';}
   document.getElementById('loading-view').style.display='none';
   document.getElementById('data-view').style.display='block';
-  buildStats(); applyFilters();
+  buildStats();applyFilters();
 }
 
 function buildStats(){
@@ -284,121 +261,111 @@ function buildStats(){
   const unique=new Set(allData.map(r=>(r['Car Number']||'').replace(/\s/g,''))).size;
   const retests=allData.filter(r=>r['Is Retest']==='YES').length;
   const critical=allData.filter(r=>['CRITICAL_LEAK','FULL_OVERHAUL','COMP_INTERNAL'].includes(r['Diagnosis Code'])).length;
-  const today=allData.filter(r=>{ try{ return new Date(r['Timestamp']).toDateString()===new Date().toDateString(); }catch(e){ return false; } }).length;
+  const today=allData.filter(r=>{try{return new Date(r['Timestamp']).toDateString()===new Date().toDateString();}catch(e){return false;}}).length;
   document.getElementById('stats-grid').innerHTML=[
-    {v:total,l:'Total Inspections',c:'cyan'},
+    {v:total,l:'Total Inspections',c:'purple'},
     {v:unique,l:'Unique Vehicles',c:'green'},
     {v:retests,l:'Retests',c:'amber'},
     {v:critical,l:'Critical Cases',c:'red'},
-    {v:today,l:'Today',c:''},
+    {v:today,l:'Aaj / Today',c:''},
   ].map(s=>`<div class="stat-card ${s.c}"><div class="stat-val">${s.v}</div><div class="stat-lbl">${s.l}</div></div>`).join('');
 }
 
 function applyFilters(){
-  const fCar=document.getElementById('f-car').value.toUpperCase().replace(/\s/g,'');
-  const fFuel=document.getElementById('f-fuel').value;
-  const fDiag=document.getElementById('f-diag').value;
-  const fRetest=document.getElementById('f-retest').value;
+  const fC=document.getElementById('f-car').value.toUpperCase().replace(/\s/g,'');
+  const fF=document.getElementById('f-fuel').value;
+  const fD=document.getElementById('f-diag').value;
+  const fR=document.getElementById('f-retest').value;
   const fDays=parseInt(document.getElementById('f-days').value)||0;
   const cutoff=fDays?new Date(Date.now()-fDays*86400000):null;
-
   filtered=allData.filter(r=>{
-    if(fCar && !(r['Car Number']||'').replace(/\s/g,'').toUpperCase().includes(fCar)) return false;
-    if(fFuel && (r['Fuel']||'').toLowerCase()!==fFuel) return false;
-    if(fDiag && r['Diagnosis Code']!==fDiag) return false;
-    if(fRetest && r['Is Retest']!==fRetest) return false;
-    if(cutoff){ try{ if(new Date(r['Timestamp'])<cutoff) return false; }catch(e){} }
+    if(fC&&!(r['Car Number']||'').replace(/\s/g,'').toUpperCase().includes(fC))return false;
+    if(fF&&(r['Fuel']||'').toLowerCase()!==fF)return false;
+    if(fD&&r['Diagnosis Code']!==fD)return false;
+    if(fR&&r['Is Retest']!==fR)return false;
+    if(cutoff){try{if(new Date(r['Timestamp'])<cutoff)return false;}catch(e){}}
     return true;
   });
-
   filtered.sort((a,b)=>{
     let va=a[sortCol]||'',vb=b[sortCol]||'';
-    if(['Ambient °C','High Pressure','Low Pressure','Vent °C','Test Number'].includes(sortCol)){ va=parseFloat(va)||0; vb=parseFloat(vb)||0; }
-    if(va<vb) return sortDir==='asc'?-1:1;
-    if(va>vb) return sortDir==='asc'?1:-1;
-    return 0;
+    if(['Ambient °C','High Pressure','Low Pressure','Vent °C','Test Number'].includes(sortCol)){va=parseFloat(va)||0;vb=parseFloat(vb)||0;}
+    if(va<vb)return sortDir==='asc'?-1:1;if(va>vb)return sortDir==='asc'?1:-1;return 0;
   });
-
   currentPage=1;
   document.getElementById('result-count').textContent='('+filtered.length+')';
-  document.getElementById('footer-count').textContent=filtered.length+' records shown of '+allData.length+' total';
+  document.getElementById('footer-count').textContent=filtered.length+' records of '+allData.length+' total';
   renderTable();
 }
 
 function sortBy(col){
-  if(sortCol===col) sortDir=sortDir==='asc'?'desc':'asc';
-  else{ sortCol=col; sortDir='desc'; }
+  if(sortCol===col)sortDir=sortDir==='asc'?'desc':'asc';else{sortCol=col;sortDir='desc';}
   document.querySelectorAll('th').forEach(th=>th.classList.remove('sort-asc','sort-desc'));
-  const th=document.getElementById('th-'+col);
-  if(th) th.classList.add(sortDir==='asc'?'sort-asc':'sort-desc');
+  const th=document.getElementById('th-'+col);if(th)th.classList.add(sortDir==='asc'?'sort-asc':'sort-desc');
   applyFilters();
 }
 
-const DIAG_LABELS={'NORMAL':'Normal','BOTH_LOW':'Gas Top-Up','OVERCHARGED':'Overcharged','COMP_INTERNAL':'Compressor Leak','COMP_HP_LOW':'Compressor HP Low','EXP_VALVE':'Expansion Valve','CRITICAL_LEAK':'Critical Leak','COOLING_LOW':'Cooling Low','MOISTURE':'Moisture/Exp.Valve','AIR_IN_SYSTEM':'Air in System','FULL_OVERHAUL':'Full Overhaul','LP_LOW':'LP Low'};
-const DIAG_CLASS={'NORMAL':'diag-ok','BOTH_LOW':'diag-warn','OVERCHARGED':'diag-danger','COMP_INTERNAL':'diag-critical','COMP_HP_LOW':'diag-warn','EXP_VALVE':'diag-warn','CRITICAL_LEAK':'diag-critical','COOLING_LOW':'diag-warn','MOISTURE':'diag-danger','AIR_IN_SYSTEM':'diag-danger','FULL_OVERHAUL':'diag-critical','LP_LOW':'diag-warn'};
-const LP_BEH={'stable':'Stable','fluctuating':'Fluctuating','negative':'Negative','frost-lp':'Frost on LP','lp-not-cold':'Not cold'};
+const DLBL={'NORMAL':'Normal ✓','BOTH_LOW':'Gas Low','OVERCHARGED':'Overcharged','COMP_INTERNAL':'Compressor Leak','COMP_HP_LOW':'Compressor HP Low','EXP_VALVE':'Expansion Valve','CRITICAL_LEAK':'Critical Leak','COOLING_LOW':'Cooling Low','MOISTURE':'Moisture/Frozen','AIR_IN_SYSTEM':'Air in System','FULL_OVERHAUL':'Black Death','LP_LOW':'LP Low'};
+const DCLS={'NORMAL':'diag-ok','BOTH_LOW':'diag-warn','OVERCHARGED':'diag-danger','COMP_INTERNAL':'diag-critical','COMP_HP_LOW':'diag-warn','EXP_VALVE':'diag-warn','CRITICAL_LEAK':'diag-critical','COOLING_LOW':'diag-warn','MOISTURE':'diag-danger','AIR_IN_SYSTEM':'diag-danger','FULL_OVERHAUL':'diag-critical','LP_LOW':'diag-warn'};
+const LPBEH={'stable':'Stable','fluctuating':'Upar-Neeche','negative':'Negative','frost-lp':'Barf/Ice','lp-not-cold':'Thandi Nahi'};
 
 function renderTable(){
-  const tbody=document.getElementById('main-tbody'); tbody.innerHTML='';
-  const start=(currentPage-1)*PAGE_SIZE, page=filtered.slice(start,start+PAGE_SIZE);
+  const tbody=document.getElementById('main-tbody');tbody.innerHTML='';
+  const page=filtered.slice((currentPage-1)*PAGE_SIZE,currentPage*PAGE_SIZE);
   document.getElementById('no-data').style.display=filtered.length===0?'block':'none';
-  if(!filtered.length){ document.getElementById('pagination').innerHTML=''; return; }
-
+  if(!filtered.length){document.getElementById('pagination').innerHTML='';return;}
   page.forEach(r=>{
     const dc=r['Diagnosis Code']||'';
-    const dcls=DIAG_CLASS[dc]||'diag-warn';
-    const dlbl=DIAG_LABELS[dc]||dc||'—';
+    const dcls=DCLS[dc]||'diag-warn',dlbl=DLBL[dc]||dc||'—';
     const retest=r['Is Retest']==='YES'?'<span class="retest-dot"></span>':'';
-    const black=r['Blackness']==='YES'?`<span style="color:var(--red);font-weight:600">YES</span>`:`<span style="color:var(--text3)">No</span>`;
-    const hpSt=r['HP Status']==='LOW'?`<span style="color:var(--red)"> ↓</span>`:r['HP Status']==='HIGH'?`<span style="color:var(--amber)"> ↑</span>`:'';
-    const lpSt=r['LP Status']==='LOW'?`<span style="color:var(--red)"> ↓</span>`:r['LP Status']==='HIGH'?`<span style="color:var(--amber)"> ↑</span>`:'';
-    const carEsc=(r['Car Number']||'').replace(/'/g,"\\'");
+    const black=r['Blackness']==='YES'?`<span style="color:var(--red);font-weight:700">⚠ YES</span>`:`<span style="color:var(--text3)">No</span>`;
+    const hpSt=r['HP Status']==='LOW'?`<span style="color:var(--red)">↓</span>`:r['HP Status']==='HIGH'?`<span style="color:var(--amber)">↑</span>`:'';
+    const lpSt=r['LP Status']==='LOW'?`<span style="color:var(--red)">↓</span>`:r['LP Status']==='HIGH'?`<span style="color:var(--amber)">↑</span>`:'';
+    const ce=(r['Car Number']||'').replace(/'/g,"\\'");
     const tr=document.createElement('tr');
     tr.innerHTML=`
       <td>${r['Timestamp']||'—'}</td>
       <td class="car-cell">${r['Car Number']||'—'}</td>
       <td style="text-transform:capitalize">${r['Fuel']||'—'}</td>
       <td>${r['Ambient °C']||'—'}°C</td>
-      <td>${r['High Pressure']||'—'} ${r['Unit']||''}${hpSt}</td>
-      <td>${r['Low Pressure']||'—'} ${r['Unit']||''}${lpSt}</td>
+      <td>${r['High Pressure']||'—'} ${r['Unit']||''} ${hpSt}</td>
+      <td>${r['Low Pressure']||'—'} ${r['Unit']||''} ${lpSt}</td>
       <td>${r['Vent °C']||'—'}°C</td>
-      <td style="font-size:9px">${r['RPM']||'—'}</td>
-      <td style="font-size:9px;text-transform:capitalize">${r['Blower']||'—'}</td>
-      <td style="font-size:9px">${LP_BEH[r['LP Behaviour']]||r['LP Behaviour']||'—'}</td>
+      <td>${r['RPM']||'—'}</td>
+      <td style="text-transform:capitalize">${r['Blower']||'—'}</td>
+      <td>${LPBEH[r['LP Behaviour']]||r['LP Behaviour']||'—'}</td>
       <td>${black}</td>
       <td>${retest}<span class="diag-badge ${dcls}">${dlbl}</span></td>
-      <td style="color:${r['Is Retest']==='YES'?'var(--amber)':'var(--text3)'}">${r['Test Number']||1}</td>
-      <td><button onclick="showCarHistory('${carEsc}')" style="font-family:'IBM Plex Mono',monospace;font-size:9px;background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2);color:var(--cyan);padding:3px 9px;border-radius:4px;cursor:pointer">View</button></td>`;
+      <td style="color:${r['Is Retest']==='YES'?'var(--amber)':'var(--text3)'};font-weight:${r['Is Retest']==='YES'?'700':'400'}">${r['Test Number']||1}</td>
+      <td><button onclick="showCarHistory('${ce}')" style="font-family:'Inter',sans-serif;font-size:11px;font-weight:600;background:var(--purple-light);border:1.5px solid rgba(108,59,219,0.25);color:var(--purple);padding:4px 10px;border-radius:6px;cursor:pointer">View</button></td>`;
     tbody.appendChild(tr);
   });
   renderPagination();
 }
 
 function renderPagination(){
-  const total=Math.ceil(filtered.length/PAGE_SIZE);
-  const pg=document.getElementById('pagination');
-  if(total<=1){ pg.innerHTML=''; return; }
-  let html=`<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>←</button>`;
+  const total=Math.ceil(filtered.length/PAGE_SIZE),pg=document.getElementById('pagination');
+  if(total<=1){pg.innerHTML='';return;}
+  let html=`<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>← Prev</button>`;
   for(let i=1;i<=total;i++){
-    if(i===1||i===total||Math.abs(i-currentPage)<=2) html+=`<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
-    else if(Math.abs(i-currentPage)===3) html+=`<span>…</span>`;
+    if(i===1||i===total||Math.abs(i-currentPage)<=2)html+=`<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+    else if(Math.abs(i-currentPage)===3)html+=`<span>…</span>`;
   }
-  html+=`<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===total?'disabled':''}>→</button>`;
+  html+=`<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===total?'disabled':''}>Next →</button>`;
   pg.innerHTML=html;
 }
-function goPage(p){ const t=Math.ceil(filtered.length/PAGE_SIZE); if(p<1||p>t) return; currentPage=p; renderTable(); document.querySelector('.table-outer').scrollIntoView({behavior:'smooth',block:'nearest'}); }
+function goPage(p){const t=Math.ceil(filtered.length/PAGE_SIZE);if(p<1||p>t)return;currentPage=p;renderTable();document.querySelector('.table-outer').scrollIntoView({behavior:'smooth',block:'nearest'});}
 
 function showCarHistory(carNum){
   const panel=document.getElementById('car-panel');
   document.getElementById('car-panel-title').textContent='Vehicle History — '+carNum;
-  const carTests=allData.filter(r=>(r['Car Number']||'').replace(/\s/g,'').toUpperCase()===carNum.replace(/\s/g,'').toUpperCase());
-  const timeline=document.getElementById('car-timeline');
-  if(!carTests.length){ timeline.innerHTML='<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11px;color:var(--text3)">No history found for this vehicle.</div>'; panel.classList.add('show'); return; }
-  timeline.innerHTML=[...carTests].reverse().map((r,i)=>{
+  const tests=allData.filter(r=>(r['Car Number']||'').replace(/\s/g,'').toUpperCase()===carNum.replace(/\s/g,'').toUpperCase());
+  const tl=document.getElementById('car-timeline');
+  if(!tests.length){tl.innerHTML='<div style="font-size:12px;color:var(--text3)">Is gaadi ka koi history nahi mila.</div>';panel.classList.add('show');return;}
+  tl.innerHTML=[...tests].reverse().map(r=>{
     const dc=r['Diagnosis Code']||'';
     const type=dc==='NORMAL'?'ok':['CRITICAL_LEAK','FULL_OVERHAUL','COMP_INTERNAL'].includes(dc)?'critical':'warn';
-    const dlbl=DIAG_LABELS[dc]||dc;
-    const retest=r['Is Retest']==='YES'?`<span style="color:var(--amber);font-size:9px;margin-left:8px">RETEST #${r['Test Number']||''}</span>`:'';
+    const dlbl=DLBL[dc]||dc;
+    const retest=r['Is Retest']==='YES'?`<span style="color:var(--amber);font-size:9px;font-weight:700;margin-left:8px">RETEST #${r['Test Number']||''}</span>`:'';
     return `<div class="tl-item ${type}"><div class="tl-dot"></div>
       <div class="tl-date">${r['Timestamp']||'—'}${retest}</div>
       <div class="tl-title">${r['Diagnosis Title']||dlbl}</div>
@@ -408,8 +375,7 @@ function showCarHistory(carNum){
         <span>LP: <b>${r['Low Pressure']||'—'} ${r['Unit']||''}</b></span>
         <span>Vent: <b>${r['Vent °C']||'—'}°C</b></span>
         <span>Ambient: <b>${r['Ambient °C']||'—'}°C</b></span>
-        <span>RPM: <b>${r['RPM']||'—'}</b></span>
-        ${r['Blackness']==='YES'?'<span style="color:var(--red)">⚠ Blackness</span>':''}
+        ${r['Blackness']==='YES'?'<span style="color:var(--red);font-weight:700">⚠ Black Death</span>':''}
       </div>
     </div>`;
   }).join('');
@@ -418,17 +384,17 @@ function showCarHistory(carNum){
 }
 
 function exportCSV(){
-  if(!filtered.length){ alert('No data to export.'); return; }
+  if(!filtered.length){alert('Export ke liye koi data nahi hai.');return;}
   const headers=Object.keys(filtered[0]);
   const rows=filtered.map(r=>headers.map(h=>'"'+String(r[h]||'').replace(/"/g,'""')+'"').join(','));
   const csv=[headers.map(h=>'"'+h+'"').join(','),...rows].join('\n');
-  const blob=new Blob([csv],{type:'text/csv'});
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download='ac-diagnostics-'+new Date().toISOString().slice(0,10)+'.csv';
-  a.click(); URL.revokeObjectURL(url);
+  const a=document.createElement('a');a.href=url;a.download='ac-diagnostics-'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();URL.revokeObjectURL(url);
 }
 
-document.getElementById('pin-input').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+document.getElementById('pin-input').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 </script>
 </body>
 </html>

@@ -5,278 +5,371 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>AC Pressure Diagnostic — Workshop Tool</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#06080a;--bg3:#111518;--surface:#161b20;--surface2:#1c2228;
-  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);
-  --text:#dde3e8;--text2:#8a99a8;--text3:#4a5a68;
-  --cyan:#00d4ff;--cyan-dim:rgba(0,212,255,0.1);
-  --green:#00e676;--green-dim:rgba(0,230,118,0.1);
-  --amber:#ffab00;--amber-dim:rgba(255,171,0,0.1);
-  --red:#ff4444;--red-dim:rgba(255,68,68,0.1);
-  --purple:#c084fc;--purple-dim:rgba(192,132,252,0.1);
-  --r:8px;--rl:14px;
+  --bg:#f7f7fb;
+  --bg2:#f0f0f8;
+  --surface:#ffffff;
+  --surface2:#f5f5fc;
+  --border:#e2e2ef;
+  --border2:#d0d0e8;
+  --text:#1a1a2e;
+  --text2:#4a4a6a;
+  --text3:#9090b0;
+  --purple:#6c3bdb;
+  --purple-light:#ede8fb;
+  --purple-mid:#8b5cf6;
+  --purple-dark:#4c1d95;
+  --green:#16a34a;
+  --green-light:#dcfce7;
+  --amber:#b45309;
+  --amber-light:#fef3c7;
+  --red:#dc2626;
+  --red-light:#fee2e2;
+  --blue:#1d4ed8;
+  --blue-light:#dbeafe;
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:0 4px 6px rgba(0,0,0,0.07),0 2px 4px rgba(0,0,0,0.05);
+  --r:10px;--rl:16px;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;line-height:1.6}
-header{border-bottom:1px solid var(--border);padding:0 clamp(16px,4vw,48px);height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,8,10,0.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20}
-.logo{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:0.08em;color:var(--cyan)}
-.header-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:0.06em}
-main{max-width:920px;margin:0 auto;padding:clamp(24px,4vw,48px) clamp(16px,4vw,32px) 80px}
-.hero{margin-bottom:32px}
-.hero-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px}
-.hero h1{font-size:clamp(22px,4vw,34px);font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.2}
-.hero h1 span{color:var(--cyan)}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;line-height:1.6}
+
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 clamp(16px,4vw,48px);height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;box-shadow:var(--shadow)}
+.logo{font-weight:700;font-size:15px;color:var(--purple);letter-spacing:-0.01em;display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);box-shadow:0 0 0 3px rgba(108,59,219,0.2)}
+.header-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:0.06em}
+
+main{max-width:940px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(16px,4vw,24px) 80px}
+
+.hero{margin-bottom:28px}
+.hero-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+.hero h1{font-size:clamp(22px,4vw,32px);font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.2;letter-spacing:-0.02em}
+.hero h1 span{color:var(--purple)}
 .hero p{font-size:14px;color:var(--text2);max-width:500px;line-height:1.7}
-.slabel{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+
+.slabel{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .slabel::after{content:'';flex:1;height:1px;background:var(--border)}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:22px;margin-bottom:14px}
-.tgroup{display:flex;gap:5px;background:var(--bg3);padding:3px;border-radius:999px;border:1px solid var(--border);width:fit-content}
-.tbtn{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:5px 18px;border-radius:999px;border:none;background:transparent;color:var(--text3);cursor:pointer;transition:all 0.18s;letter-spacing:0.04em}
-.tbtn.active{background:var(--cyan);color:#06080a}
-.config-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:20px}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
+
+/* TOGGLES */
+.tgroup{display:flex;gap:4px;background:var(--bg2);padding:3px;border-radius:999px;border:1px solid var(--border);width:fit-content}
+.tbtn{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;padding:6px 20px;border-radius:999px;border:none;background:transparent;color:var(--text2);cursor:pointer;transition:all 0.18s}
+.tbtn.active{background:var(--purple);color:#fff;box-shadow:0 2px 8px rgba(108,59,219,0.3)}
+
+.config-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:18px}
 .cfg{display:flex;flex-direction:column;gap:8px}
-.cfg label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)}
+.cfg label{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:0.02em}
+
+/* INPUTS */
 .inputs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
 @media(max-width:600px){.inputs-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:380px){.inputs-grid{grid-template-columns:1fr}}
-.ig{display:flex;flex-direction:column;gap:6px}
-.ig label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)}
+.ig{display:flex;flex-direction:column;gap:5px}
+.ig label{font-size:11px;font-weight:600;color:var(--text2)}
 .ig label span{color:var(--red);margin-left:2px}
 .iw{position:relative}
-.iw input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:11px 44px 11px 13px;font-size:19px;font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text);outline:none;transition:border-color 0.2s;-moz-appearance:textfield}
+.iw input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:11px 48px 11px 13px;font-size:20px;font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--text);outline:none;transition:all 0.2s;-moz-appearance:textfield}
 .iw input::-webkit-inner-spin-button,.iw input::-webkit-outer-spin-button{-webkit-appearance:none}
-.iw input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,0.08)}
-.iw input.err{border-color:var(--red)!important}
-.iw .utag{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);pointer-events:none}
+.iw input:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 3px rgba(108,59,219,0.1)}
+.iw input.err{border-color:var(--red)!important;background:#fff5f5}
+.iw .utag{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);pointer-events:none;background:var(--bg2);padding:2px 6px;border-radius:4px}
+
+/* CAR NUMBER */
 .car-wrap{position:relative;margin-bottom:14px}
-.car-wrap input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:13px 50px 13px 16px;font-size:22px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--text);outline:none;transition:border-color 0.2s;text-transform:uppercase;letter-spacing:0.12em}
-.car-wrap input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,0.08)}
-.car-wrap input.valid{border-color:var(--green)}
-.car-wrap input.invalid{border-color:var(--red)}
-.car-status{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600}
-.car-hint{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);margin-top:5px}
-.sel-wrap select{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:11px 13px;font-size:13px;font-family:'IBM Plex Mono',monospace;color:var(--text);outline:none;cursor:pointer;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;width:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5a68' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
-.sel-wrap select:focus{border-color:var(--cyan)}
-.black-row{display:flex;align-items:center;gap:12px;padding:13px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);margin-bottom:14px}
-.black-lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text2);flex:1;line-height:1.5}
-.black-lbl strong{color:var(--amber);display:block;font-size:9px;margin-bottom:2px;letter-spacing:0.08em;text-transform:uppercase}
-.hist-pill{background:var(--amber-dim);border:1px solid rgba(255,171,0,0.3);border-radius:var(--r);padding:13px 16px;margin-bottom:14px;display:none}
+.car-wrap input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:14px 52px 14px 16px;font-size:22px;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--text);outline:none;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.14em}
+.car-wrap input:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 3px rgba(108,59,219,0.1)}
+.car-wrap input.valid{border-color:var(--green);background:#f0fdf4}
+.car-wrap input.invalid{border-color:var(--red);background:#fff5f5}
+.car-status{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:16px;font-weight:700}
+.car-hint{font-size:11px;color:var(--text3);margin-top:5px}
+
+/* SELECT */
+.sel-wrap select{background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:11px 13px;font-size:13px;font-family:'Inter',sans-serif;color:var(--text);outline:none;cursor:pointer;transition:all 0.2s;-webkit-appearance:none;appearance:none;width:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239090b0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+.sel-wrap select:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 3px rgba(108,59,219,0.1)}
+
+/* LP BEHAVIOUR - VISUAL CARDS */
+.lp-beh-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:14px}
+.lp-card{border:2px solid var(--border);border-radius:var(--r);padding:12px;cursor:pointer;transition:all 0.18s;background:var(--surface);user-select:none}
+.lp-card:hover{border-color:var(--purple-mid);background:var(--purple-light)}
+.lp-card.selected{border-color:var(--purple);background:var(--purple-light);box-shadow:0 0 0 3px rgba(108,59,219,0.12)}
+.lp-card-icon{font-size:22px;margin-bottom:6px}
+.lp-card-en{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px}
+.lp-card-hi{font-size:11px;color:var(--text2);line-height:1.4}
+
+/* BLACKNESS */
+.black-row{display:flex;align-items:center;gap:12px;padding:14px;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);margin-bottom:14px}
+.black-lbl{font-size:12px;color:var(--text2);flex:1;line-height:1.5}
+.black-lbl strong{color:var(--amber);display:block;font-size:10px;margin-bottom:2px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em}
+
+/* HISTORY PILL */
+.hist-pill{background:var(--amber-light);border:1.5px solid #fbbf24;border-radius:var(--r);padding:13px 16px;margin-bottom:14px;display:none}
 .hist-pill.show{display:block}
-.hist-pill-title{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px}
+.hist-pill-title{font-size:11px;font-weight:700;color:var(--amber);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
 .hist-pill-body{font-size:12px;color:var(--text2);line-height:1.6}
 .hist-pill-body b{color:var(--text)}
-.run-btn{width:100%;padding:14px;background:var(--cyan);color:#06080a;border:none;border-radius:var(--r);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:0.06em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.run-btn:hover{background:#33ddff;transform:translateY(-1px)}
+
+/* RUN BUTTON */
+.run-btn{width:100%;padding:15px;background:var(--purple);color:#fff;border:none;border-radius:var(--r);font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.02em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(108,59,219,0.35)}
+.run-btn:hover{background:var(--purple-dark);transform:translateY(-1px);box-shadow:0 6px 20px rgba(108,59,219,0.4)}
 .run-btn:active{transform:translateY(0)}
-.run-btn:disabled{background:var(--surface2);color:var(--text3);cursor:not-allowed;transform:none}
-.cond-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--amber);background:rgba(255,171,0,0.07);border:1px solid rgba(255,171,0,0.2);border-radius:6px;padding:8px 12px;margin-bottom:14px;display:none}
+.run-btn:disabled{background:var(--text3);cursor:not-allowed;transform:none;box-shadow:none}
+
+/* COND NOTE */
+.cond-note{font-size:12px;color:var(--amber);background:var(--amber-light);border:1.5px solid #fbbf24;border-radius:var(--r);padding:10px 14px;margin-bottom:14px;display:none}
 .cond-note.show{display:block}
-.save-status{font-family:'IBM Plex Mono',monospace;font-size:10px;text-align:center;padding:8px;border-radius:6px;margin-bottom:14px;display:none}
+
+/* SAVE STATUS */
+.save-status{font-family:'JetBrains Mono',monospace;font-size:11px;text-align:center;padding:9px;border-radius:var(--r);margin-bottom:14px;display:none}
 .save-status.show{display:block}
-.save-status.saving{color:var(--cyan);background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2)}
-.save-status.saved{color:var(--green);background:var(--green-dim);border:1px solid rgba(0,230,118,0.2)}
-.save-status.save-err{color:var(--red);background:var(--red-dim);border:1px solid rgba(255,68,68,0.2)}
+.save-status.saving{color:var(--purple);background:var(--purple-light);border:1px solid rgba(108,59,219,0.3)}
+.save-status.saved{color:var(--green);background:var(--green-light);border:1px solid rgba(22,163,74,0.3)}
+.save-status.save-err{color:var(--red);background:var(--red-light);border:1px solid rgba(220,38,38,0.3)}
+
+/* PRESSURE BARS */
 .bars-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 @media(max-width:480px){.bars-grid{grid-template-columns:1fr}}
-.bar-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:14px}
-.bar-card-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:0.1em;margin-bottom:10px}
-.bar-track{height:5px;background:var(--bg3);border-radius:3px;position:relative;overflow:visible;margin-bottom:6px}
-.bar-lz{position:absolute;height:100%;background:rgba(255,68,68,0.35);border-radius:3px 0 0 3px;left:0}
+.bar-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;box-shadow:var(--shadow)}
+.bar-card-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:0.1em;margin-bottom:10px;text-transform:uppercase}
+.bar-track{height:6px;background:var(--bg2);border-radius:3px;position:relative;overflow:visible;margin-bottom:6px}
+.bar-lz{position:absolute;height:100%;background:rgba(220,38,38,0.25);border-radius:3px 0 0 3px;left:0}
 .bar-oz{position:absolute;height:100%;border-radius:3px}
-.bar-pin{position:absolute;width:2px;height:13px;top:-4px;border-radius:1px;transition:left 0.45s cubic-bezier(0.34,1.56,0.64,1)}
-.bar-rlbl{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:4px}
-.bar-val{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500}
-.bar-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3)}
-.leg-item{display:flex;align-items:center;gap:5px}
-.leg-sw{width:8px;height:8px;border-radius:2px}
-.result-card{border-radius:var(--rl);padding:22px;border:1px solid;display:none;animation:slideIn 0.3s ease;margin-bottom:14px}
+.bar-pin{position:absolute;width:3px;height:14px;top:-4px;border-radius:2px;transition:left 0.45s cubic-bezier(0.34,1.56,0.64,1)}
+.bar-rlbl{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:4px}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500}
+.bar-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-size:11px;color:var(--text3)}
+.leg-item{display:flex;align-items:center;gap:6px}
+.leg-sw{width:10px;height:10px;border-radius:2px}
+
+/* RESULT CARD */
+.result-card{border-radius:var(--rl);padding:22px;border:2px solid;display:none;animation:slideIn 0.3s ease;margin-bottom:14px;box-shadow:var(--shadow-md)}
 .result-card.show{display:block}
 @keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.result-card.ok{background:var(--green-dim);border-color:rgba(0,230,118,0.25)}
-.result-card.warn{background:var(--amber-dim);border-color:rgba(255,171,0,0.25)}
-.result-card.danger{background:var(--red-dim);border-color:rgba(255,68,68,0.25)}
-.result-card.critical{background:rgba(255,68,68,0.05);border-color:rgba(255,68,68,0.4);box-shadow:0 0 30px rgba(255,68,68,0.08)}
-.result-card.info{background:var(--purple-dim);border-color:rgba(192,132,252,0.25)}
-.res-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
-.res-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
-.ok .res-icon{background:rgba(0,230,118,0.15);color:var(--green)}
-.warn .res-icon{background:rgba(255,171,0,0.15);color:var(--amber)}
-.danger .res-icon{background:rgba(255,68,68,0.15);color:var(--red)}
-.critical .res-icon{background:rgba(255,68,68,0.2);color:var(--red)}
-.info .res-icon{background:rgba(192,132,252,0.15);color:var(--purple)}
-.res-title{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;margin-bottom:4px}
-.ok .res-title{color:var(--green)}.warn .res-title{color:var(--amber)}.danger .res-title{color:var(--red)}.critical .res-title{color:var(--red)}.info .res-title{color:var(--purple)}
+.result-card.ok{background:var(--green-light);border-color:#86efac}
+.result-card.warn{background:var(--amber-light);border-color:#fcd34d}
+.result-card.danger{background:var(--red-light);border-color:#fca5a5}
+.result-card.critical{background:#fdf2f8;border-color:#c084fc;box-shadow:0 4px 20px rgba(192,132,252,0.2)}
+.result-card.info{background:var(--blue-light);border-color:#93c5fd}
+
+.res-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+.res-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:700}
+.ok .res-icon{background:#16a34a;color:#fff}
+.warn .res-icon{background:#d97706;color:#fff}
+.danger .res-icon{background:#dc2626;color:#fff}
+.critical .res-icon{background:var(--purple);color:#fff}
+.info .res-icon{background:#1d4ed8;color:#fff}
+.res-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:-0.01em}
 .res-sub{font-size:13px;color:var(--text2);line-height:1.6}
-.ca-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-@media(max-width:560px){.ca-grid{grid-template-columns:1fr}}
-.ca-box{background:rgba(255,255,255,0.03);border-radius:var(--r);padding:13px;border:1px solid var(--border)}
-.ca-box-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px}
-.cause .ca-box-lbl{color:var(--amber)}.action .ca-box-lbl{color:var(--cyan)}
-.ca-list{list-style:none;display:flex;flex-direction:column;gap:5px}
-.ca-list li{font-size:12px;color:var(--text);padding-left:14px;position:relative;line-height:1.5}
-.ca-list li::before{content:'—';position:absolute;left:0;color:var(--text3)}
-.retest-box{background:rgba(255,68,68,0.06);border:1px solid rgba(255,68,68,0.25);border-radius:var(--r);padding:13px;margin-bottom:14px;display:none}
+
+/* SPINNY NODE ACTIONS */
+.spinny-actions{margin-bottom:14px}
+.spinny-actions-title{font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.spinny-actions-title::before{content:'';width:12px;height:2px;background:var(--purple);border-radius:1px}
+.node-list{display:flex;flex-direction:column;gap:7px}
+.node-item{background:var(--surface);border:1.5px solid var(--border2);border-radius:var(--r);padding:11px 14px;display:flex;align-items:flex-start;gap:10px}
+.node-item.repair{border-left:4px solid #16a34a}
+.node-item.replace{border-left:4px solid #dc2626}
+.node-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;letter-spacing:0.04em;text-transform:uppercase}
+.node-badge.repair{background:var(--green-light);color:var(--green)}
+.node-badge.replace{background:var(--red-light);color:var(--red)}
+.node-path{flex:1}
+.node-path-breadcrumb{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:3px}
+.node-path-breadcrumb span{color:var(--purple)}
+.node-name{font-size:13px;font-weight:600;color:var(--text)}
+.node-issue{font-size:11px;color:var(--text2);margin-top:1px}
+
+/* RETEST BOX */
+.retest-box{background:#fdf2f8;border:2px solid #c084fc;border-radius:var(--r);padding:14px;margin-bottom:14px;display:none}
 .retest-box.show{display:block}
-.retest-title{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--red);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px}
+.retest-title{font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
 .retest-body{font-size:12px;color:var(--text2);line-height:1.6}
-.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.badge{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:4px 12px;border-radius:999px;border:1px solid;letter-spacing:0.06em}
-.badge-red{color:var(--red);border-color:rgba(255,68,68,0.4);background:rgba(255,68,68,0.08)}
-.badge-amber{color:var(--amber);border-color:rgba(255,171,0,0.4);background:rgba(255,171,0,0.08)}
-.badge-cyan{color:var(--cyan);border-color:rgba(0,212,255,0.4);background:rgba(0,212,255,0.08)}
-.badge-green{color:var(--green);border-color:rgba(0,230,118,0.4);background:rgba(0,230,118,0.08)}
+
+/* BADGES */
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;padding:4px 12px;border-radius:999px;letter-spacing:0.04em}
+.badge-red{color:var(--red);background:var(--red-light);border:1.5px solid #fca5a5}
+.badge-amber{color:var(--amber);background:var(--amber-light);border:1.5px solid #fcd34d}
+.badge-purple{color:var(--purple);background:var(--purple-light);border:1.5px solid #c4b5fd}
+.badge-green{color:var(--green);background:var(--green-light);border:1.5px solid #86efac}
+
+/* MATRIX */
 .matrix-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:20px}
 @media(max-width:580px){.matrix-grid{grid-template-columns:1fr}}
-.mc{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:12px;transition:all 0.2s}
-.mc.hit{border-color:var(--cyan);background:rgba(0,212,255,0.05)}
-.mc-state{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:4px}
-.mc-state .hp{color:#60a5fa}.mc-state .lp{color:#a78bfa}
+.mc{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:12px;transition:all 0.2s;box-shadow:var(--shadow)}
+.mc.hit{border-color:var(--purple);background:var(--purple-light);box-shadow:0 0 0 3px rgba(108,59,219,0.1)}
+.mc-state{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:4px}
+.mc-state .hp{color:var(--blue)}.mc-state .lp{color:var(--purple)}
 .mc-action{font-size:12px;color:var(--text2);line-height:1.5}
-.mc.hit .mc-action{color:var(--text)}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:440px}
-th{text-align:left;color:var(--text3);font-weight:400;padding:7px 10px;border-bottom:1px solid var(--border)}
-td{padding:7px 10px;color:var(--text2);border-bottom:1px solid var(--border)}
-td.hi{color:var(--text);font-weight:500}
-td.grn{color:var(--green);font-weight:500}
+.mc.hit .mc-action{color:var(--text);font-weight:500}
+
+/* REFERENCE TABLE */
+.table-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11px;min-width:480px}
+th{text-align:left;color:var(--text3);font-weight:500;padding:9px 12px;border-bottom:1px solid var(--border);background:var(--bg2);white-space:nowrap}
+td{padding:9px 12px;color:var(--text2);border-bottom:1px solid var(--border)}
+td.hi{color:var(--text);font-weight:600}
+td.grn{color:var(--green);font-weight:600}
 td.red{color:var(--red)}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:rgba(255,255,255,0.015)}
-.divider{height:1px;background:var(--border);margin:20px 0}
-footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+tr:hover td{background:var(--bg2)}
+
+.divider{height:1px;background:var(--border);margin:24px 0}
+footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .shake{animation:shake 0.35s ease}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">AC DIAGNOSTIC</div>
-  <div class="header-tag">WORKSHOP TOOL v3.0</div>
+  <div class="logo"><span class="logo-dot"></span>AC DIAGNOSTIC</div>
+  <div class="header-tag">WORKSHOP TOOL v4.0</div>
 </header>
 <main>
   <div class="hero">
     <div class="hero-tag">Refrigerant Pressure Analysis</div>
     <h1>AC System<br><span>Pressure Diagnostic</span></h1>
-    <p>Enter vehicle details and gauge readings for instant AC system diagnosis and repair guidance.</p>
+    <p>Gaadi ka number aur gauge readings daalo — turant AC diagnosis aur repair guidance milega.</p>
   </div>
 
   <!-- CAR NUMBER -->
   <div class="card">
-    <div class="slabel">Vehicle identification</div>
+    <div class="slabel">Vehicle / Gaadi ki Pehchaan</div>
     <div class="car-wrap">
       <input type="text" id="car-num" placeholder="MH 12 AB 1234" maxlength="13" autocomplete="off" oninput="validateCar(this)"/>
       <span class="car-status" id="car-status"></span>
     </div>
-    <div class="car-hint" id="car-hint">Enter Indian registration number — Format: XX 00 XX 0000 or BH series: 00 BH 0000 XX</div>
+    <div class="car-hint" id="car-hint">Indian registration number daalo — Format: XX 00 XX 0000 ya BH series: 00 BH 0000 XX</div>
   </div>
 
   <!-- HISTORY PILL -->
   <div class="hist-pill" id="hist-pill">
-    <div class="hist-pill-title">⟳ Previous inspection found for this vehicle</div>
+    <div class="hist-pill-title">⟳ Is gaadi ka pehle ka inspection mila</div>
     <div class="hist-pill-body" id="hist-pill-body"></div>
   </div>
 
   <!-- CONFIGURATION -->
   <div class="card">
-    <div class="slabel">Configuration</div>
+    <div class="slabel">Configuration / Settings</div>
     <div class="config-grid">
       <div class="cfg">
-        <label>Fuel type</label>
+        <label>Fuel Type / Indhan</label>
         <div class="tgroup" id="fuel-grp">
           <button class="tbtn active" onclick="setFuel('petrol')">Petrol</button>
           <button class="tbtn" onclick="setFuel('diesel')">Diesel</button>
         </div>
       </div>
       <div class="cfg">
-        <label>Pressure unit</label>
+        <label>Pressure Unit</label>
         <div class="tgroup" id="unit-grp">
           <button class="tbtn active" onclick="setUnit('kpa')">kPa</button>
           <button class="tbtn" onclick="setUnit('psi')">psi</button>
         </div>
       </div>
     </div>
-    <div class="slabel" style="margin-top:4px">Test conditions</div>
+    <div class="slabel" style="margin-top:4px">Test Conditions / Jaanch ke Halaat</div>
     <div class="config-grid">
       <div class="cfg">
         <label>Engine RPM</label>
         <div class="sel-wrap"><select id="rpm" onchange="checkCondNote()">
-          <option value="1500">1500 RPM — Standard</option>
-          <option value="idle">Idle (~750 RPM)</option>
+          <option value="1500">1500 RPM — Standard / Sahi tarika</option>
+          <option value="idle">Idle (~750 RPM) — Engine band karna mat</option>
         </select></div>
       </div>
       <div class="cfg">
-        <label>Blower speed</label>
+        <label>Blower Speed / Pankhe ki Speed</label>
         <div class="sel-wrap"><select id="blower" onchange="checkCondNote()">
-          <option value="max">Maximum — Standard</option>
-          <option value="mid">Medium</option>
-          <option value="min">Minimum</option>
+          <option value="max">Maximum (Full) — Standard</option>
+          <option value="mid">Medium (Beech mein)</option>
+          <option value="min">Minimum (Kam)</option>
         </select></div>
       </div>
     </div>
   </div>
 
-  <div class="cond-note" id="cond-note">⚠ Non-standard test conditions. Standard requires 1500 RPM + MAX blower. Results are indicative only.</div>
+  <div class="cond-note" id="cond-note">⚠ Non-standard conditions. Sahi test ke liye 1500 RPM + Full blower chahiye. Abhi ke results sirf andaza hain.</div>
 
   <!-- READINGS -->
   <div class="card">
-    <div class="slabel">Pressure & temperature readings</div>
+    <div class="slabel">Gauge Readings / Pressure Readings</div>
     <div class="inputs-grid">
       <div class="ig">
-        <label>Ambient Temp<span>*</span></label>
+        <label>Bahari Garmi (Ambient)<span>*</span></label>
         <div class="iw"><input type="number" id="amb" placeholder="30" min="25" max="45"/><span class="utag">°C</span></div>
       </div>
       <div class="ig">
-        <label>High Pressure<span>*</span></label>
+        <label>High Pressure (HP)<span>*</span></label>
         <div class="iw"><input type="number" id="hp" placeholder="1380"/><span class="utag" id="hp-utag">kPa</span></div>
       </div>
       <div class="ig">
-        <label>Low Pressure<span>*</span></label>
+        <label>Low Pressure (LP)<span>*</span></label>
         <div class="iw"><input type="number" id="lp" placeholder="295"/><span class="utag" id="lp-utag">kPa</span></div>
       </div>
       <div class="ig">
-        <label>Vent Temperature<span>*</span></label>
+        <label>Vent Temperature (Vent se aati hawa)<span>*</span></label>
         <div class="iw"><input type="number" id="vent" placeholder="14"/><span class="utag">°C</span></div>
       </div>
-      <div class="ig" style="grid-column:span 2">
-        <label>LP line behaviour<span>*</span></label>
-        <div class="sel-wrap"><select id="lp-beh">
-          <option value="stable">Stable — steady reading</option>
-          <option value="fluctuating">Fluctuating — swings to negative pressure</option>
-          <option value="negative">Negative pressure — reads below zero</option>
-          <option value="frost-lp">Frost / heavy dew on LP tubing</option>
-          <option value="lp-not-cold">LP tubing not cold to touch</option>
-        </select></div>
+    </div>
+
+    <!-- LP BEHAVIOUR - VISUAL CARDS -->
+    <div class="slabel">LP Line Kaisa Dikh Raha Hai?<span style="color:var(--red);margin-left:4px">*</span></div>
+    <div class="lp-beh-grid" id="lp-beh-grid">
+      <div class="lp-card selected" onclick="selectLP(this,'stable')" data-val="stable">
+        <div class="lp-card-icon">📊</div>
+        <div class="lp-card-en">Stable / Normal</div>
+        <div class="lp-card-hi">Seedha reading — koi problem nahi dikh rahi</div>
+      </div>
+      <div class="lp-card" onclick="selectLP(this,'fluctuating')" data-val="fluctuating">
+        <div class="lp-card-icon">📉📈</div>
+        <div class="lp-card-en">Upar-Neeche / Fluctuating</div>
+        <div class="lp-card-hi">Kabhi normal, kabhi zero se neeche chali jaati hai</div>
+      </div>
+      <div class="lp-card" onclick="selectLP(this,'negative')" data-val="negative">
+        <div class="lp-card-icon">⬇️</div>
+        <div class="lp-card-en">Zero se Neeche / Negative</div>
+        <div class="lp-card-hi">Gauge hamesha zero se neeche dikh raha hai</div>
+      </div>
+      <div class="lp-card" onclick="selectLP(this,'frost-lp')" data-val="frost-lp">
+        <div class="lp-card-icon">🧊</div>
+        <div class="lp-card-en">Pipe pe Barf / Ice / Dew</div>
+        <div class="lp-card-hi">LP pipe pe ice jam gayi ya bohot zyada paseena aa raha hai</div>
+      </div>
+      <div class="lp-card" onclick="selectLP(this,'lp-not-cold')" data-val="lp-not-cold">
+        <div class="lp-card-icon">🌡️</div>
+        <div class="lp-card-en">Pipe Thandi Nahi / Not Cold</div>
+        <div class="lp-card-hi">Haath lagao toh LP pipe thandi nahi lagti (dono pressure high hain)</div>
       </div>
     </div>
-    <div class="slabel">Refrigerant quality</div>
+    <input type="hidden" id="lp-beh" value="stable"/>
+
+    <!-- BLACKNESS -->
+    <div class="slabel" style="margin-top:4px">Gas Quality / Gas ki Jaanch</div>
     <div class="black-row">
       <div class="black-lbl">
-        <strong>Blackness / Metal particles check</strong>
-        Press service valve momentarily — observe refrigerant colour. Black or dark oily discharge = metal particles from compressor wear.
+        <strong>⚠ Black Death / Kala Tel Check</strong>
+        Service valve thoda dabao — gas ka rang dekho. Kala ya maila tel jaisa nikle toh compressor ke andhar se loha ghis gaya hai. Yeh "Black Death" hai.
       </div>
       <div class="tgroup" id="black-grp">
-        <button class="tbtn active" onclick="setBlack(false)">Clean</button>
-        <button class="tbtn" onclick="setBlack(true)">Black / Particles</button>
+        <button class="tbtn active" onclick="setBlack(false)">Saaf / Clean ✓</button>
+        <button class="tbtn" onclick="setBlack(true)">Kala / Black ✗</button>
       </div>
     </div>
+
     <button class="run-btn" id="run-btn" onclick="diagnose()">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Run Diagnostic
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Diagnosis Chalao / Run Diagnostic
     </button>
   </div>
 
-  <!-- SAVE STATUS -->
   <div class="save-status" id="save-status"></div>
 
   <!-- BARS -->
   <div id="bars-sec" style="display:none;margin-bottom:14px">
     <div class="bar-legend">
-      <div class="leg-item"><div class="leg-sw" style="background:rgba(255,68,68,0.4)"></div>Leak zone (&lt;33% of min)</div>
-      <div class="leg-item"><div class="leg-sw" style="background:rgba(0,230,118,0.5)"></div>Acceptable range</div>
-      <div class="leg-item"><div class="leg-sw" style="background:rgba(0,230,118,0.2)"></div>+15% upper tolerance</div>
+      <div class="leg-item"><div class="leg-sw" style="background:rgba(220,38,38,0.3)"></div>Leak zone (&lt;-10% of min)</div>
+      <div class="leg-item"><div class="leg-sw" style="background:rgba(108,59,219,0.45)"></div>Acceptable range (−10% to +20%)</div>
     </div>
     <div class="bars-grid">
       <div class="bar-card">
@@ -294,9 +387,9 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
     </div>
   </div>
 
-  <!-- RETEST ESCALATION -->
+  <!-- RETEST -->
   <div class="retest-box" id="retest-box">
-    <div class="retest-title" id="retest-title">⟳ Retest — Escalated Diagnosis</div>
+    <div class="retest-title" id="retest-title">⟳ Retest — Pehle wali repair ke baad bhi problem hai</div>
     <div class="retest-body" id="retest-body"></div>
   </div>
 
@@ -306,407 +399,444 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
       <div class="res-icon" id="res-icon"></div>
       <div><div class="res-title" id="res-title"></div><div class="res-sub" id="res-sub"></div></div>
     </div>
-    <div class="ca-grid" id="ca-grid"></div>
+    <div class="spinny-actions" id="spinny-actions"></div>
     <div class="badges" id="res-badges"></div>
   </div>
 
   <div class="divider"></div>
 
   <!-- MATRIX -->
-  <div class="slabel">Diagnostic condition matrix</div>
+  <div class="slabel">Diagnostic Condition Matrix / Jaanch Chart</div>
   <div class="matrix-grid" id="matrix"></div>
 
   <div class="divider"></div>
 
   <!-- REFERENCE TABLE -->
-  <div class="slabel">Pressure reference — <span id="ref-fuel-lbl">Petrol</span> · <span id="ref-unit-lbl">kPa</span> · at 30°C ambient</div>
+  <div class="slabel">Pressure Reference — <span id="ref-fuel-lbl">Petrol</span> · <span id="ref-unit-lbl">kPa</span> · 30°C par</div>
   <div class="table-wrap">
     <table>
       <thead><tr>
-        <th>Ambient °C</th><th>High P. min</th><th>High P. max</th><th>High P. +15%</th><th>High P. target</th>
-        <th>Low P. min</th><th>Low P. max</th><th>Low P. +15%</th><th>Low P. target</th>
-        <th>Leak threshold</th>
+        <th>Ambient °C</th><th>HP min (−10%)</th><th>HP OEM</th><th>HP max (+20%)</th><th>HP target</th>
+        <th>LP min (−10%)</th><th>LP OEM</th><th>LP max (+20%)</th><th>LP target</th>
       </tr></thead>
       <tbody id="ref-tbody"></tbody>
     </table>
   </div>
 
   <footer>
-    <span>AC PRESSURE DIAGNOSTIC</span>
-    <span>WORKSHOP TOOL v3.0</span>
+    <span>AC PRESSURE DIAGNOSTIC · WORKSHOP TOOL v4.0</span>
+    <span>Spinny Workshop</span>
   </footer>
 </main>
 
 <script>
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbww_vyo8GEmais19mpgHgEfj0sHDa6U2-B-mpiCdqkkoSu5RyXixE-Yd4nLaBaEQQvzfw/exec';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbww_vyo8GEmais19mpgHgEfj0sHDa6U2-B-mpiCdqkkoSu5RyXixE-Yd4nLaBaEQQvzfw/exec';
 
-const BASE = {
-  petrol:{ hpMin:1220, hpMax:1540, lpMin:240, lpMax:350 },
-  diesel:{ hpMin:1320, hpMax:1650, lpMin:210, lpMax:290 }
+const BASE={
+  petrol:{hpMin:1220,hpMax:1540,lpMin:240,lpMax:350},
+  diesel:{hpMin:1320,hpMax:1650,lpMin:210,lpMax:290}
 };
-const KPA_TO_PSI = 0.14504;
-let fuel='petrol', unit='kpa', blackness=false;
+const KPA_TO_PSI=0.14504;
+let fuel='petrol',unit='kpa',blackness=false,lpBehVal='stable';
 
-function scale(v,a){ return Math.round(v*(1+(a-30)*0.025)); }
-function toPsi(k){ return Math.round(k*KPA_TO_PSI*10)/10; }
-function toKpa(p){ return Math.round(p/KPA_TO_PSI); }
-function fmt(k){ return unit==='psi'?toPsi(k):k; }
-function uu(){ return unit==='psi'?'psi':'kPa'; }
-function mid(a,b){ return Math.round((a+b)/2); }
-function leakTh(mn){ return Math.round(mn*0.67); }
-function getOEM(a){ const b=BASE[fuel]; return {hpMin:scale(b.hpMin,a),hpMax:scale(b.hpMax,a),lpMin:scale(b.lpMin,a),lpMax:scale(b.lpMax,a)}; }
+function scale(v,a){return Math.round(v*(1+(a-30)*0.025));}
+function toPsi(k){return Math.round(k*KPA_TO_PSI*10)/10;}
+function toKpa(p){return Math.round(p/KPA_TO_PSI);}
+function fmt(k){return unit==='psi'?toPsi(k):k;}
+function uu(){return unit==='psi'?'psi':'kPa';}
+function mid(a,b){return Math.round((a+b)/2);}
+// -10% lower, +20% upper tolerance
+function lowerBound(oem){return Math.round(oem*0.90);}
+function upperBound(oem){return Math.round(oem*1.20);}
+function leakTh(mn){return Math.round(mn*0.67);}
+function getOEM(a){const b=BASE[fuel];return{hpMin:scale(b.hpMin,a),hpMax:scale(b.hpMax,a),lpMin:scale(b.lpMin,a),lpMax:scale(b.lpMax,a)};}
 
-function setFuel(f){ fuel=f; document.querySelectorAll('#fuel-grp .tbtn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===f)); document.getElementById('ref-fuel-lbl').textContent=f.charAt(0).toUpperCase()+f.slice(1); refreshTable(); }
-function setUnit(u){ unit=u; document.querySelectorAll('#unit-grp .tbtn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===u)); document.getElementById('hp-utag').textContent=uu(); document.getElementById('lp-utag').textContent=uu(); document.getElementById('ref-unit-lbl').textContent=uu(); document.getElementById('hp').placeholder=u==='psi'?'200':'1380'; document.getElementById('lp').placeholder=u==='psi'?'43':'295'; refreshTable(); }
-function setBlack(v){ blackness=v; document.querySelectorAll('#black-grp .tbtn').forEach((b,i)=>b.classList.toggle('active',i===(v?1:0))); }
-function checkCondNote(){ const r=document.getElementById('rpm').value,bl=document.getElementById('blower').value; document.getElementById('cond-note').classList.toggle('show',r==='idle'||bl!=='max'); }
+function setFuel(f){fuel=f;document.querySelectorAll('#fuel-grp .tbtn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().startsWith(f)));document.getElementById('ref-fuel-lbl').textContent=f.charAt(0).toUpperCase()+f.slice(1);refreshTable();}
+function setUnit(u){unit=u;document.querySelectorAll('#unit-grp .tbtn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===u));document.getElementById('hp-utag').textContent=uu();document.getElementById('lp-utag').textContent=uu();document.getElementById('ref-unit-lbl').textContent=uu();document.getElementById('hp').placeholder=u==='psi'?'200':'1380';document.getElementById('lp').placeholder=u==='psi'?'43':'295';refreshTable();}
+function setBlack(v){blackness=v;document.querySelectorAll('#black-grp .tbtn').forEach((b,i)=>b.classList.toggle('active',i===(v?1:0)));}
+function checkCondNote(){const r=document.getElementById('rpm').value,bl=document.getElementById('blower').value;document.getElementById('cond-note').classList.toggle('show',r==='idle'||bl!=='max');}
 
-// ── CAR NUMBER ────────────────────────────────────────────────────
+function selectLP(el,val){
+  document.querySelectorAll('.lp-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  lpBehVal=val;
+  document.getElementById('lp-beh').value=val;
+}
+
+// CAR NUMBER
 const PATTERNS=[/^[A-Z]{2}\s?\d{2}\s?[A-Z]{1,3}\s?\d{1,4}$/,/^\d{2}\s?BH\s?\d{4}\s?[A-Z]{1,2}$/];
 let carValid=false;
-
 function validateCar(input){
   const raw=input.value.toUpperCase().replace(/\s+/g,' ').trim();
   input.value=raw;
   const clean=raw.replace(/\s/g,'');
   const valid=PATTERNS.some(p=>p.test(raw)||p.test(clean));
   const st=document.getElementById('car-status'),ht=document.getElementById('car-hint');
-  if(raw.length<4){ st.textContent=''; input.className=''; ht.textContent='Format: XX 00 XX 0000 or BH series: 00 BH 0000 XX'; carValid=false; document.getElementById('hist-pill').classList.remove('show'); return; }
-  if(valid){ input.classList.remove('invalid'); input.classList.add('valid'); st.textContent='✓'; st.style.color='var(--green)'; ht.textContent='Valid registration number'; carValid=true; loadHistory(clean); }
-  else { input.classList.remove('valid'); input.classList.add('invalid'); st.textContent='✗'; st.style.color='var(--red)'; ht.textContent='Invalid format. Examples: MH12AB1234 · DL3CAB1234 · 22BH1234AB'; carValid=false; document.getElementById('hist-pill').classList.remove('show'); }
+  if(raw.length<4){st.textContent='';input.className='';ht.textContent='Indian registration number daalo — Format: XX 00 XX 0000 ya BH series: 00 BH 0000 XX';carValid=false;document.getElementById('hist-pill').classList.remove('show');return;}
+  if(valid){input.classList.remove('invalid');input.classList.add('valid');st.textContent='✓';st.style.color='var(--green)';ht.textContent='✓ Valid registration number';carValid=true;loadHistory(clean);}
+  else{input.classList.remove('valid');input.classList.add('invalid');st.textContent='✗';st.style.color='var(--red)';ht.textContent='Invalid format. Examples: MH12AB1234 · DL3CAB1234 · 22BH1234AB';carValid=false;document.getElementById('hist-pill').classList.remove('show');}
 }
 
-// ── HISTORY FROM SHEETS ───────────────────────────────────────────
-let allSheetData = [];
-let historyLoaded = false;
-
+// STORAGE
+let allSheetData=[];
 async function fetchAllData(){
-  try {
-    const resp = await fetch(SHEET_URL+'?t='+Date.now());
-    const json = await resp.json();
-    if(json.status==='success') allSheetData = json.rows || [];
-    historyLoaded = true;
-  } catch(e){ historyLoaded = true; }
+  try{const resp=await fetch(SHEET_URL+'?t='+Date.now());const json=await resp.json();if(json.status==='success')allSheetData=json.rows||[];}catch(e){}
 }
-
 function loadHistory(carNum){
-  const pill=document.getElementById('hist-pill');
-  const body=document.getElementById('hist-pill-body');
-  const carTests = allSheetData.filter(r=>(r['Car Number']||'').replace(/\s/g,'').toUpperCase()===carNum);
-  if(!carTests.length){ pill.classList.remove('show'); return; }
-  const last = carTests[carTests.length-1];
-  const count = carTests.length;
-  body.innerHTML=`<b>${count} previous inspection${count>1?'s':''} found.</b> Last on ${last['Timestamp']||'—'}.<br>Last diagnosis: <b>${last['Diagnosis Code']||'—'}</b> — ${last['Diagnosis Title']||'—'}<br>Readings: HP ${last['High Pressure']||'—'} · LP ${last['Low Pressure']||'—'} · Vent ${last['Vent °C']||'—'}°C · ${(last['Fuel']||'').toUpperCase()}`;
+  const pill=document.getElementById('hist-pill'),body=document.getElementById('hist-pill-body');
+  const tests=allSheetData.filter(r=>(r['Car Number']||'').replace(/\s/g,'').toUpperCase()===carNum);
+  if(!tests.length){pill.classList.remove('show');return;}
+  const last=tests[tests.length-1],count=tests.length;
+  body.innerHTML=`<b>${count} pehle ka inspection mila.</b> Last: ${last['Timestamp']||'—'}.<br>Pehli diagnosis: <b>${last['Diagnosis Code']||'—'}</b> — ${last['Diagnosis Title']||'—'}<br>HP: ${last['High Pressure']||'—'} · LP: ${last['Low Pressure']||'—'} · Vent: ${last['Vent °C']||'—'}°C`;
   pill.classList.add('show');
 }
-
-function getPrevTests(carNum){
-  return allSheetData.filter(r=>(r['Car Number']||'').replace(/\s/g,'').toUpperCase()===carNum);
-}
-
-// ── SAVE TO SHEETS ────────────────────────────────────────────────
+function getPrevTests(carNum){return allSheetData.filter(r=>(r['Car Number']||'').replace(/\s/g,'').toUpperCase()===carNum);}
 async function saveToSheet(data){
   const ss=document.getElementById('save-status');
-  ss.className='save-status show saving'; ss.textContent='⟳ Saving to records...';
-  try {
-    await fetch(SHEET_URL, {
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(data)
-    });
-    ss.className='save-status show saved'; ss.textContent='✓ Test saved to records successfully';
-    // Update local cache
-    allSheetData.push({
-      'Timestamp':data.timestamp,'Car Number':data.carNum,'Fuel':data.fuel,
-      'Ambient °C':data.amb,'High Pressure':data.hp,'Low Pressure':data.lp,
-      'Unit':data.unit,'Vent °C':data.vent,'RPM':data.rpm,'Blower':data.blower,
-      'LP Behaviour':data.lpBeh,'Blackness':data.blackness?'YES':'NO',
-      'Diagnosis Code':data.diagCode,'Diagnosis Title':data.diagTitle,
-      'HP Status':data.hpStatus,'LP Status':data.lpStatus,
-      'Test Number':data.testCount,'Is Retest':data.isRetest?'YES':'NO'
-    });
-    setTimeout(()=>{ ss.className='save-status'; },4000);
-  } catch(e){
-    ss.className='save-status show save-err'; ss.textContent='⚠ Could not save — check internet connection';
-    setTimeout(()=>{ ss.className='save-status'; },5000);
-  }
+  ss.className='save-status show saving';ss.textContent='⟳ Records mein save ho raha hai...';
+  try{
+    await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    ss.className='save-status show saved';ss.textContent='✓ Test successfully save hua';
+    allSheetData.push({'Timestamp':data.timestamp,'Car Number':data.carNum,'Fuel':data.fuel,'Ambient °C':data.amb,'High Pressure':data.hp,'Low Pressure':data.lp,'Unit':data.unit,'Vent °C':data.vent,'RPM':data.rpm,'Blower':data.blower,'LP Behaviour':data.lpBeh,'Blackness':data.blackness?'YES':'NO','Diagnosis Code':data.diagCode,'Diagnosis Title':data.diagTitle,'HP Status':data.hpStatus,'LP Status':data.lpStatus,'Test Number':data.testCount,'Is Retest':data.isRetest?'YES':'NO'});
+    setTimeout(()=>{ss.className='save-status';},4000);
+  }catch(e){ss.className='save-status show save-err';ss.textContent='⚠ Save nahi hua — internet check karo';setTimeout(()=>{ss.className='save-status';},5000);}
 }
 
-// ── ESCALATION ────────────────────────────────────────────────────
-const ESCALATION = {
-  'BOTH_LOW':      { title:'Gas top-up did not resolve the issue', body:'Previous top-up performed. Pressure still low — confirms an active leak. Do not top up again. Use electronic leak detector on all fittings, hoses, and compressor seals before any recharge.' },
-  'OVERCHARGED':   { title:'Overcharge condition persists after recovery', body:'Gas was previously recovered. High pressures persist — not an overcharge issue. Likely cause: dirty/blocked condenser or faulty radiator cooling fan. Inspect condenser fins and fan operation thoroughly.' },
-  'CONDENSER':     { title:'Condenser cleaning did not resolve high pressure', body:'Condenser was previously cleaned. HP still high. Escalated: compressor malfunction or engine overheat. Inspect compressor and engine cooling system.' },
-  'COMP_INTERNAL': { title:'Compressor replacement — verify installation', body:'Compressor was previously replaced. Issue persists — check installation quality, drive belt tension, and magnet clutch clearance (0.3–0.6mm specification).' },
-  'EXP_VALVE':     { title:'Expansion valve replacement did not resolve the fault', body:'Expansion valve was replaced. Issue persists. Check for remaining moisture (replace receiver/dryer if not done), verify correct refrigerant charge, and inspect for partial blockage in refrigerant passages.' },
-  'COMP_HP_LOW':   { title:'Compressor issue persists after inspection', body:'Compressor was previously inspected. HP remains low — compressor requires replacement. Also verify drive belt tension and magnet clutch operation.' },
-  'LP_LOW':        { title:'LP top-up did not hold — active leak confirmed', body:'LP was topped up previously but is low again. Active leak confirmed on suction side. Full leak detection required before any further top-up.' },
-  'COOLING_LOW':   { title:'AC cooling low persists after maintenance', body:'Cooling maintenance was performed. Vent temp still high. Escalated: check for clogged/frosted evaporator, air leakage from HVAC unit or ducts, or temperature control door malfunction.' },
-  'CRITICAL_LEAK': { title:'Critical leak not resolved — system still empty', body:'System was recharged after leak repair but is empty again. Leak repair was incomplete or there is an additional leak point. Full pressure test of entire circuit required.' },
-  'MOISTURE':      { title:'Moisture symptoms persist after valve replacement', body:'Expansion valve and condenser replaced. Symptoms persist. Evacuate for minimum 30 minutes (not 15) to remove all moisture. Replace receiver/dryer if not already done.' },
-  'AIR_IN_SYSTEM': { title:'Air in system persists after evacuation', body:'System was evacuated and recharged. Air contamination symptoms persist. Verify vacuum pump achieves below -100 kPa. Check all manifold gauge connections for air ingress during service.' },
-  'FULL_OVERHAUL': { title:'Full overhaul — verify all components replaced', body:'Full system overhaul was completed. Issue persists. Verify: all O-rings replaced, refrigerant passages fully flushed, correct refrigerant quantity charged, and new compressor installation quality.' },
+// ESCALATION
+const ESCALATION={
+  'BOTH_LOW':{title:'Gas top-up ke baad bhi gas kam hai',body:'Pehle gas daala gaya tha. Abhi bhi pressure kam hai — iska matlab hai koi jagah gas leak ho rahi hai. Bina leak fix kiye dobara gas mat daalo. Electronic leak detector se poori pipe check karo.'},
+  'OVERCHARGED':{title:'Condenser clean ke baad bhi pressure high hai',body:'Condenser saaf kar diya gaya tha. HP abhi bhi high hai — sirf gas ki wajah nahi. Radiator cooling fan aur compressor check karo.'},
+  'COMP_INTERNAL':{title:'Compressor replace ke baad bhi problem hai',body:'Compressor badla gaya tha. Dobara same problem aa rahi hai — installation quality, drive belt tension, aur magnet clutch clearance (0.3–0.6mm) check karo.'},
+  'EXP_VALVE':{title:'Expansion valve replace ke baad bhi theek nahi',body:'Expansion valve badla gaya. Problem abhi bhi hai — system mein moisture check karo (receiver/dryer badlo agar nahi badla), aur refrigerant charge sahi hai ya nahi dekho.'},
+  'COMP_HP_LOW':{title:'Compressor clutch ke baad bhi HP low hai',body:'Compressor clutch ya inspection ho chuka hai. HP abhi bhi low — poora compressor badalna padega. Drive belt tension bhi dobara check karo.'},
+  'LP_LOW':{title:'Gas daalne ke baad bhi LP low hai',body:'LP gas top-up kiya gaya tha. Phir se low aa gaya — LP side mein active leak confirm hai. Bina leak fix kiye gas mat daalo.'},
+  'COOLING_LOW':{title:'Maintenance ke baad bhi thanda nahi',body:'AC cooling maintenance ho chuka hai. Vent temp abhi bhi zyada hai — Cooling Coil/Evaporator clean karo ya replace karo, HVAC unit mein air leak check karo, aur temperature control flap check karo.'},
+  'CRITICAL_LEAK':{title:'Leak fix ke baad bhi system khaali hai',body:'System recharge kiya gaya tha leak ke baad. Phir se empty — leak poori tarah fix nahi hui, ya koi aur leak point hai. Poori AC pipe assembly pressure test karo.'},
+  'MOISTURE':{title:'Expansion valve ke baad bhi moisture symptoms hain',body:'Expansion valve aur condenser badla gaya. Symptoms abhi bhi hain — vacuum pump se 30 minute tak evacuation karo (15 nahi), aur receiver/dryer bhi badlo agar nahi badla.'},
+  'AIR_IN_SYSTEM':{title:'Evacuation ke baad bhi air hai',body:'System evacuate aur recharge kiya gaya. Air contamination abhi bhi hai — vacuum pump -100 kPa tak pahunch raha hai ya nahi check karo. Manifold gauge connections bhi check karo.'},
+  'FULL_OVERHAUL':{title:'Full overhaul ke baad bhi problem hai',body:'Poora system badla gaya. Problem phir bhi — check karo: saare O-rings replace hue ya nahi, refrigerant passages flush hue ya nahi, aur sahi matra mein gas charge hua ya nahi.'},
 };
-
-function getEscalation(diagCode, prevTests){
-  if(!prevTests||!prevTests.length) return null;
+function getEscalation(diagCode,prevTests){
+  if(!prevTests||!prevTests.length)return null;
   const last=prevTests[prevTests.length-1];
-  if((last['Diagnosis Code']||'')=== diagCode && ESCALATION[diagCode]){
-    return { ...ESCALATION[diagCode], lastDate: last['Timestamp']||'previous test', count: prevTests.length };
-  }
+  if((last['Diagnosis Code']||'')===diagCode&&ESCALATION[diagCode])return{...ESCALATION[diagCode],lastDate:last['Timestamp']||'pehle',count:prevTests.length};
   return null;
 }
 
-// ── MAIN DIAGNOSE ─────────────────────────────────────────────────
+// SPINNY NODE HELPER
+function nodeItem(action,node1,node2,node3,part,issue){
+  const isReplace=action==='replace';
+  const breadcrumb=[node1,node2,node3].filter(Boolean).join(' › ');
+  return `<div class="node-item ${action}">
+    <span class="node-badge ${action}">${isReplace?'Replace':'Repair'}</span>
+    <div class="node-path">
+      <div class="node-path-breadcrumb">AC Assembly › <span>${breadcrumb}</span></div>
+      <div class="node-name">${part}</div>
+      <div class="node-issue">${issue}</div>
+    </div>
+  </div>`;
+}
+function renderNodes(nodes){
+  return `<div class="spinny-actions"><div class="spinny-actions-title">Spinny Parts Action / Kya Karna Hai</div><div class="node-list">${nodes.join('')}</div></div>`;
+}
+
+// MAIN DIAGNOSE
 async function diagnose(){
-  if(!carValid){
-    const inp=document.getElementById('car-num'); inp.classList.add('shake'); setTimeout(()=>inp.classList.remove('shake'),600);
-    alert('Please enter a valid Indian vehicle registration number to proceed.'); return;
-  }
+  if(!carValid){const inp=document.getElementById('car-num');inp.classList.add('shake');setTimeout(()=>inp.classList.remove('shake'),600);alert('Pehle sahi gaadi ka number daalo.');return;}
   const carNum=document.getElementById('car-num').value.replace(/\s/g,'').toUpperCase();
   const amb=parseFloat(document.getElementById('amb').value);
   const hpRaw=parseFloat(document.getElementById('hp').value);
   const lpRaw=parseFloat(document.getElementById('lp').value);
   const vent=parseFloat(document.getElementById('vent').value);
-  const lpBeh=document.getElementById('lp-beh').value;
+  const lpBeh=lpBehVal;
 
   let err=false;
-  ['amb','hp','lp','vent'].forEach(id=>{ if(isNaN(parseFloat(document.getElementById(id).value))){ document.getElementById(id).classList.add('shake','err'); setTimeout(()=>document.getElementById(id).classList.remove('shake','err'),600); err=true; } });
-  if(err) return;
-  if(amb<25||amb>45){ alert('Ambient temperature must be between 25°C and 45°C.'); return; }
+  ['amb','hp','lp','vent'].forEach(id=>{if(isNaN(parseFloat(document.getElementById(id).value))){document.getElementById(id).classList.add('shake','err');setTimeout(()=>document.getElementById(id).classList.remove('shake','err'),600);err=true;}});
+  if(err)return;
+  if(amb<25||amb>45){alert('Bahari garmi 25°C se 45°C ke beech honi chahiye.');return;}
 
-  const btn=document.getElementById('run-btn'); btn.disabled=true; btn.textContent='Running...';
+  const btn=document.getElementById('run-btn');btn.disabled=true;btn.textContent='Running...';
 
   const hpKpa=unit==='psi'?toKpa(hpRaw):hpRaw;
   const lpKpa=unit==='psi'?toKpa(lpRaw):lpRaw;
   const oem=getOEM(amb);
   const {hpMin,hpMax,lpMin,lpMax}=oem;
-  const hpMaxTol=Math.round(hpMax*1.15),lpMaxTol=Math.round(lpMax*1.15);
+  // Apply -10% lower, +20% upper tolerance
+  const hpLo=lowerBound(hpMin),hpHi=upperBound(hpMax);
+  const lpLo=lowerBound(lpMin),lpHi=upperBound(lpMax);
   const hpMid=mid(hpMin,hpMax),lpMid=mid(lpMin,lpMax);
-  const hpLeak=leakTh(hpMin),lpLeak=leakTh(lpMin);
+  const hpLeak=leakTh(hpLo),lpLeak=leakTh(lpLo);
 
   const hpSevere=hpKpa<hpLeak,lpSevere=lpKpa<lpLeak;
-  const hpLow=hpKpa<hpMin,hpHigh=hpKpa>hpMaxTol;
-  const lpLow=lpKpa<lpMin,lpHigh=lpKpa>lpMaxTol;
+  const hpLow=hpKpa<hpLo,hpHigh=hpKpa>hpHi;
+  const lpLow=lpKpa<lpLo,lpHigh=lpKpa>lpHi;
   const hpOk=!hpLow&&!hpHigh,lpOk=!lpLow&&!lpHigh;
   const u=uu();
   const hpD=fmt(hpKpa),lpD=fmt(lpKpa);
   const hpMdD=fmt(hpMid),lpMdD=fmt(lpMid);
-  const hpMnD=fmt(hpMin),hpMxD=fmt(hpMax);
-  const lpMnD=fmt(lpMin),lpMxD=fmt(lpMax);
+  const hpLoD=fmt(hpLo),hpHiD=fmt(hpHi);
+  const lpLoD=fmt(lpLo),lpHiD=fmt(lpHi);
 
-  drawBars(hpKpa,lpKpa,hpMin,hpMaxTol,lpMin,lpMaxTol,hpLeak,lpLeak);
+  drawBars(hpKpa,lpKpa,hpLo,hpHi,lpLo,lpHi,hpLeak,lpLeak);
 
   const prevTests=getPrevTests(carNum);
-
-  let diagCode='',diagTitle='',type='',sub='',causes=[],actions=[],badges=[],matrixId='';
+  let diagCode='',diagTitle='',type='',sub='',nodes=[],badges=[],matrixId='';
 
   if(blackness){
-    diagCode='FULL_OVERHAUL';diagTitle='Full System Overhaul Required';type='critical';
-    sub='Metal particles in refrigerant. Severe internal compressor wear — entire circuit contaminated.';
-    causes=['Compressor internal failure','Contaminated compressor oil','Circuit-wide metal contamination'];
-    actions=['Replace A/C compressor assembly','Replace condenser with integrated receiver/dryer','Replace expansion valve','Flush entire refrigerant circuit','Full evacuation (min 15 min, below -100 kPa)','Recharge to specification'];
-    badges=['CRITICAL','FULL SYSTEM REPLACEMENT'];matrixId='mc-black';
+    // BLACK DEATH — all Replace
+    diagCode='FULL_OVERHAUL';diagTitle='Black Death — Full System Replace';type='critical';
+    sub='Kala tel aaya — compressor ke andhar se loha ghis gaya. Poori AC system contaminated hai. Sirf gas dene se kaam nahi chalega.';
+    nodes=[
+      nodeItem('replace','AC Condenser','','','AC Condenser','Damaged/Leakage'),
+      nodeItem('replace','AC Compressor Assembly','AC Compressor','','AC Compressor','Damaged'),
+      nodeItem('replace','Cooling Coil/Evaporator','','','Cooling Coil/Evaporator','Damaged/Leakage'),
+      nodeItem('replace','AC Pipe Inlet Hose/Line','','','AC Pipe Inlet Hose/Line','Damaged/Leakage'),
+      nodeItem('replace','AC Pipe Outlet Hose/Line','','','AC Pipe Outlet Hose/Line','Damaged/Leakage'),
+      nodeItem('replace','AC Gas','','','AC Gas','Empty'),
+    ];
+    badges=['CRITICAL','BLACK DEATH','FULL REPLACE'];matrixId='mc-black';
+
   } else if(lpBeh==='fluctuating'){
     diagCode='MOISTURE';diagTitle='Expansion Valve Frozen — Moisture in System';type='danger';
-    sub='LP fluctuates between normal and negative. Moisture-frozen expansion valve temporarily shutting off refrigeration cycle.';
-    causes=['Expansion valve frozen due to moisture','Moisture in A/C circuit causing ice blockage'];
-    actions=['Replace expansion valve','Replace condenser assembly (removes moisture via receiver/dryer)','Full system evacuation','Recharge with fresh refrigerant'];
+    sub='LP upar-neeche ho rahi hai — kabhi normal, kabhi zero se neeche. Yeh moisture ki wajah se expansion valve freeze ho rahi hai.';
+    nodes=[
+      nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
+      nodeItem('repair','AC Condenser','','','AC Condenser','Damaged/Leakage'),
+      nodeItem('repair','AC Gas','','','AC Gas','Empty'),
+    ];
     badges=['MOISTURE IN SYSTEM','EXPANSION VALVE'];matrixId='mc-fluc';
+
   } else if(lpBeh==='negative'){
-    diagCode='MOISTURE';diagTitle='Expansion Valve Blocked — Dust or Ice';type='danger';
-    sub='LP reads negative, HP extremely low. Frost present around condenser and expansion valve tubing.';
-    causes=['Dust or ice blocking expansion valve','Frost around condenser/expansion valve tubing'];
-    actions=['Replace expansion valve','Replace condenser assembly','Full system evacuation','Recharge with fresh refrigerant'];
+    diagCode='MOISTURE';diagTitle='Expansion Valve Blocked — Dust ya Ice';type='danger';
+    sub='LP zero se neeche — HP bhi bahut kam. Expansion valve mein dust ya ice jam gayi hai. Condenser ke paas barf dikh sakti hai.';
+    nodes=[
+      nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
+      nodeItem('repair','AC Condenser','','','AC Condenser','Damaged/Leakage'),
+      nodeItem('repair','AC Gas','','','AC Gas','Empty'),
+    ];
     badges=['EXPANSION VALVE BLOCKED'];matrixId='mc-neg';
+
   } else if(lpBeh==='frost-lp'){
-    diagCode='EXP_VALVE';diagTitle='Expansion Valve Fault — Unregulated Flow';type='danger';
-    sub='Frost/dew on LP tubing with high pressures. Expansion valve not regulating refrigerant flow properly.';
-    causes=['Expansion valve malfunction — opening incorrectly','Refrigerant flow not regulated'];
-    actions=['Replace expansion valve','System evacuation and recharge'];
+    diagCode='EXP_VALVE';diagTitle='Expansion Valve Faulty — Flow Unregulated';type='danger';
+    sub='LP pipe pe barf jam gayi aur dono pressure high hain. Expansion valve refrigerant flow sahi se control nahi kar rahi.';
+    nodes=[
+      nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
+      nodeItem('repair','AC Gas','','','AC Gas','Low'),
+    ];
     badges=['EXPANSION VALVE FAULTY'];matrixId='mc-frost';
+
   } else if(lpBeh==='lp-not-cold'&&lpHigh&&hpHigh){
-    diagCode='AIR_IN_SYSTEM';diagTitle='Air in System — Improper Evacuation';type='danger';
-    sub='Both HP and LP high with LP tubing not cold. Air contamination from improper evacuation.';
-    causes=['Air (non-condensable gas) in A/C system','Improperly evacuated during previous service'];
-    actions=['Replace condenser assembly','Check compressor oil quantity','Full evacuation (min 15 min below -100 kPa)','Recharge with fresh refrigerant'];
+    diagCode='AIR_IN_SYSTEM';diagTitle='Air in System — Sahi se Vacuum Nahi Kiya';type='danger';
+    sub='LP pipe thandi nahi, dono pressure high hain — system mein hawa ghus gayi hai. Pehle wali service mein vacuum theek se nahi kiya gaya.';
+    nodes=[
+      nodeItem('repair','AC Condenser','','','AC Condenser','Damaged/Leakage'),
+      nodeItem('repair','AC Gas','','','AC Gas','Empty'),
+    ];
     badges=['AIR IN SYSTEM'];matrixId='mc-air';
+
   } else if(lpHigh&&hpLow){
-    diagCode='COMP_INTERNAL';diagTitle='Compressor Internal Leak';type='danger';
-    sub=`HP low (${hpD} ${u}) with LP high (${lpD} ${u}). Pressures equalise when A/C switched off — internal compressor valve failure.`;
-    causes=['Internal compressor valve failure','Compressor not building high-side pressure'];
-    actions=['Inspect A/C compressor','Replace compressor if internal leak confirmed','Evacuation and recharge after replacement'];
-    badges=['COMPRESSOR FAILURE','INTERNAL LEAK'];matrixId='mc-compleak';
+    diagCode='COMP_INTERNAL';diagTitle='Compressor Internal Leak — Andar se Toot Gaya';type='danger';
+    sub=`HP low (${hpD} ${u}), LP high (${lpD} ${u}). AC band karo toh dono pressure barabar ho jaate hain — compressor ke andar valve toot gaya hai.`;
+    nodes=[
+      nodeItem('repair','AC Compressor Assembly','AC Compressor','','AC Compressor','Damaged'),
+      nodeItem('repair','AC Compressor Assembly','','','AC Compressor Assembly','Not Working'),
+    ];
+    badges=['COMPRESSOR INTERNAL LEAK'];matrixId='mc-compleak';
+
   } else if((hpSevere||lpSevere)&&hpLow&&lpLow){
-    diagCode='CRITICAL_LEAK';diagTitle='Critical Refrigerant Loss — Severe Leak';type='critical';
-    sub=`HP ${hpD} ${u} and LP ${lpD} ${u} — both critically below 33% of minimum. System nearly empty.`;
-    causes=['Major refrigerant leak','Possible fitting/hose rupture or compressor seal failure'];
-    actions=['Use electronic leak detector — locate and repair all leaks','System evacuation','Recharge to specification','Re-check for leaks after recharge'];
-    badges=['CRITICAL LEAK','DO NOT TOP UP WITHOUT FIXING LEAK'];matrixId='mc-both-low';
+    diagCode='CRITICAL_LEAK';diagTitle='Gas Khatam — Badi Leak Hai';type='critical';
+    sub=`HP ${hpD} ${u} aur LP ${lpD} ${u} — dono OEM minimum se 33% se bhi kam. System almost khaali hai.`;
+    nodes=[
+      nodeItem('repair','AC Gas','','','AC Gas','Empty'),
+      nodeItem('repair','AC Pipe Inlet Hose/Line','','','AC Pipe Inlet Hose/Line','Damaged/Leakage'),
+      nodeItem('repair','AC Pipe Outlet Hose/Line','','','AC Pipe Outlet Hose/Line','Damaged/Leakage'),
+      nodeItem('repair','Cooling Coil/Evaporator','','','Cooling Coil/Evaporator','Damaged/Leakage'),
+      nodeItem('repair','AC Condenser','','','AC Condenser','Damaged/Leakage'),
+    ];
+    badges=['CRITICAL LEAK','GAS EMPTY','FIX LEAK FIRST'];matrixId='mc-both-low';
+
   } else if(hpLow&&lpLow){
-    diagCode='BOTH_LOW';diagTitle='Gas Top-Up Required — Insufficient Refrigerant';type='warn';
-    sub=`HP ${hpD} ${u} and LP ${lpD} ${u} both below range. Output air slightly cold. Possible slow leak.`;
-    causes=['Low refrigerant charge','Possible slow leak'];
-    actions=['Check for refrigerant leaks','Top up refrigerant to specification','Target: HP ~'+hpMdD+' '+u+' | LP ~'+lpMdD+' '+u];
+    diagCode='BOTH_LOW';diagTitle='Gas Kam Hai — Top Up Required';type='warn';
+    sub=`HP ${hpD} ${u} aur LP ${lpD} ${u} dono kam hain. AC thoda thanda karta hai. Gas leak bhi ho sakti hai.`;
+    nodes=[
+      nodeItem('repair','AC Gas','','','AC Gas','Low'),
+    ];
     badges=['GAS TOP-UP REQUIRED'];matrixId='mc-both-low';
+
   } else if(hpHigh&&lpHigh){
-    diagCode='OVERCHARGED';diagTitle='System Overcharged or Condenser Fault';type='danger';
-    sub=`HP ${hpD} ${u} and LP ${lpD} ${u} both high. Three possible causes: overcharged, dirty condenser, or faulty cooling fan.`;
-    causes=['Refrigerant overcharged','Dirty or clogged condenser fins','Faulty radiator cooling fan'];
-    actions=['Inspect condenser fins — clean if clogged','Check radiator cooling fan operation','If overcharged: recover and recharge to specification','Target: HP ~'+hpMdD+' '+u+' | LP ~'+lpMdD+' '+u];
-    badges=['OVERCHARGE / CONDENSER FAULT'];matrixId='mc-both-high';
+    diagCode='OVERCHARGED';diagTitle='Gas Zyada Hai ya Condenser Jam Gaya';type='danger';
+    sub=`HP ${hpD} ${u} aur LP ${lpD} ${u} dono zyada hain. Teen wajahaat ho sakti hain: gas zyada, condenser jam gaya, ya cooling fan kharab.`;
+    nodes=[
+      nodeItem('repair','AC Gas','','','AC Gas','Low'),
+      nodeItem('repair','AC Condenser','','','AC Condenser','Damaged/Leakage'),
+    ];
+    badges=['OVERCHARGED / CONDENSER'];matrixId='mc-both-high';
+
   } else if(hpHigh&&lpOk){
-    diagCode='EXP_VALVE';diagTitle='Expansion Valve Fault — Not Opening';type='warn';
-    sub=`HP ${hpD} ${u} above range. LP normal ${lpD} ${u}. Expansion valve not opening correctly.`;
-    causes=['Expansion valve not opening sufficiently','Partial blockage or valve malfunction'];
-    actions=['Inspect expansion valve — replace if faulty','Target HP → ~'+hpMdD+' '+u];
+    diagCode='EXP_VALVE';diagTitle='Expansion Valve Theek Se Khul Nahi Rahi';type='warn';
+    sub=`HP ${hpD} ${u} zyada, LP normal ${lpD} ${u}. Expansion valve gas flow rok rahi hai.`;
+    nodes=[
+      nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
+    ];
     badges=['EXPANSION VALVE'];matrixId='mc-hp-high-lp-ok';
+
   } else if(hpOk&&lpHigh){
-    diagCode='EXP_VALVE';diagTitle='LP High — Expansion Valve or Compressor';type='warn';
-    sub=`LP ${lpD} ${u} above range. HP normal ${hpD} ${u}. Expansion valve opening too wide or compressor fault.`;
-    causes=['Expansion valve opens too wide','A/C compressor insufficient compression'];
-    actions=['Check expansion valve — replace if faulty','Inspect compressor operation','Target LP → ~'+lpMdD+' '+u];
+    diagCode='EXP_VALVE';diagTitle='LP Zyada — Expansion Valve ya Compressor';type='warn';
+    sub=`LP ${lpD} ${u} zyada, HP normal ${hpD} ${u}. Expansion valve bahut zyada khul rahi hai ya compressor sahi se compress nahi kar raha.`;
+    nodes=[
+      nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
+      nodeItem('repair','AC Compressor Assembly','AC Compressor','','AC Compressor','Damaged'),
+    ];
     badges=['EXPANSION VALVE / COMPRESSOR'];matrixId='mc-hp-ok-lp-high';
+
   } else if(hpLow&&lpOk){
-    diagCode='COMP_HP_LOW';diagTitle='High Pressure Low — Compressor Issue';type='warn';
-    sub=`HP ${hpD} ${u} below range. LP normal. High pressure cannot be directly topped up.`;
-    causes=['Compressor not building adequate discharge pressure','Possible drive belt slippage'];
-    actions=['Check compressor drive belt tension','Inspect magnet clutch operation','Check compressor — replace if faulty'];
+    diagCode='COMP_HP_LOW';diagTitle='HP Kam — Compressor Problem';type='warn';
+    sub=`HP ${hpD} ${u} kam, LP normal. HP seedha top up nahi hoti — compressor sahi se pressure nahi bana raha.`;
+    nodes=[
+      nodeItem('repair','AC Compressor Assembly','AC Compressor','','AC Compressor','Damaged'),
+      nodeItem('repair','AC Compressor Assembly','','','AC Compressor Assembly','Abnormal Noise'),
+    ];
     badges=['COMPRESSOR CHECK'];matrixId='mc-hp-low-lp-ok';
+
   } else if(hpOk&&lpLow){
     if(lpSevere){
-      diagCode='CRITICAL_LEAK';diagTitle='LP Critically Low — Leak on Suction Side';type='danger';
-      sub=`LP ${lpD} ${u} critically low. HP normal. Significant refrigerant loss on low pressure side.`;
-      causes=['Significant refrigerant loss on low side','Clogged suction passage or expansion valve too narrow'];
-      actions=['Electronic leak check on LP circuit','Inspect suction pipe for damage','Check expansion valve','Repair leak, evacuate, recharge to specification'];
+      diagCode='CRITICAL_LEAK';diagTitle='LP Bahut Kam — Suction Side Leak';type='danger';
+      sub=`LP ${lpD} ${u} critical level pe. HP normal. LP side mein badi leak ho sakti hai.`;
+      nodes=[
+        nodeItem('repair','AC Gas','','','AC Gas','Empty'),
+        nodeItem('repair','AC Pipe Inlet Hose/Line','','','AC Pipe Inlet Hose/Line','Damaged/Leakage'),
+        nodeItem('repair','Cooling Coil/Evaporator','','','Cooling Coil/Evaporator','Damaged/Leakage'),
+        nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
+      ];
       badges=['LEAK CHECK','LP CIRCUIT'];matrixId='mc-hp-ok-lp-low';
     } else {
-      diagCode='LP_LOW';diagTitle='LP Low — Gas Top-Up Required';type='warn';
-      sub=`LP ${lpD} ${u} below range. HP normal. Insufficient refrigerant or expansion valve restricting flow.`;
-      causes=['Low refrigerant on suction side','Expansion valve opening too narrow'];
-      actions=['Check for slow leak','Top up refrigerant — target LP → ~'+lpMdD+' '+u,'Inspect expansion valve if top-up does not hold'];
+      diagCode='LP_LOW';diagTitle='LP Kam — Gas Top Up Karo';type='warn';
+      sub=`LP ${lpD} ${u} kam, HP normal. Gas thodi kam hai ya expansion valve gas flow rok rahi hai.`;
+      nodes=[
+        nodeItem('repair','AC Gas','','','AC Gas','Low'),
+        nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
+      ];
       badges=['GAS TOP-UP'];matrixId='mc-hp-ok-lp-low';
     }
+
   } else if(hpOk&&lpOk){
     if(vent>12){
-      diagCode='COOLING_LOW';diagTitle='Pressures Normal — AC Cooling Low';type='warn';
-      sub=`HP (${hpD} ${u}) and LP (${lpD} ${u}) within range for ${amb}°C. Vent temp ${vent}°C above 12°C — inadequate cooling despite normal pressures.`;
-      causes=['Dirty/clogged evaporator fins','Air leakage from HVAC unit or ducts','Temperature control door malfunction','Blower motor fault'];
-      actions=['Inspect and clean evaporator fins','Check for air leaks from HVAC unit','Check blower motor operation','Inspect temperature control door','Raise maintenance request — AC cooling low'];
-      badges=['AC COOLING LOW','MAINTENANCE REQUIRED'];matrixId='mc-ok';
+      diagCode='COOLING_LOW';diagTitle='Pressure Normal — AC Thanda Nahi Kar Raha';type='warn';
+      sub=`HP (${hpD} ${u}) aur LP (${lpD} ${u}) ${amb}°C ke liye theek hain. Lekin vent se ${vent}°C ki hawa aa rahi hai — AC thanda nahi kar raha.`;
+      nodes=[
+        nodeItem('repair','AC Assembly','','','AC Assembly','Cooling Mode Less Effective'),
+        nodeItem('repair','Cooling Coil/Evaporator','','','Cooling Coil/Evaporator','Damaged/Leakage'),
+        nodeItem('repair','AC Blower Assembly','Front AC Blower Motor','','Front AC Blower Motor','Damaged/Not Working'),
+      ];
+      badges=['COOLING LOW','MAINTENANCE REQUIRED'];matrixId='mc-ok';
     } else {
-      diagCode='NORMAL';diagTitle='AC System Normal';type='ok';
-      sub=`HP (${hpD} ${u}) and LP (${lpD} ${u}) within specification for ${amb}°C. Vent temp ${vent}°C confirms adequate cooling.`;
-      causes=[];actions=[];badges=['NO ACTION REQUIRED'];matrixId='mc-ok';
+      diagCode='NORMAL';diagTitle='AC System Theek Hai ✓';type='ok';
+      sub=`HP (${hpD} ${u}) aur LP (${lpD} ${u}) ${amb}°C ke liye bilkul sahi hain. Vent se ${vent}°C thandi hawa aa rahi hai. Koi dikkat nahi.`;
+      nodes=[];badges=['NO ACTION REQUIRED'];matrixId='mc-ok';
     }
   }
 
-  // Escalation check
-  const esc = diagCode!=='NORMAL'?getEscalation(diagCode,prevTests):null;
+  // Escalation
+  const esc=diagCode!=='NORMAL'?getEscalation(diagCode,prevTests):null;
   if(esc){
     document.getElementById('retest-box').classList.add('show');
     document.getElementById('retest-title').textContent='⟳ Retest — '+esc.title;
-    document.getElementById('retest-body').innerHTML=`Previous test: <b>${esc.lastDate}</b> (Test #${esc.count})<br><br>${esc.body}`;
+    document.getElementById('retest-body').innerHTML=`Pehla test: <b>${esc.lastDate}</b> (Test #${esc.count})<br><br>${esc.body}`;
   } else {
     document.getElementById('retest-box').classList.remove('show');
   }
 
-  showResult(type,diagTitle,sub,causes,actions,badges,matrixId);
+  showResult(type,diagTitle,sub,nodes,badges,matrixId);
 
-  // Save to Google Sheets
-  const testData = {
-    timestamp: new Date().toLocaleString('en-IN'),
-    carNum, fuel,
-    rpm: document.getElementById('rpm').value,
-    blower: document.getElementById('blower').value,
-    amb, hp: fmt(hpKpa), lp: fmt(lpKpa), unit: uu(), vent,
-    lpBeh, blackness,
-    diagCode, diagTitle,
-    hpStatus: hpLow?'LOW':hpHigh?'HIGH':'NORMAL',
-    lpStatus: lpLow?'LOW':lpHigh?'HIGH':'NORMAL',
-    isRetest: prevTests.length>0,
-    testCount: prevTests.length+1
+  const testData={
+    timestamp:new Date().toLocaleString('en-IN'),
+    carNum,fuel,
+    rpm:document.getElementById('rpm').value,
+    blower:document.getElementById('blower').value,
+    amb,hp:fmt(hpKpa),lp:fmt(lpKpa),unit:uu(),vent,
+    lpBeh,blackness,diagCode,diagTitle,
+    hpStatus:hpLow?'LOW':hpHigh?'HIGH':'NORMAL',
+    lpStatus:lpLow?'LOW':lpHigh?'HIGH':'NORMAL',
+    isRetest:prevTests.length>0,
+    testCount:prevTests.length+1
   };
   await saveToSheet(testData);
-  btn.disabled=false; btn.innerHTML='<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Run Diagnostic';
+  btn.disabled=false;
+  btn.innerHTML='<svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Diagnosis Chalao / Run Diagnostic';
 }
 
-const ICONS={ok:'✓',warn:'△',danger:'✕',critical:'⚠',info:'ℹ'};
-function showResult(type,title,sub,causes,actions,badges,matrixId){
+const ICONS={ok:'✓',warn:'!',danger:'✕',critical:'☠',info:'i'};
+function showResult(type,title,sub,nodes,badges,matrixId){
   const card=document.getElementById('result-card');
   card.className='result-card show '+type;
   document.getElementById('res-icon').textContent=ICONS[type]||'';
   document.getElementById('res-title').textContent=title;
   document.getElementById('res-sub').textContent=sub;
-  const cag=document.getElementById('ca-grid'); cag.innerHTML='';
-  if(causes.length){ const cb=document.createElement('div'); cb.className='ca-box cause'; cb.innerHTML='<div class="ca-box-lbl">Probable cause</div><ul class="ca-list">'+causes.map(c=>`<li>${c}</li>`).join('')+'</ul>'; cag.appendChild(cb); }
-  if(actions.length){ const ab=document.createElement('div'); ab.className='ca-box action'; ab.innerHTML='<div class="ca-box-lbl">Required actions</div><ul class="ca-list">'+actions.map(a=>`<li>${a}</li>`).join('')+'</ul>'; cag.appendChild(ab); }
-  const brow=document.getElementById('res-badges'); brow.innerHTML='';
-  badges.forEach((b,i)=>{ const s=document.createElement('span'); s.className='badge '+(i===0?'badge-red':i===1?'badge-amber':'badge-cyan'); s.textContent=b; brow.appendChild(s); });
+  document.getElementById('spinny-actions').innerHTML=nodes.length?renderNodes(nodes):'';
+  const brow=document.getElementById('res-badges');brow.innerHTML='';
+  const bcls=['badge-red','badge-amber','badge-purple'];
+  badges.forEach((b,i)=>{const s=document.createElement('span');s.className='badge '+(bcls[i]||'badge-purple');s.textContent=b;brow.appendChild(s);});
   card.scrollIntoView({behavior:'smooth',block:'nearest'});
   document.querySelectorAll('.mc').forEach(m=>m.classList.remove('hit'));
   document.getElementById(matrixId)?.classList.add('hit');
 }
 
-function drawBars(hpKpa,lpKpa,hpMn,hpMxT,lpMn,lpMxT,hpLk,lpLk){
+function drawBars(hpKpa,lpKpa,hpLo,hpHi,lpLo,lpHi,hpLk,lpLk){
   document.getElementById('bars-sec').style.display='block';
-  function bar(p,val,mn,mxT,lk){
-    const span=mxT*1.7;
+  function bar(p,val,lo,hi,lk){
+    const span=hi*1.5;
     document.getElementById(p+'-lz').style.width=(lk/span*100).toFixed(1)+'%';
-    document.getElementById(p+'-oz').style.left=(mn/span*100).toFixed(1)+'%';
-    document.getElementById(p+'-oz').style.width=((mxT-mn)/span*100).toFixed(1)+'%';
-    const sv=val<lk,low=val<mn,high=val>mxT;
-    document.getElementById(p+'-oz').style.background=sv?'rgba(0,230,118,0.1)':'rgba(0,230,118,0.45)';
+    document.getElementById(p+'-oz').style.left=(lo/span*100).toFixed(1)+'%';
+    document.getElementById(p+'-oz').style.width=((hi-lo)/span*100).toFixed(1)+'%';
+    const sv=val<lk,low=val<lo,high=val>hi;
+    document.getElementById(p+'-oz').style.background=sv?'rgba(108,59,219,0.1)':'rgba(108,59,219,0.4)';
     const pct=Math.max(0,Math.min(100,val/span*100)).toFixed(1);
     const pin=document.getElementById(p+'-pin');
-    pin.style.left='calc('+pct+'% - 1px)';
-    pin.style.background=sv?'#ff4444':low?'#ffab00':high?'#ffab00':'#00e676';
+    pin.style.left='calc('+pct+'% - 1.5px)';
+    pin.style.background=sv?'#dc2626':low?'#b45309':high?'#b45309':'#16a34a';
     document.getElementById(p+'-lz-lbl').textContent=fmt(lk)+' '+uu();
-    document.getElementById(p+'-mn-lbl').textContent=fmt(mn)+' '+uu();
-    document.getElementById(p+'-mx-lbl').textContent=fmt(mxT)+' '+uu();
+    document.getElementById(p+'-mn-lbl').textContent=fmt(lo)+' '+uu();
+    document.getElementById(p+'-mx-lbl').textContent=fmt(hi)+' '+uu();
     const el=document.getElementById(p+'-val');
-    el.textContent=fmt(val)+' '+uu()+' — '+(sv?'critically low':low?'below range':high?'above range':'within range');
-    el.style.color=sv?'#ff4444':low?'#ffab00':high?'#ffab00':'#00e676';
+    el.textContent=fmt(val)+' '+uu()+' — '+(sv?'Bahut kam (Leak!)':low?'Kam (Low)':high?'Zyada (High)':'Theek hai ✓');
+    el.style.color=sv?'#dc2626':low?'#b45309':high?'#b45309':'#16a34a';
   }
-  bar('hp',hpKpa,hpMn,hpMxT,hpLk); bar('lp',lpKpa,lpMn,lpMxT,lpLk);
+  bar('hp',hpKpa,hpLo,hpHi,hpLk); bar('lp',lpKpa,lpLo,lpHi,lpLk);
 }
 
 const MATRIX=[
-  {id:'mc-ok',hp:'NORMAL',lp:'NORMAL',act:'Normal — if vent >12°C raise maintenance for cooling low.'},
-  {id:'mc-both-low',hp:'LOW',lp:'LOW',act:'Insufficient refrigerant. Check for leak, top up to specification.'},
-  {id:'mc-compleak',hp:'LOW',lp:'HIGH',act:'Compressor internal leak. Pressures equalise on shutdown.'},
-  {id:'mc-both-high',hp:'HIGH',lp:'HIGH',act:'Overcharged / dirty condenser / cooling fan fault.'},
-  {id:'mc-hp-high-lp-ok',hp:'HIGH',lp:'NORMAL',act:'Expansion valve not opening. Inspect and replace.'},
-  {id:'mc-hp-ok-lp-high',hp:'NORMAL',lp:'HIGH',act:'Expansion valve opens too wide or compressor fault.'},
-  {id:'mc-hp-low-lp-ok',hp:'LOW',lp:'NORMAL',act:'Compressor not building HP. Inspect compressor and belt.'},
-  {id:'mc-hp-ok-lp-low',hp:'NORMAL',lp:'LOW',act:'LP insufficient. Top up gas or check expansion valve.'},
-  {id:'mc-neg',hp:'VERY LOW',lp:'NEGATIVE',act:'Expansion valve blocked by dust/ice. Replace valve + condenser.'},
-  {id:'mc-fluc',hp:'FLUCTUATING',lp:'FLUCTUATING',act:'Moisture-frozen expansion valve. Replace valve + condenser, evacuate.'},
-  {id:'mc-frost',hp:'HIGH',lp:'HIGH + FROST',act:'Expansion valve faulty — unregulated flow. Replace valve.'},
-  {id:'mc-air',hp:'HIGH',lp:'HIGH (not cold)',act:'Air in system from improper evacuation. Replace condenser, re-evacuate.'},
-  {id:'mc-black',hp:'ANY',lp:'ANY',act:'Metal particles detected. Full system overhaul required.'},
+  {id:'mc-ok',hp:'NORMAL',lp:'NORMAL',act:'Theek hai — agar vent >12°C toh cooling low maintenance.'},
+  {id:'mc-both-low',hp:'LOW',lp:'LOW',act:'Gas kam — leak check karo, phir gas daalo.'},
+  {id:'mc-compleak',hp:'LOW',lp:'HIGH',act:'Compressor andar se toot gaya — band karne pe dono barabar.'},
+  {id:'mc-both-high',hp:'HIGH',lp:'HIGH',act:'Gas zyada ya condenser jam gaya ya fan kharab.'},
+  {id:'mc-hp-high-lp-ok',hp:'HIGH',lp:'NORMAL',act:'Expansion valve theek se nahi khul rahi.'},
+  {id:'mc-hp-ok-lp-high',hp:'NORMAL',lp:'HIGH',act:'Expansion valve bahut khul rahi ya compressor problem.'},
+  {id:'mc-hp-low-lp-ok',hp:'LOW',lp:'NORMAL',act:'Compressor HP nahi bana raha — clutch ya full compressor check.'},
+  {id:'mc-hp-ok-lp-low',hp:'NORMAL',lp:'LOW',act:'LP gas kam — top up ya expansion valve check.'},
+  {id:'mc-neg',hp:'BAHUT KAM',lp:'NEGATIVE',act:'Expansion valve dust/ice se jam gayi — repair karo.'},
+  {id:'mc-fluc',hp:'UPAR-NEECHE',lp:'UPAR-NEECHE',act:'Moisture se expansion valve freeze — repair karo.'},
+  {id:'mc-frost',hp:'HIGH',lp:'HIGH + BARF',act:'Expansion valve flow control nahi kar rahi — repair.'},
+  {id:'mc-air',hp:'HIGH',lp:'HIGH (thanda nahi)',act:'Hawa ghus gayi — sahi vacuum karo aur recharge karo.'},
+  {id:'mc-black',hp:'KOI BHI',lp:'KOI BHI',act:'Black death — poora system replace karna padega.'},
 ];
-function buildMatrix(){ const g=document.getElementById('matrix'); g.innerHTML=''; MATRIX.forEach(item=>{ const d=document.createElement('div'); d.className='mc'; d.id=item.id; d.innerHTML=`<div class="mc-state"><span class="hp">HP: ${item.hp}</span> · <span class="lp">LP: ${item.lp}</span></div><div class="mc-action">${item.act}</div>`; g.appendChild(d); }); }
+function buildMatrix(){const g=document.getElementById('matrix');g.innerHTML='';MATRIX.forEach(item=>{const d=document.createElement('div');d.className='mc';d.id=item.id;d.innerHTML=`<div class="mc-state"><span class="hp">HP: ${item.hp}</span> · <span class="lp">LP: ${item.lp}</span></div><div class="mc-action">${item.act}</div>`;g.appendChild(d);});}
 
 function refreshTable(){
-  const body=document.getElementById('ref-tbody'); body.innerHTML='';
+  const body=document.getElementById('ref-tbody');body.innerHTML='';
   const b=BASE[fuel];
   [25,30,35,40,45].forEach(t=>{
     const hMn=scale(b.hpMin,t),hMx=scale(b.hpMax,t),lMn=scale(b.lpMin,t),lMx=scale(b.lpMax,t);
-    const hMxT=Math.round(hMx*1.15),lMxT=Math.round(lMx*1.15);
+    const hLo=lowerBound(hMn),hHi=upperBound(hMx),lLo=lowerBound(lMn),lHi=upperBound(lMx);
     const hMd=mid(hMn,hMx),lMd=mid(lMn,lMx);
-    const hLk=leakTh(hMn),lLk=leakTh(lMn);
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${t}°C</td><td>${fmt(hMn)}</td><td>${fmt(hMx)}</td><td class="grn">${fmt(hMxT)}</td><td class="hi">${fmt(hMd)}</td><td>${fmt(lMn)}</td><td>${fmt(lMx)}</td><td class="grn">${fmt(lMxT)}</td><td class="hi">${fmt(lMd)}</td><td class="red">${fmt(hLk)} / ${fmt(lLk)}</td>`;
+    tr.innerHTML=`<td>${t}°C</td><td class="red">${fmt(hLo)}</td><td>${fmt(hMn)}–${fmt(hMx)}</td><td class="grn">${fmt(hHi)}</td><td class="hi">${fmt(hMd)}</td><td class="red">${fmt(lLo)}</td><td>${fmt(lMn)}–${fmt(lMx)}</td><td class="grn">${fmt(lHi)}</td><td class="hi">${fmt(lMd)}</td>`;
     body.appendChild(tr);
   });
   document.getElementById('ref-fuel-lbl').textContent=fuel.charAt(0).toUpperCase()+fuel.slice(1);
   document.getElementById('ref-unit-lbl').textContent=uu();
 }
 
-// Init — fetch all data on load for history lookups
-buildMatrix(); refreshTable(); fetchAllData();
+buildMatrix();refreshTable();fetchAllData();
 </script>
 </body>
 </html>
