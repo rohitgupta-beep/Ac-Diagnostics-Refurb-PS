@@ -451,16 +451,23 @@ function checkCondNote(){const r=document.getElementById('rpm').value,bl=documen
 function selectLP(el,val){document.querySelectorAll('.lp-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');lpBehVal=val;}
 
 // CAR NUMBER
-const PATTERNS=[/^[A-Z]{2}\s?\d{2}\s?[A-Z]{1,3}\s?\d{1,4}$/,/^\d{2}\s?BH\s?\d{4}\s?[A-Z]{1,2}$/];
+// Supports: all Indian state codes, 1-3 digit districts, 0-3 letter series, 1-4 digit number, BH series
+const VALID_STATES=new Set(['AN','AP','AR','AS','BR','CG','CH','DD','DL','DN','GA','GJ','HP','HR','JH','JK','KA','KL','LA','LD','MH','ML','MN','MP','MZ','NL','OD','PB','PY','RJ','SK','TN','TR','TS','UK','UP','WB']);
+const REG_PATTERN=/^[A-Z]{2}\s?\d{1,3}\s?[A-Z]{0,3}\s?\d{1,4}$/;
+const BH_PATTERN=/^\d{2}\s?BH\s?\d{4}\s?[A-Z]{1,2}$/;
 let carValid=false;
 function validateCar(input){
   const raw=input.value.toUpperCase().replace(/\s+/g,' ').trim();input.value=raw;
   const clean=raw.replace(/\s/g,'');
-  const valid=PATTERNS.some(p=>p.test(raw)||p.test(clean));
+  const isBH=BH_PATTERN.test(clean)||BH_PATTERN.test(raw);
+  const isReg=REG_PATTERN.test(clean)||REG_PATTERN.test(raw);
+  const stateCode=clean.substring(0,2);
+  const stateOk=isBH||VALID_STATES.has(stateCode);
+  const valid=(isBH||(isReg&&stateOk))&&clean.length>=5;
   const st=document.getElementById('car-status'),ht=document.getElementById('car-hint');
   if(raw.length<4){st.textContent='';input.className='';ht.textContent='Indian registration number daalo — Format: XX 00 XX 0000 ya BH series: 00 BH 0000 XX';carValid=false;document.getElementById('hist-pill').classList.remove('show');return;}
   if(valid){input.classList.remove('invalid');input.classList.add('valid');st.textContent='✓';st.style.color='var(--green)';ht.textContent='✓ Valid registration number';carValid=true;loadHistory(clean);}
-  else{input.classList.remove('valid');input.classList.add('invalid');st.textContent='✗';st.style.color='var(--red)';ht.textContent='Invalid format. Examples: MH12AB1234 · DL3CAB1234 · 22BH1234AB';carValid=false;document.getElementById('hist-pill').classList.remove('show');}
+  else{input.classList.remove('valid');input.classList.add('invalid');st.textContent='✗';st.style.color='var(--red)';ht.textContent='Invalid format. Examples: MH12AB1234 · DL9CAM2922 · KA01MX9999 · 22BH1234AB';carValid=false;document.getElementById('hist-pill').classList.remove('show');}
 }
 
 let allSheetData=[];
