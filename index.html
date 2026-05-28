@@ -9,62 +9,38 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f7f7fb;
-  --bg2:#f0f0f8;
-  --surface:#ffffff;
-  --surface2:#f5f5fc;
-  --border:#e2e2ef;
-  --border2:#d0d0e8;
-  --text:#1a1a2e;
-  --text2:#4a4a6a;
-  --text3:#9090b0;
-  --purple:#6c3bdb;
-  --purple-light:#ede8fb;
-  --purple-mid:#8b5cf6;
-  --purple-dark:#4c1d95;
-  --green:#16a34a;
-  --green-light:#dcfce7;
-  --amber:#b45309;
-  --amber-light:#fef3c7;
-  --red:#dc2626;
-  --red-light:#fee2e2;
-  --blue:#1d4ed8;
-  --blue-light:#dbeafe;
-  --shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md:0 4px 6px rgba(0,0,0,0.07),0 2px 4px rgba(0,0,0,0.05);
+  --bg:#f7f7fb;--bg2:#f0f0f8;--surface:#fff;--surface2:#f5f5fc;
+  --border:#e2e2ef;--border2:#d0d0e8;
+  --text:#1a1a2e;--text2:#4a4a6a;--text3:#9090b0;
+  --purple:#6c3bdb;--purple-light:#ede8fb;--purple-dark:#4c1d95;--purple-mid:#8b5cf6;
+  --green:#16a34a;--green-light:#dcfce7;
+  --amber:#b45309;--amber-light:#fef3c7;
+  --red:#dc2626;--red-light:#fee2e2;
+  --blue:#1d4ed8;--blue-light:#dbeafe;
+  --shadow:0 1px 3px rgba(0,0,0,0.08);--shadow-md:0 4px 6px rgba(0,0,0,0.07);
   --r:10px;--rl:16px;
 }
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;line-height:1.6}
-
 header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 clamp(16px,4vw,48px);height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;box-shadow:var(--shadow)}
 .logo{font-weight:700;font-size:15px;color:var(--purple);letter-spacing:-0.01em;display:flex;align-items:center;gap:8px}
 .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);box-shadow:0 0 0 3px rgba(108,59,219,0.2)}
 .header-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:0.06em}
-
 main{max-width:940px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(16px,4vw,24px) 80px}
-
 .hero{margin-bottom:28px}
 .hero-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
 .hero h1{font-size:clamp(22px,4vw,32px);font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.2;letter-spacing:-0.02em}
 .hero h1 span{color:var(--purple)}
 .hero p{font-size:14px;color:var(--text2);max-width:500px;line-height:1.7}
-
 .slabel{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .slabel::after{content:'';flex:1;height:1px;background:var(--border)}
-
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
-
-/* TOGGLES */
 .tgroup{display:flex;gap:4px;background:var(--bg2);padding:3px;border-radius:999px;border:1px solid var(--border);width:fit-content}
 .tbtn{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;padding:6px 20px;border-radius:999px;border:none;background:transparent;color:var(--text2);cursor:pointer;transition:all 0.18s}
 .tbtn.active{background:var(--purple);color:#fff;box-shadow:0 2px 8px rgba(108,59,219,0.3)}
-
 .config-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:18px}
 .cfg{display:flex;flex-direction:column;gap:8px}
 .cfg label{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:0.02em}
-
-/* INPUTS */
 .inputs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
 @media(max-width:600px){.inputs-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:380px){.inputs-grid{grid-template-columns:1fr}}
@@ -77,8 +53,6 @@ main{max-width:940px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(16px,4vw,2
 .iw input:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 3px rgba(108,59,219,0.1)}
 .iw input.err{border-color:var(--red)!important;background:#fff5f5}
 .iw .utag{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);pointer-events:none;background:var(--bg2);padding:2px 6px;border-radius:4px}
-
-/* CAR NUMBER */
 .car-wrap{position:relative;margin-bottom:14px}
 .car-wrap input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:14px 52px 14px 16px;font-size:22px;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--text);outline:none;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.14em}
 .car-wrap input:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 3px rgba(108,59,219,0.1)}
@@ -86,12 +60,10 @@ main{max-width:940px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(16px,4vw,2
 .car-wrap input.invalid{border-color:var(--red);background:#fff5f5}
 .car-status{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:16px;font-weight:700}
 .car-hint{font-size:11px;color:var(--text3);margin-top:5px}
-
-/* SELECT */
 .sel-wrap select{background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:11px 13px;font-size:13px;font-family:'Inter',sans-serif;color:var(--text);outline:none;cursor:pointer;transition:all 0.2s;-webkit-appearance:none;appearance:none;width:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239090b0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
 .sel-wrap select:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 3px rgba(108,59,219,0.1)}
 
-/* LP BEHAVIOUR - VISUAL CARDS */
+/* LP BEHAVIOUR VISUAL CARDS */
 .lp-beh-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:14px}
 .lp-card{border:2px solid var(--border);border-radius:var(--r);padding:12px;cursor:pointer;transition:all 0.18s;background:var(--surface);user-select:none}
 .lp-card:hover{border-color:var(--purple-mid);background:var(--purple-light)}
@@ -113,16 +85,13 @@ main{max-width:940px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(16px,4vw,2
 .hist-pill-body b{color:var(--text)}
 
 /* RUN BUTTON */
-.run-btn{width:100%;padding:15px;background:var(--purple);color:#fff;border:none;border-radius:var(--r);font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.02em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(108,59,219,0.35)}
-.run-btn:hover{background:var(--purple-dark);transform:translateY(-1px);box-shadow:0 6px 20px rgba(108,59,219,0.4)}
+.run-btn{width:100%;padding:15px;background:var(--purple);color:#fff;border:none;border-radius:var(--r);font-family:'Inter',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(108,59,219,0.35)}
+.run-btn:hover{background:var(--purple-dark);transform:translateY(-1px)}
 .run-btn:active{transform:translateY(0)}
 .run-btn:disabled{background:var(--text3);cursor:not-allowed;transform:none;box-shadow:none}
 
-/* COND NOTE */
 .cond-note{font-size:12px;color:var(--amber);background:var(--amber-light);border:1.5px solid #fbbf24;border-radius:var(--r);padding:10px 14px;margin-bottom:14px;display:none}
 .cond-note.show{display:block}
-
-/* SAVE STATUS */
 .save-status{font-family:'JetBrains Mono',monospace;font-size:11px;text-align:center;padding:9px;border-radius:var(--r);margin-bottom:14px;display:none}
 .save-status.show{display:block}
 .save-status.saving{color:var(--purple);background:var(--purple-light);border:1px solid rgba(108,59,219,0.3)}
@@ -134,12 +103,13 @@ main{max-width:940px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(16px,4vw,2
 @media(max-width:480px){.bars-grid{grid-template-columns:1fr}}
 .bar-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;box-shadow:var(--shadow)}
 .bar-card-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:0.1em;margin-bottom:10px;text-transform:uppercase}
-.bar-track{height:6px;background:var(--bg2);border-radius:3px;position:relative;overflow:visible;margin-bottom:6px}
-.bar-lz{position:absolute;height:100%;background:rgba(220,38,38,0.25);border-radius:3px 0 0 3px;left:0}
-.bar-oz{position:absolute;height:100%;border-radius:3px}
-.bar-pin{position:absolute;width:3px;height:14px;top:-4px;border-radius:2px;transition:left 0.45s cubic-bezier(0.34,1.56,0.64,1)}
+.bar-track{height:8px;background:var(--bg2);border-radius:4px;position:relative;overflow:visible;margin-bottom:8px}
+.bar-verylowzone{position:absolute;height:100%;background:rgba(220,38,38,0.25);left:0;border-radius:4px 0 0 4px}
+.bar-lowzone{position:absolute;height:100%;background:rgba(180,83,9,0.18)}
+.bar-oz{position:absolute;height:100%;border-radius:4px}
+.bar-pin{position:absolute;width:3px;height:16px;top:-4px;border-radius:2px;transition:left 0.45s cubic-bezier(0.34,1.56,0.64,1)}
 .bar-rlbl{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:4px}
-.bar-val{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600}
 .bar-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-size:11px;color:var(--text3)}
 .leg-item{display:flex;align-items:center;gap:6px}
 .leg-sw{width:10px;height:10px;border-radius:2px}
@@ -151,9 +121,8 @@ main{max-width:940px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(16px,4vw,2
 .result-card.ok{background:var(--green-light);border-color:#86efac}
 .result-card.warn{background:var(--amber-light);border-color:#fcd34d}
 .result-card.danger{background:var(--red-light);border-color:#fca5a5}
-.result-card.critical{background:#fdf2f8;border-color:#c084fc;box-shadow:0 4px 20px rgba(192,132,252,0.2)}
+.result-card.critical{background:#fdf2f8;border-color:#c084fc}
 .result-card.info{background:var(--blue-light);border-color:#93c5fd}
-
 .res-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
 .res-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:700}
 .ok .res-icon{background:#16a34a;color:#fff}
@@ -164,20 +133,29 @@ main{max-width:940px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(16px,4vw,2
 .res-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:-0.01em}
 .res-sub{font-size:13px;color:var(--text2);line-height:1.6}
 
-/* SPINNY NODE ACTIONS */
-.spinny-actions{margin-bottom:14px}
-.spinny-actions-title{font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.spinny-actions-title::before{content:'';width:12px;height:2px;background:var(--purple);border-radius:1px}
-.node-list{display:flex;flex-direction:column;gap:7px}
-.node-item{background:var(--surface);border:1.5px solid var(--border2);border-radius:var(--r);padding:11px 14px;display:flex;align-items:flex-start;gap:10px}
-.node-item.repair{border-left:4px solid #16a34a}
-.node-item.replace{border-left:4px solid #dc2626}
+/* STEPPED ACTIONS */
+.steps-wrap{margin:16px 0}
+.steps-title{font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.steps-title::before{content:'';width:14px;height:2px;background:var(--purple);border-radius:1px}
+.step-block{margin-bottom:10px}
+.step-header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.step-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.step-num.s1{background:var(--purple);color:#fff}
+.step-num.s2{background:var(--amber);color:#fff}
+.step-num.s3{background:var(--red);color:#fff}
+.step-label{font-size:12px;font-weight:600;color:var(--text)}
+.step-sublabel{font-size:11px;color:var(--text3)}
+.step-arrow{font-size:11px;color:var(--text3);text-align:center;padding:3px 0;letter-spacing:0.06em;font-family:'JetBrains Mono',monospace}
+.node-list{display:flex;flex-direction:column;gap:6px;margin-left:34px}
+.node-item{background:var(--surface);border:1.5px solid var(--border2);border-radius:var(--r);padding:10px 13px;display:flex;align-items:flex-start;gap:10px}
+.node-item.repair{border-left:4px solid var(--green)}
+.node-item.replace{border-left:4px solid var(--red)}
 .node-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;letter-spacing:0.04em;text-transform:uppercase}
 .node-badge.repair{background:var(--green-light);color:var(--green)}
 .node-badge.replace{background:var(--red-light);color:var(--red)}
 .node-path{flex:1}
-.node-path-breadcrumb{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:3px}
-.node-path-breadcrumb span{color:var(--purple)}
+.node-path-bc{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-bottom:3px}
+.node-path-bc span{color:var(--purple)}
 .node-name{font-size:13px;font-weight:600;color:var(--text)}
 .node-issue{font-size:11px;color:var(--text2);margin-top:1px}
 
@@ -187,7 +165,6 @@ main{max-width:940px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(16px,4vw,2
 .retest-title{font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
 .retest-body{font-size:12px;color:var(--text2);line-height:1.6}
 
-/* BADGES */
 .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;padding:4px 12px;border-radius:999px;letter-spacing:0.04em}
 .badge-red{color:var(--red);background:var(--red-light);border:1.5px solid #fca5a5}
@@ -205,17 +182,17 @@ main{max-width:940px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(16px,4vw,2
 .mc-action{font-size:12px;color:var(--text2);line-height:1.5}
 .mc.hit .mc-action{color:var(--text);font-weight:500}
 
-/* REFERENCE TABLE */
+/* TABLE */
 .table-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--shadow)}
-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11px;min-width:480px}
+table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11px;min-width:500px}
 th{text-align:left;color:var(--text3);font-weight:500;padding:9px 12px;border-bottom:1px solid var(--border);background:var(--bg2);white-space:nowrap}
 td{padding:9px 12px;color:var(--text2);border-bottom:1px solid var(--border)}
 td.hi{color:var(--text);font-weight:600}
 td.grn{color:var(--green);font-weight:600}
 td.red{color:var(--red)}
+td.amb{color:var(--amber)}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:var(--bg2)}
-
 .divider{height:1px;background:var(--border);margin:24px 0}
 footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .shake{animation:shake 0.35s ease}
@@ -225,16 +202,15 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
 <body>
 <header>
   <div class="logo"><span class="logo-dot"></span>AC DIAGNOSTIC</div>
-  <div class="header-tag">WORKSHOP TOOL v4.0</div>
+  <div class="header-tag">WORKSHOP TOOL v5.0</div>
 </header>
 <main>
   <div class="hero">
     <div class="hero-tag">Refrigerant Pressure Analysis</div>
     <h1>AC System<br><span>Pressure Diagnostic</span></h1>
-    <p>Gaadi ka number aur gauge readings daalo — turant AC diagnosis aur repair guidance milega.</p>
+    <p>Gaadi ka number aur gauge readings daalo — turant AC diagnosis aur step-by-step repair guidance milega.</p>
   </div>
 
-  <!-- CAR NUMBER -->
   <div class="card">
     <div class="slabel">Vehicle / Gaadi ki Pehchaan</div>
     <div class="car-wrap">
@@ -244,13 +220,11 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
     <div class="car-hint" id="car-hint">Indian registration number daalo — Format: XX 00 XX 0000 ya BH series: 00 BH 0000 XX</div>
   </div>
 
-  <!-- HISTORY PILL -->
   <div class="hist-pill" id="hist-pill">
     <div class="hist-pill-title">⟳ Is gaadi ka pehle ka inspection mila</div>
     <div class="hist-pill-body" id="hist-pill-body"></div>
   </div>
 
-  <!-- CONFIGURATION -->
   <div class="card">
     <div class="slabel">Configuration / Settings</div>
     <div class="config-grid">
@@ -269,13 +243,13 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
         </div>
       </div>
     </div>
-    <div class="slabel" style="margin-top:4px">Test Conditions / Jaanch ke Halaat</div>
+    <div class="slabel" style="margin-top:4px">Test Conditions</div>
     <div class="config-grid">
       <div class="cfg">
         <label>Engine RPM</label>
         <div class="sel-wrap"><select id="rpm" onchange="checkCondNote()">
           <option value="1500">1500 RPM — Standard / Sahi tarika</option>
-          <option value="idle">Idle (~750 RPM) — Engine band karna mat</option>
+          <option value="idle">Idle (~750 RPM)</option>
         </select></div>
       </div>
       <div class="cfg">
@@ -291,7 +265,6 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
 
   <div class="cond-note" id="cond-note">⚠ Non-standard conditions. Sahi test ke liye 1500 RPM + Full blower chahiye. Abhi ke results sirf andaza hain.</div>
 
-  <!-- READINGS -->
   <div class="card">
     <div class="slabel">Gauge Readings / Pressure Readings</div>
     <div class="inputs-grid">
@@ -308,35 +281,34 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
         <div class="iw"><input type="number" id="lp" placeholder="295"/><span class="utag" id="lp-utag">kPa</span></div>
       </div>
       <div class="ig">
-        <label>Vent Temperature (Vent se aati hawa)<span>*</span></label>
+        <label>Vent Temperature<span>*</span></label>
         <div class="iw"><input type="number" id="vent" placeholder="14"/><span class="utag">°C</span></div>
       </div>
     </div>
 
-    <!-- LP BEHAVIOUR - VISUAL CARDS -->
     <div class="slabel">LP Line Kaisa Dikh Raha Hai?<span style="color:var(--red);margin-left:4px">*</span></div>
-    <div class="lp-beh-grid" id="lp-beh-grid">
-      <div class="lp-card selected" onclick="selectLP(this,'stable')" data-val="stable">
+    <div class="lp-beh-grid">
+      <div class="lp-card selected" onclick="selectLP(this,'stable')">
         <div class="lp-card-icon">📊</div>
         <div class="lp-card-en">Stable / Normal</div>
         <div class="lp-card-hi">Seedha reading — koi problem nahi dikh rahi</div>
       </div>
-      <div class="lp-card" onclick="selectLP(this,'fluctuating')" data-val="fluctuating">
+      <div class="lp-card" onclick="selectLP(this,'fluctuating')">
         <div class="lp-card-icon">📉📈</div>
         <div class="lp-card-en">Upar-Neeche / Fluctuating</div>
         <div class="lp-card-hi">Kabhi normal, kabhi zero se neeche chali jaati hai</div>
       </div>
-      <div class="lp-card" onclick="selectLP(this,'negative')" data-val="negative">
+      <div class="lp-card" onclick="selectLP(this,'negative')">
         <div class="lp-card-icon">⬇️</div>
         <div class="lp-card-en">Zero se Neeche / Negative</div>
         <div class="lp-card-hi">Gauge hamesha zero se neeche dikh raha hai</div>
       </div>
-      <div class="lp-card" onclick="selectLP(this,'frost-lp')" data-val="frost-lp">
+      <div class="lp-card" onclick="selectLP(this,'frost-lp')">
         <div class="lp-card-icon">🧊</div>
         <div class="lp-card-en">Pipe pe Barf / Ice / Dew</div>
         <div class="lp-card-hi">LP pipe pe ice jam gayi ya bohot zyada paseena aa raha hai</div>
       </div>
-      <div class="lp-card" onclick="selectLP(this,'lp-not-cold')" data-val="lp-not-cold">
+      <div class="lp-card" onclick="selectLP(this,'lp-not-cold')">
         <div class="lp-card-icon">🌡️</div>
         <div class="lp-card-en">Pipe Thandi Nahi / Not Cold</div>
         <div class="lp-card-hi">Haath lagao toh LP pipe thandi nahi lagti (dono pressure high hain)</div>
@@ -344,12 +316,11 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
     </div>
     <input type="hidden" id="lp-beh" value="stable"/>
 
-    <!-- BLACKNESS -->
     <div class="slabel" style="margin-top:4px">Gas Quality / Gas ki Jaanch</div>
     <div class="black-row">
       <div class="black-lbl">
         <strong>⚠ Black Death / Kala Tel Check</strong>
-        Service valve thoda dabao — gas ka rang dekho. Kala ya maila tel jaisa nikle toh compressor ke andhar se loha ghis gaya hai. Yeh "Black Death" hai.
+        Service valve thoda dabao — gas ka rang dekho. Kala ya maila tel jaisa nikle toh compressor ke andhar se loha ghis gaya hai.
       </div>
       <div class="tgroup" id="black-grp">
         <button class="tbtn active" onclick="setBlack(false)">Saaf / Clean ✓</button>
@@ -368,20 +339,41 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
   <!-- BARS -->
   <div id="bars-sec" style="display:none;margin-bottom:14px">
     <div class="bar-legend">
-      <div class="leg-item"><div class="leg-sw" style="background:rgba(220,38,38,0.3)"></div>Leak zone (&lt;-10% of min)</div>
-      <div class="leg-item"><div class="leg-sw" style="background:rgba(108,59,219,0.45)"></div>Acceptable range (−10% to +20%)</div>
+      <div class="leg-item"><div class="leg-sw" style="background:rgba(220,38,38,0.35)"></div>Very Low — Leak check karo (&lt;−33%)</div>
+      <div class="leg-item"><div class="leg-sw" style="background:rgba(180,83,9,0.25)"></div>Low — Top up karo (−33% to −10%)</div>
+      <div class="leg-item"><div class="leg-sw" style="background:rgba(108,59,219,0.4)"></div>Normal range (−10% to +20%)</div>
     </div>
     <div class="bars-grid">
       <div class="bar-card">
         <div class="bar-card-label">HIGH PRESSURE LINE</div>
-        <div class="bar-track"><div class="bar-lz" id="hp-lz"></div><div class="bar-oz" id="hp-oz"></div><div class="bar-pin" id="hp-pin"></div></div>
-        <div class="bar-rlbl"><span id="hp-lz-lbl" style="color:var(--red);font-size:8px"></span><span id="hp-mn-lbl"></span><span id="hp-mx-lbl"></span></div>
+        <div class="bar-track">
+          <div class="bar-verylowzone" id="hp-vlz"></div>
+          <div class="bar-lowzone" id="hp-lz"></div>
+          <div class="bar-oz" id="hp-oz"></div>
+          <div class="bar-pin" id="hp-pin"></div>
+        </div>
+        <div class="bar-rlbl">
+          <span id="hp-vl-lbl" style="color:var(--red);font-size:8px"></span>
+          <span id="hp-mn-lbl" style="color:var(--amber);font-size:8px"></span>
+          <span id="hp-ok-lbl"></span>
+          <span id="hp-mx-lbl"></span>
+        </div>
         <div class="bar-val" id="hp-val"></div>
       </div>
       <div class="bar-card">
         <div class="bar-card-label">LOW PRESSURE LINE</div>
-        <div class="bar-track"><div class="bar-lz" id="lp-lz"></div><div class="bar-oz" id="lp-oz"></div><div class="bar-pin" id="lp-pin"></div></div>
-        <div class="bar-rlbl"><span id="lp-lz-lbl" style="color:var(--red);font-size:8px"></span><span id="lp-mn-lbl"></span><span id="lp-mx-lbl"></span></div>
+        <div class="bar-track">
+          <div class="bar-verylowzone" id="lp-vlz"></div>
+          <div class="bar-lowzone" id="lp-lz"></div>
+          <div class="bar-oz" id="lp-oz"></div>
+          <div class="bar-pin" id="lp-pin"></div>
+        </div>
+        <div class="bar-rlbl">
+          <span id="lp-vl-lbl" style="color:var(--red);font-size:8px"></span>
+          <span id="lp-mn-lbl" style="color:var(--amber);font-size:8px"></span>
+          <span id="lp-ok-lbl"></span>
+          <span id="lp-mx-lbl"></span>
+        </div>
         <div class="bar-val" id="lp-val"></div>
       </div>
     </div>
@@ -399,39 +391,35 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
       <div class="res-icon" id="res-icon"></div>
       <div><div class="res-title" id="res-title"></div><div class="res-sub" id="res-sub"></div></div>
     </div>
-    <div class="spinny-actions" id="spinny-actions"></div>
+    <div id="steps-container"></div>
     <div class="badges" id="res-badges"></div>
   </div>
 
   <div class="divider"></div>
-
-  <!-- MATRIX -->
   <div class="slabel">Diagnostic Condition Matrix / Jaanch Chart</div>
   <div class="matrix-grid" id="matrix"></div>
-
   <div class="divider"></div>
 
-  <!-- REFERENCE TABLE -->
   <div class="slabel">Pressure Reference — <span id="ref-fuel-lbl">Petrol</span> · <span id="ref-unit-lbl">kPa</span> · 30°C par</div>
   <div class="table-wrap">
     <table>
       <thead><tr>
-        <th>Ambient °C</th><th>HP min (−10%)</th><th>HP OEM</th><th>HP max (+20%)</th><th>HP target</th>
-        <th>LP min (−10%)</th><th>LP OEM</th><th>LP max (+20%)</th><th>LP target</th>
+        <th>Ambient</th>
+        <th>HP Very Low (&lt;−33%)</th><th>HP Low (−10%)</th><th>HP OEM Range</th><th>HP Max (+20%)</th><th>HP Target</th>
+        <th>LP Very Low (&lt;−33%)</th><th>LP Low (−10%)</th><th>LP OEM Range</th><th>LP Max (+20%)</th><th>LP Target</th>
       </tr></thead>
       <tbody id="ref-tbody"></tbody>
     </table>
   </div>
 
   <footer>
-    <span>AC PRESSURE DIAGNOSTIC · WORKSHOP TOOL v4.0</span>
+    <span>AC PRESSURE DIAGNOSTIC · WORKSHOP TOOL v5.0</span>
     <span>Spinny Workshop</span>
   </footer>
 </main>
 
 <script>
 const SHEET_URL='https://script.google.com/macros/s/AKfycbww_vyo8GEmais19mpgHgEfj0sHDa6U2-B-mpiCdqkkoSu5RyXixE-Yd4nLaBaEQQvzfw/exec';
-
 const BASE={
   petrol:{hpMin:1220,hpMax:1540,lpMin:240,lpMax:350},
   diesel:{hpMin:1320,hpMax:1650,lpMin:210,lpMax:290}
@@ -445,30 +433,28 @@ function toKpa(p){return Math.round(p/KPA_TO_PSI);}
 function fmt(k){return unit==='psi'?toPsi(k):k;}
 function uu(){return unit==='psi'?'psi':'kPa';}
 function mid(a,b){return Math.round((a+b)/2);}
-// -10% lower, +20% upper tolerance
-function lowerBound(oem){return Math.round(oem*0.90);}
-function upperBound(oem){return Math.round(oem*1.20);}
-function leakTh(mn){return Math.round(mn*0.67);}
+// Thresholds
+// OEM range: hpMin to hpMax
+// Accepted low: -10% of hpMin (Low zone)
+// Very low: -33% of hpMin (below this = Very Low / leak)
+// Accepted high: +20% of hpMax
+function loBound(v){return Math.round(v*0.90);}  // -10%
+function veryLoBound(v){return Math.round(v*0.67);}  // -33%
+function hiBound(v){return Math.round(v*1.20);}  // +20%
+
 function getOEM(a){const b=BASE[fuel];return{hpMin:scale(b.hpMin,a),hpMax:scale(b.hpMax,a),lpMin:scale(b.lpMin,a),lpMax:scale(b.lpMax,a)};}
 
 function setFuel(f){fuel=f;document.querySelectorAll('#fuel-grp .tbtn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().startsWith(f)));document.getElementById('ref-fuel-lbl').textContent=f.charAt(0).toUpperCase()+f.slice(1);refreshTable();}
 function setUnit(u){unit=u;document.querySelectorAll('#unit-grp .tbtn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===u));document.getElementById('hp-utag').textContent=uu();document.getElementById('lp-utag').textContent=uu();document.getElementById('ref-unit-lbl').textContent=uu();document.getElementById('hp').placeholder=u==='psi'?'200':'1380';document.getElementById('lp').placeholder=u==='psi'?'43':'295';refreshTable();}
 function setBlack(v){blackness=v;document.querySelectorAll('#black-grp .tbtn').forEach((b,i)=>b.classList.toggle('active',i===(v?1:0)));}
 function checkCondNote(){const r=document.getElementById('rpm').value,bl=document.getElementById('blower').value;document.getElementById('cond-note').classList.toggle('show',r==='idle'||bl!=='max');}
-
-function selectLP(el,val){
-  document.querySelectorAll('.lp-card').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected');
-  lpBehVal=val;
-  document.getElementById('lp-beh').value=val;
-}
+function selectLP(el,val){document.querySelectorAll('.lp-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');lpBehVal=val;}
 
 // CAR NUMBER
 const PATTERNS=[/^[A-Z]{2}\s?\d{2}\s?[A-Z]{1,3}\s?\d{1,4}$/,/^\d{2}\s?BH\s?\d{4}\s?[A-Z]{1,2}$/];
 let carValid=false;
 function validateCar(input){
-  const raw=input.value.toUpperCase().replace(/\s+/g,' ').trim();
-  input.value=raw;
+  const raw=input.value.toUpperCase().replace(/\s+/g,' ').trim();input.value=raw;
   const clean=raw.replace(/\s/g,'');
   const valid=PATTERNS.some(p=>p.test(raw)||p.test(clean));
   const st=document.getElementById('car-status'),ht=document.getElementById('car-hint');
@@ -477,20 +463,18 @@ function validateCar(input){
   else{input.classList.remove('valid');input.classList.add('invalid');st.textContent='✗';st.style.color='var(--red)';ht.textContent='Invalid format. Examples: MH12AB1234 · DL3CAB1234 · 22BH1234AB';carValid=false;document.getElementById('hist-pill').classList.remove('show');}
 }
 
-// STORAGE
 let allSheetData=[];
-async function fetchAllData(){
-  try{const resp=await fetch(SHEET_URL+'?t='+Date.now());const json=await resp.json();if(json.status==='success')allSheetData=json.rows||[];}catch(e){}
-}
+async function fetchAllData(){try{const r=await fetch(SHEET_URL+'?t='+Date.now());const j=await r.json();if(j.status==='success')allSheetData=j.rows||[];}catch(e){}}
 function loadHistory(carNum){
   const pill=document.getElementById('hist-pill'),body=document.getElementById('hist-pill-body');
   const tests=allSheetData.filter(r=>(r['Car Number']||'').replace(/\s/g,'').toUpperCase()===carNum);
   if(!tests.length){pill.classList.remove('show');return;}
-  const last=tests[tests.length-1],count=tests.length;
-  body.innerHTML=`<b>${count} pehle ka inspection mila.</b> Last: ${last['Timestamp']||'—'}.<br>Pehli diagnosis: <b>${last['Diagnosis Code']||'—'}</b> — ${last['Diagnosis Title']||'—'}<br>HP: ${last['High Pressure']||'—'} · LP: ${last['Low Pressure']||'—'} · Vent: ${last['Vent °C']||'—'}°C`;
+  const last=tests[tests.length-1];
+  body.innerHTML=`<b>${tests.length} pehle ka inspection mila.</b> Last: ${last['Timestamp']||'—'}.<br>Pehli diagnosis: <b>${last['Diagnosis Code']||'—'}</b> — ${last['Diagnosis Title']||'—'}<br>HP: ${last['High Pressure']||'—'} · LP: ${last['Low Pressure']||'—'} · Vent: ${last['Vent °C']||'—'}°C`;
   pill.classList.add('show');
 }
 function getPrevTests(carNum){return allSheetData.filter(r=>(r['Car Number']||'').replace(/\s/g,'').toUpperCase()===carNum);}
+
 async function saveToSheet(data){
   const ss=document.getElementById('save-status');
   ss.className='save-status show saving';ss.textContent='⟳ Records mein save ho raha hai...';
@@ -505,16 +489,16 @@ async function saveToSheet(data){
 // ESCALATION
 const ESCALATION={
   'BOTH_LOW':{title:'Gas top-up ke baad bhi gas kam hai',body:'Pehle gas daala gaya tha. Abhi bhi pressure kam hai — iska matlab hai koi jagah gas leak ho rahi hai. Bina leak fix kiye dobara gas mat daalo. Electronic leak detector se poori pipe check karo.'},
-  'OVERCHARGED':{title:'Condenser clean ke baad bhi pressure high hai',body:'Condenser saaf kar diya gaya tha. HP abhi bhi high hai — sirf gas ki wajah nahi. Radiator cooling fan aur compressor check karo.'},
-  'COMP_INTERNAL':{title:'Compressor replace ke baad bhi problem hai',body:'Compressor badla gaya tha. Dobara same problem aa rahi hai — installation quality, drive belt tension, aur magnet clutch clearance (0.3–0.6mm) check karo.'},
+  'OVERCHARGED':{title:'Condenser clean ke baad bhi pressure high hai',body:'Condenser saaf kar diya gaya tha. HP abhi bhi high hai — radiator cooling fan aur compressor check karo.'},
+  'COMP_INTERNAL':{title:'Compressor clutch ke baad bhi problem hai',body:'Compressor clutch repair/replace ho chuki hai. Issue persists — poora compressor assembly replace karna padega.'},
   'EXP_VALVE':{title:'Expansion valve replace ke baad bhi theek nahi',body:'Expansion valve badla gaya. Problem abhi bhi hai — system mein moisture check karo (receiver/dryer badlo agar nahi badla), aur refrigerant charge sahi hai ya nahi dekho.'},
-  'COMP_HP_LOW':{title:'Compressor clutch ke baad bhi HP low hai',body:'Compressor clutch ya inspection ho chuka hai. HP abhi bhi low — poora compressor badalna padega. Drive belt tension bhi dobara check karo.'},
-  'LP_LOW':{title:'Gas daalne ke baad bhi LP low hai',body:'LP gas top-up kiya gaya tha. Phir se low aa gaya — LP side mein active leak confirm hai. Bina leak fix kiye gas mat daalo.'},
-  'COOLING_LOW':{title:'Maintenance ke baad bhi thanda nahi',body:'AC cooling maintenance ho chuka hai. Vent temp abhi bhi zyada hai — Cooling Coil/Evaporator clean karo ya replace karo, HVAC unit mein air leak check karo, aur temperature control flap check karo.'},
-  'CRITICAL_LEAK':{title:'Leak fix ke baad bhi system khaali hai',body:'System recharge kiya gaya tha leak ke baad. Phir se empty — leak poori tarah fix nahi hui, ya koi aur leak point hai. Poori AC pipe assembly pressure test karo.'},
-  'MOISTURE':{title:'Expansion valve ke baad bhi moisture symptoms hain',body:'Expansion valve aur condenser badla gaya. Symptoms abhi bhi hain — vacuum pump se 30 minute tak evacuation karo (15 nahi), aur receiver/dryer bhi badlo agar nahi badla.'},
-  'AIR_IN_SYSTEM':{title:'Evacuation ke baad bhi air hai',body:'System evacuate aur recharge kiya gaya. Air contamination abhi bhi hai — vacuum pump -100 kPa tak pahunch raha hai ya nahi check karo. Manifold gauge connections bhi check karo.'},
-  'FULL_OVERHAUL':{title:'Full overhaul ke baad bhi problem hai',body:'Poora system badla gaya. Problem phir bhi — check karo: saare O-rings replace hue ya nahi, refrigerant passages flush hue ya nahi, aur sahi matra mein gas charge hua ya nahi.'},
+  'COMP_HP_LOW':{title:'Compressor clutch ke baad bhi HP low hai',body:'Compressor clutch repair ho chuki hai. HP abhi bhi low — poora compressor replace karna padega.'},
+  'LP_LOW':{title:'Gas daalne ke baad bhi LP low hai',body:'LP gas top-up kiya gaya tha. Phir se low aa gaya — LP side mein active leak confirm hai. Expansion valve bhi check karo.'},
+  'COOLING_LOW':{title:'Maintenance ke baad bhi thanda nahi',body:'AC cooling maintenance ho chuka hai. Evaporator/Cooling Coil clean ya replace karo, temperature control flap check karo, HVAC unit mein air leak dhundo.'},
+  'CRITICAL_LEAK':{title:'Leak fix ke baad bhi system khaali hai',body:'System recharge kiya gaya tha leak ke baad. Phir se empty — poori AC pipe assembly ka pressure test karo, koi aur leak point dhundo.'},
+  'MOISTURE':{title:'Expansion valve ke baad bhi moisture symptoms hain',body:'Expansion valve aur condenser badla gaya. Symptoms abhi bhi hain — 30 minute evacuation karo, receiver/dryer bhi badlo agar nahi badla.'},
+  'AIR_IN_SYSTEM':{title:'Evacuation ke baad bhi air hai',body:'System evacuate aur recharge kiya gaya. Air contamination abhi bhi hai — vacuum pump -100 kPa tak pahunch raha hai ya nahi check karo.'},
+  'FULL_OVERHAUL':{title:'Full overhaul ke baad bhi problem hai',body:'Poora system badla gaya. Check karo: saare O-rings replace hue ya nahi, refrigerant passages flush hue ya nahi, sahi matra mein gas charge hua ya nahi.'},
 };
 function getEscalation(diagCode,prevTests){
   if(!prevTests||!prevTests.length)return null;
@@ -523,21 +507,40 @@ function getEscalation(diagCode,prevTests){
   return null;
 }
 
-// SPINNY NODE HELPER
-function nodeItem(action,node1,node2,node3,part,issue){
-  const isReplace=action==='replace';
-  const breadcrumb=[node1,node2,node3].filter(Boolean).join(' › ');
+// NODE BUILDER
+function N(action,part,node1,node2,issue){
+  const bc=node2?`<span>${node1}</span> › <span>${node2}</span>`:`<span>${node1}</span>`;
   return `<div class="node-item ${action}">
-    <span class="node-badge ${action}">${isReplace?'Replace':'Repair'}</span>
+    <span class="node-badge ${action}">${action==='replace'?'Replace':'Repair'}</span>
     <div class="node-path">
-      <div class="node-path-breadcrumb">AC Assembly › <span>${breadcrumb}</span></div>
+      <div class="node-path-bc">AC Assembly › ${bc}</div>
       <div class="node-name">${part}</div>
       <div class="node-issue">${issue}</div>
     </div>
   </div>`;
 }
-function renderNodes(nodes){
-  return `<div class="spinny-actions"><div class="spinny-actions-title">Spinny Parts Action / Kya Karna Hai</div><div class="node-list">${nodes.join('')}</div></div>`;
+
+// STEP BUILDER — cheapest first
+function Step(num,label,sublabel,nodes){
+  const cls=['','s1','s2','s3'][num]||'s3';
+  return `<div class="step-block">
+    <div class="step-header">
+      <div class="step-num ${cls}">${num}</div>
+      <div><div class="step-label">${label}</div><div class="step-sublabel">${sublabel}</div></div>
+    </div>
+    <div class="node-list">${nodes.join('')}</div>
+  </div>`;
+}
+function Arrow(txt){return `<div class="step-arrow">↓ Agar Step ${txt} se theek na ho toh →</div>`;}
+
+function renderSteps(steps){
+  let html='<div class="steps-wrap"><div class="steps-title">Step-by-Step Repair / Seedha Aur Sasta Pehle</div>';
+  steps.forEach((s,i)=>{
+    html+=Step(i+1,s.label,s.sub,s.nodes);
+    if(i<steps.length-1) html+=Arrow(i+1);
+  });
+  html+='</div>';
+  return html;
 }
 
 // MAIN DIAGNOSE
@@ -561,178 +564,230 @@ async function diagnose(){
   const lpKpa=unit==='psi'?toKpa(lpRaw):lpRaw;
   const oem=getOEM(amb);
   const {hpMin,hpMax,lpMin,lpMax}=oem;
-  // Apply -10% lower, +20% upper tolerance
-  const hpLo=lowerBound(hpMin),hpHi=upperBound(hpMax);
-  const lpLo=lowerBound(lpMin),lpHi=upperBound(lpMax);
-  const hpMid=mid(hpMin,hpMax),lpMid=mid(lpMin,lpMax);
-  const hpLeak=leakTh(hpLo),lpLeak=leakTh(lpLo);
 
-  const hpSevere=hpKpa<hpLeak,lpSevere=lpKpa<lpLeak;
-  const hpLow=hpKpa<hpLo,hpHigh=hpKpa>hpHi;
-  const lpLow=lpKpa<lpLo,lpHigh=lpKpa>lpHi;
-  const hpOk=!hpLow&&!hpHigh,lpOk=!lpLow&&!lpHigh;
+  // Zone thresholds
+  const hpLo=loBound(hpMin),     hpVLo=veryLoBound(hpMin),   hpHi=hiBound(hpMax);
+  const lpLo=loBound(lpMin),     lpVLo=veryLoBound(lpMin),   lpHi=hiBound(lpMax);
+  const hpMid=mid(hpMin,hpMax),  lpMid=mid(lpMin,lpMax);
+
+  // Status flags
+  const hpVeryLow=hpKpa<hpVLo,   lpVeryLow=lpKpa<lpVLo;
+  const hpLow=hpKpa<hpLo&&!hpVeryLow,  lpLow=lpKpa<lpLo&&!lpVeryLow;
+  const hpHigh=hpKpa>hpHi,       lpHigh=lpKpa>lpHi;
+  const hpOk=!hpVeryLow&&!hpLow&&!hpHigh;
+  const lpOk=!lpVeryLow&&!lpLow&&!lpHigh;
+  const hpAnyLow=hpVeryLow||hpLow, lpAnyLow=lpVeryLow||lpLow;
+
   const u=uu();
   const hpD=fmt(hpKpa),lpD=fmt(lpKpa);
   const hpMdD=fmt(hpMid),lpMdD=fmt(lpMid);
-  const hpLoD=fmt(hpLo),hpHiD=fmt(hpHi);
-  const lpLoD=fmt(lpLo),lpHiD=fmt(lpHi);
+  const hpLoD=fmt(hpLo),hpHiD=fmt(hpHi),hpVLoD=fmt(hpVLo);
+  const lpLoD=fmt(lpLo),lpHiD=fmt(lpHi),lpVLoD=fmt(lpVLo);
 
-  drawBars(hpKpa,lpKpa,hpLo,hpHi,lpLo,lpHi,hpLeak,lpLeak);
+  drawBars(hpKpa,lpKpa,hpVLo,hpLo,hpHi,lpVLo,lpLo,lpHi);
 
   const prevTests=getPrevTests(carNum);
-  let diagCode='',diagTitle='',type='',sub='',nodes=[],badges=[],matrixId='';
+  let diagCode='',diagTitle='',type='',sub='',steps=[],badges=[],matrixId='';
 
+  // ── BLACK DEATH ──
   if(blackness){
-    // BLACK DEATH — all Replace
     diagCode='FULL_OVERHAUL';diagTitle='Black Death — Full System Replace';type='critical';
-    sub='Kala tel aaya — compressor ke andhar se loha ghis gaya. Poori AC system contaminated hai. Sirf gas dene se kaam nahi chalega.';
-    nodes=[
-      nodeItem('replace','AC Condenser','','','AC Condenser','Damaged/Leakage'),
-      nodeItem('replace','AC Compressor Assembly','AC Compressor','','AC Compressor','Damaged'),
-      nodeItem('replace','Cooling Coil/Evaporator','','','Cooling Coil/Evaporator','Damaged/Leakage'),
-      nodeItem('replace','AC Pipe Inlet Hose/Line','','','AC Pipe Inlet Hose/Line','Damaged/Leakage'),
-      nodeItem('replace','AC Pipe Outlet Hose/Line','','','AC Pipe Outlet Hose/Line','Damaged/Leakage'),
-      nodeItem('replace','AC Gas','','','AC Gas','Empty'),
-    ];
-    badges=['CRITICAL','BLACK DEATH','FULL REPLACE'];matrixId='mc-black';
+    sub='Kala tel aaya — compressor ke andhar se loha ghis gaya. Poori AC system contaminated hai. Sirf ek baar sab kuch replace karna hoga — koi step nahi.';
+    steps=[{
+      label:'Sabka Replace Karo — Ek Saath',
+      sub:'Black death mein sirf poora replace kaam karta hai — koi partial fix nahi',
+      nodes:[
+        N('replace','AC Condenser','AC Condenser','','Damaged/Leakage'),
+        N('replace','AC Compressor','AC Compressor Assembly','AC Compressor','Damaged'),
+        N('replace','Cooling Coil/Evaporator','Cooling Coil/Evaporator','','Damaged/Leakage'),
+        N('replace','AC Pipe Inlet Hose/Line','AC Pipe Inlet Hose/Line','','Damaged/Leakage'),
+        N('replace','AC Pipe Outlet Hose/Line','AC Pipe Outlet Hose/Line','','Damaged/Leakage'),
+        N('replace','AC Gas','AC Gas','','Empty'),
+      ]
+    }];
+    badges=['BLACK DEATH','FULL REPLACE'];matrixId='mc-black';
 
+  // ── MOISTURE / FLUCTUATING ──
   } else if(lpBeh==='fluctuating'){
-    diagCode='MOISTURE';diagTitle='Expansion Valve Frozen — Moisture in System';type='danger';
-    sub='LP upar-neeche ho rahi hai — kabhi normal, kabhi zero se neeche. Yeh moisture ki wajah se expansion valve freeze ho rahi hai.';
-    nodes=[
-      nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
-      nodeItem('repair','AC Condenser','','','AC Condenser','Damaged/Leakage'),
-      nodeItem('repair','AC Gas','','','AC Gas','Empty'),
+    diagCode='MOISTURE';diagTitle='Expansion Valve Frozen — Moisture';type='danger';
+    sub='LP upar-neeche ho rahi hai. Moisture ki wajah se expansion valve freeze ho rahi hai.';
+    steps=[
+      {label:'Step 1 — Expansion Valve Repair/Replace karo',sub:'Sabse pehle aur sabse sasta fix',nodes:[N('repair','Expansion Valve','Expansion Valve','','Damaged')]},
+      {label:'Step 2 — Condenser Replace karo (moisture hataane ke liye)',sub:'Agar step 1 se theek na ho',nodes:[N('repair','AC Condenser','AC Condenser','','Damaged/Leakage')]},
+      {label:'Step 3 — Gas Recharge',sub:'Evacuation ke baad fresh gas daalo',nodes:[N('repair','AC Gas','AC Gas','','Empty')]},
     ];
     badges=['MOISTURE IN SYSTEM','EXPANSION VALVE'];matrixId='mc-fluc';
 
+  // ── NEGATIVE LP ──
   } else if(lpBeh==='negative'){
     diagCode='MOISTURE';diagTitle='Expansion Valve Blocked — Dust ya Ice';type='danger';
-    sub='LP zero se neeche — HP bhi bahut kam. Expansion valve mein dust ya ice jam gayi hai. Condenser ke paas barf dikh sakti hai.';
-    nodes=[
-      nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
-      nodeItem('repair','AC Condenser','','','AC Condenser','Damaged/Leakage'),
-      nodeItem('repair','AC Gas','','','AC Gas','Empty'),
+    sub='LP zero se neeche — dust ya ice ne expansion valve jam kar di hai.';
+    steps=[
+      {label:'Step 1 — Expansion Valve Repair/Replace karo',sub:'Blockage wali valve badlo',nodes:[N('repair','Expansion Valve','Expansion Valve','','Damaged')]},
+      {label:'Step 2 — Condenser Replace + Gas Recharge',sub:'Receiver/dryer ke liye condenser badlo, phir gas daalo',nodes:[N('repair','AC Condenser','AC Condenser','','Damaged/Leakage'),N('repair','AC Gas','AC Gas','','Empty')]},
     ];
     badges=['EXPANSION VALVE BLOCKED'];matrixId='mc-neg';
 
+  // ── FROST ON LP ──
   } else if(lpBeh==='frost-lp'){
     diagCode='EXP_VALVE';diagTitle='Expansion Valve Faulty — Flow Unregulated';type='danger';
-    sub='LP pipe pe barf jam gayi aur dono pressure high hain. Expansion valve refrigerant flow sahi se control nahi kar rahi.';
-    nodes=[
-      nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
-      nodeItem('repair','AC Gas','','','AC Gas','Low'),
+    sub='LP pipe pe barf, dono pressure high. Expansion valve flow control nahi kar rahi.';
+    steps=[
+      {label:'Step 1 — Expansion Valve Repair/Replace karo',sub:'Flow unregulated — valve badlo',nodes:[N('repair','Expansion Valve','Expansion Valve','','Damaged')]},
+      {label:'Step 2 — Gas Recharge',sub:'Sahi amount mein gas bharo',nodes:[N('repair','AC Gas','AC Gas','','Low')]},
     ];
     badges=['EXPANSION VALVE FAULTY'];matrixId='mc-frost';
 
+  // ── AIR IN SYSTEM ──
   } else if(lpBeh==='lp-not-cold'&&lpHigh&&hpHigh){
-    diagCode='AIR_IN_SYSTEM';diagTitle='Air in System — Sahi se Vacuum Nahi Kiya';type='danger';
-    sub='LP pipe thandi nahi, dono pressure high hain — system mein hawa ghus gayi hai. Pehle wali service mein vacuum theek se nahi kiya gaya.';
-    nodes=[
-      nodeItem('repair','AC Condenser','','','AC Condenser','Damaged/Leakage'),
-      nodeItem('repair','AC Gas','','','AC Gas','Empty'),
+    diagCode='AIR_IN_SYSTEM';diagTitle='Air in System — Sahi Vacuum Nahi Kiya';type='danger';
+    sub='Dono pressure high, LP thandi nahi — hawa ghus gayi hai. Pehli service mein vacuum theek se nahi kiya gaya.';
+    steps=[
+      {label:'Step 1 — Condenser Replace + Proper Evacuation',sub:'Pahle condenser badlo, phir 15+ min vacuum karo',nodes:[N('repair','AC Condenser','AC Condenser','','Damaged/Leakage')]},
+      {label:'Step 2 — Gas Recharge',sub:'Sahi amount mein fresh gas daalo',nodes:[N('repair','AC Gas','AC Gas','','Empty')]},
     ];
     badges=['AIR IN SYSTEM'];matrixId='mc-air';
 
-  } else if(lpHigh&&hpLow){
-    diagCode='COMP_INTERNAL';diagTitle='Compressor Internal Leak — Andar se Toot Gaya';type='danger';
-    sub=`HP low (${hpD} ${u}), LP high (${lpD} ${u}). AC band karo toh dono pressure barabar ho jaate hain — compressor ke andar valve toot gaya hai.`;
-    nodes=[
-      nodeItem('repair','AC Compressor Assembly','AC Compressor','','AC Compressor','Damaged'),
-      nodeItem('repair','AC Compressor Assembly','','','AC Compressor Assembly','Not Working'),
+  // ── COMPRESSOR INTERNAL LEAK (LP high, HP low) ──
+  } else if(lpHigh&&hpAnyLow){
+    diagCode='COMP_INTERNAL';diagTitle='Compressor Internal Leak';type='danger';
+    sub=`HP low (${hpD} ${u}), LP high (${lpD} ${u}). AC band karo — dono pressure barabar ho jaate hain. Compressor ke andar valve toot gaya.`;
+    steps=[
+      {label:'Step 1 — Compressor Clutch Check/Repair karo',sub:'Pehle clutch check karo — sasta aur fast',nodes:[N('repair','AC Compressor','AC Compressor Assembly','AC Compressor','Damaged')]},
+      {label:'Step 2 — Full Compressor Assembly Replace',sub:'Agar clutch se theek na ho — poora compressor badlo',nodes:[N('repair','AC Compressor Assembly','AC Compressor Assembly','','Not Working')]},
     ];
     badges=['COMPRESSOR INTERNAL LEAK'];matrixId='mc-compleak';
 
-  } else if((hpSevere||lpSevere)&&hpLow&&lpLow){
+  // ── BOTH VERY LOW — critical leak ──
+  } else if((hpVeryLow||lpVeryLow)&&hpAnyLow&&lpAnyLow){
     diagCode='CRITICAL_LEAK';diagTitle='Gas Khatam — Badi Leak Hai';type='critical';
-    sub=`HP ${hpD} ${u} aur LP ${lpD} ${u} — dono OEM minimum se 33% se bhi kam. System almost khaali hai.`;
-    nodes=[
-      nodeItem('repair','AC Gas','','','AC Gas','Empty'),
-      nodeItem('repair','AC Pipe Inlet Hose/Line','','','AC Pipe Inlet Hose/Line','Damaged/Leakage'),
-      nodeItem('repair','AC Pipe Outlet Hose/Line','','','AC Pipe Outlet Hose/Line','Damaged/Leakage'),
-      nodeItem('repair','Cooling Coil/Evaporator','','','Cooling Coil/Evaporator','Damaged/Leakage'),
-      nodeItem('repair','AC Condenser','','','AC Condenser','Damaged/Leakage'),
+    sub=`HP ${hpD} ${u} aur LP ${lpD} ${u} — dono OEM se 33% se bhi kam. System almost khaali. Bina leak fix kiye gas mat daalo.`;
+    steps=[
+      {label:'Step 1 — Pehle Leak Dhundo aur Fix Karo',sub:'Bina leak fix kiye gas dena bekaar hai',nodes:[
+        N('repair','AC Pipe Inlet Hose/Line','AC Pipe Inlet Hose/Line','','Damaged/Leakage'),
+        N('repair','AC Pipe Outlet Hose/Line','AC Pipe Outlet Hose/Line','','Damaged/Leakage'),
+        N('repair','Cooling Coil/Evaporator','Cooling Coil/Evaporator','','Damaged/Leakage'),
+        N('repair','AC Condenser','AC Condenser','','Damaged/Leakage'),
+      ]},
+      {label:'Step 2 — Gas Recharge',sub:'Leak fix ke baad gas bharo',nodes:[N('repair','AC Gas','AC Gas','','Empty')]},
     ];
-    badges=['CRITICAL LEAK','GAS EMPTY','FIX LEAK FIRST'];matrixId='mc-both-low';
+    badges=['CRITICAL LEAK','FIX LEAK FIRST'];matrixId='mc-both-low';
 
+  // ── BOTH LOW (not very low) — simple top-up ──
   } else if(hpLow&&lpLow){
-    diagCode='BOTH_LOW';diagTitle='Gas Kam Hai — Top Up Required';type='warn';
-    sub=`HP ${hpD} ${u} aur LP ${lpD} ${u} dono kam hain. AC thoda thanda karta hai. Gas leak bhi ho sakti hai.`;
-    nodes=[
-      nodeItem('repair','AC Gas','','','AC Gas','Low'),
+    diagCode='BOTH_LOW';diagTitle='Gas Thodi Kam Hai — Top Up Karo';type='warn';
+    sub=`HP ${hpD} ${u} aur LP ${lpD} ${u} Low zone mein hain (−10% threshold). Gas thodi kam hai.`;
+    steps=[
+      {label:'Step 1 — Gas Top Up Karo',sub:`Target: HP ~${hpMdD} ${u} | LP ~${lpMdD} ${u}`,nodes:[N('repair','AC Gas','AC Gas','','Low')]},
+      {label:'Step 2 — Agar Gas Nahi Ruk Rahi',sub:'Leak check karo — pipes aur connections',nodes:[
+        N('repair','AC Pipe Inlet Hose/Line','AC Pipe Inlet Hose/Line','','Damaged/Leakage'),
+        N('repair','AC Pipe Outlet Hose/Line','AC Pipe Outlet Hose/Line','','Damaged/Leakage'),
+      ]},
     ];
-    badges=['GAS TOP-UP REQUIRED'];matrixId='mc-both-low';
+    badges=['GAS TOP-UP'];matrixId='mc-both-low';
 
+  // ── HP VERY LOW + LP VERY LOW (mixed severity both low) ──
+  } else if(hpVeryLow&&lpAnyLow){
+    diagCode='CRITICAL_LEAK';diagTitle='HP Bahut Kam — Leak Check Karo';type='critical';
+    sub=`HP ${hpD} ${u} Very Low zone mein — 33% se bhi kam. LP bhi low. System mein badi leak ho sakti hai.`;
+    steps=[
+      {label:'Step 1 — Pehle Leak Dhundo',sub:'HP itna low nahi ho sakta bina leak ke',nodes:[
+        N('repair','AC Pipe Inlet Hose/Line','AC Pipe Inlet Hose/Line','','Damaged/Leakage'),
+        N('repair','AC Condenser','AC Condenser','','Damaged/Leakage'),
+      ]},
+      {label:'Step 2 — Gas Recharge',sub:'Leak fix ke baad',nodes:[N('repair','AC Gas','AC Gas','','Empty')]},
+    ];
+    badges=['CRITICAL LEAK'];matrixId='mc-both-low';
+
+  // ── BOTH HIGH — overcharged / condenser ──
   } else if(hpHigh&&lpHigh){
     diagCode='OVERCHARGED';diagTitle='Gas Zyada Hai ya Condenser Jam Gaya';type='danger';
-    sub=`HP ${hpD} ${u} aur LP ${lpD} ${u} dono zyada hain. Teen wajahaat ho sakti hain: gas zyada, condenser jam gaya, ya cooling fan kharab.`;
-    nodes=[
-      nodeItem('repair','AC Gas','','','AC Gas','Low'),
-      nodeItem('repair','AC Condenser','','','AC Condenser','Damaged/Leakage'),
+    sub=`HP ${hpD} ${u} aur LP ${lpD} ${u} dono zyada hain. Cheapest fix pehle.`;
+    steps=[
+      {label:'Step 1 — Gas Nikalo (Release karo)',sub:`Target: HP ~${hpMdD} ${u} | LP ~${lpMdD} ${u}`,nodes:[N('repair','AC Gas','AC Gas','','Low')]},
+      {label:'Step 2 — Condenser Clean karo',sub:'Agar gas release ke baad bhi high — condenser jam gaya hai',nodes:[N('repair','AC Condenser','AC Condenser','','Damaged/Leakage')]},
+      {label:'Step 3 — Radiator Fan Check',sub:'Agar condenser clean ke baad bhi — fan kharab hai',nodes:[N('repair','AC Assembly','AC Assembly','','Cooling Mode Less Effective')]},
     ];
     badges=['OVERCHARGED / CONDENSER'];matrixId='mc-both-high';
 
+  // ── HP HIGH, LP OK — expansion valve not opening ──
   } else if(hpHigh&&lpOk){
-    diagCode='EXP_VALVE';diagTitle='Expansion Valve Theek Se Khul Nahi Rahi';type='warn';
+    diagCode='EXP_VALVE';diagTitle='HP Zyada — Expansion Valve Theek Se Nahi Khul Rahi';type='warn';
     sub=`HP ${hpD} ${u} zyada, LP normal ${lpD} ${u}. Expansion valve gas flow rok rahi hai.`;
-    nodes=[
-      nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
+    steps=[
+      {label:'Step 1 — Expansion Valve Repair/Replace karo',sub:'HP high ka sabse common cause',nodes:[N('repair','Expansion Valve','Expansion Valve','','Damaged')]},
     ];
     badges=['EXPANSION VALVE'];matrixId='mc-hp-high-lp-ok';
 
+  // ── HP OK, LP HIGH — expansion valve opens too wide ──
   } else if(hpOk&&lpHigh){
     diagCode='EXP_VALVE';diagTitle='LP Zyada — Expansion Valve ya Compressor';type='warn';
-    sub=`LP ${lpD} ${u} zyada, HP normal ${hpD} ${u}. Expansion valve bahut zyada khul rahi hai ya compressor sahi se compress nahi kar raha.`;
-    nodes=[
-      nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
-      nodeItem('repair','AC Compressor Assembly','AC Compressor','','AC Compressor','Damaged'),
+    sub=`LP ${lpD} ${u} zyada, HP normal. Expansion valve bahut zyada khul rahi ya compressor compress nahi kar raha.`;
+    steps=[
+      {label:'Step 1 — Expansion Valve Repair/Replace karo',sub:'Pehle valve check — sasta hai',nodes:[N('repair','Expansion Valve','Expansion Valve','','Damaged')]},
+      {label:'Step 2 — Compressor Check',sub:'Agar valve se theek na ho — compressor clutch check karo',nodes:[N('repair','AC Compressor','AC Compressor Assembly','AC Compressor','Damaged')]},
     ];
     badges=['EXPANSION VALVE / COMPRESSOR'];matrixId='mc-hp-ok-lp-high';
 
+  // ── HP VERY LOW, LP OK — compressor serious issue ──
+  } else if(hpVeryLow&&lpOk){
+    diagCode='COMP_HP_LOW';diagTitle='HP Bahut Kam — Compressor Serious Problem';type='danger';
+    sub=`HP ${hpD} ${u} Very Low zone mein. LP normal. HP directly top-up nahi hoti — compressor serious issue hai.`;
+    steps=[
+      {label:'Step 1 — Compressor Clutch Check/Repair karo',sub:'Very low HP pe bhi clutch pehle check karo',nodes:[N('repair','AC Compressor','AC Compressor Assembly','AC Compressor','Damaged')]},
+      {label:'Step 2 — Full Compressor Replace',sub:'Agar clutch se theek na ho',nodes:[N('replace','AC Compressor Assembly','AC Compressor Assembly','','Not Working')]},
+    ];
+    badges=['COMPRESSOR — VERY LOW HP'];matrixId='mc-hp-low-lp-ok';
+
+  // ── HP LOW (not very low), LP OK — compressor clutch ──
   } else if(hpLow&&lpOk){
-    diagCode='COMP_HP_LOW';diagTitle='HP Kam — Compressor Problem';type='warn';
-    sub=`HP ${hpD} ${u} kam, LP normal. HP seedha top up nahi hoti — compressor sahi se pressure nahi bana raha.`;
-    nodes=[
-      nodeItem('repair','AC Compressor Assembly','AC Compressor','','AC Compressor','Damaged'),
-      nodeItem('repair','AC Compressor Assembly','','','AC Compressor Assembly','Abnormal Noise'),
+    diagCode='COMP_HP_LOW';diagTitle='HP Thodi Kam — Compressor Clutch Check';type='warn';
+    sub=`HP ${hpD} ${u} Low zone mein. LP normal. HP directly top-up nahi hoti — compressor clutch problem ho sakti hai.`;
+    steps=[
+      {label:'Step 1 — Compressor Clutch Repair karo',sub:'Sabse sasta fix — clutch pehle',nodes:[N('repair','AC Compressor','AC Compressor Assembly','AC Compressor','Damaged')]},
+      {label:'Step 2 — Full Compressor Replace',sub:'Agar clutch se theek na ho',nodes:[N('replace','AC Compressor Assembly','AC Compressor Assembly','','Not Working')]},
     ];
     badges=['COMPRESSOR CHECK'];matrixId='mc-hp-low-lp-ok';
 
-  } else if(hpOk&&lpLow){
-    if(lpSevere){
-      diagCode='CRITICAL_LEAK';diagTitle='LP Bahut Kam — Suction Side Leak';type='danger';
-      sub=`LP ${lpD} ${u} critical level pe. HP normal. LP side mein badi leak ho sakti hai.`;
-      nodes=[
-        nodeItem('repair','AC Gas','','','AC Gas','Empty'),
-        nodeItem('repair','AC Pipe Inlet Hose/Line','','','AC Pipe Inlet Hose/Line','Damaged/Leakage'),
-        nodeItem('repair','Cooling Coil/Evaporator','','','Cooling Coil/Evaporator','Damaged/Leakage'),
-        nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
-      ];
-      badges=['LEAK CHECK','LP CIRCUIT'];matrixId='mc-hp-ok-lp-low';
-    } else {
-      diagCode='LP_LOW';diagTitle='LP Kam — Gas Top Up Karo';type='warn';
-      sub=`LP ${lpD} ${u} kam, HP normal. Gas thodi kam hai ya expansion valve gas flow rok rahi hai.`;
-      nodes=[
-        nodeItem('repair','AC Gas','','','AC Gas','Low'),
-        nodeItem('repair','Expansion Valve','','','Expansion Valve','Damaged'),
-      ];
-      badges=['GAS TOP-UP'];matrixId='mc-hp-ok-lp-low';
-    }
+  // ── HP OK, LP VERY LOW — serious suction leak ──
+  } else if(hpOk&&lpVeryLow){
+    diagCode='CRITICAL_LEAK';diagTitle='LP Bahut Kam — Suction Side Serious Leak';type='danger';
+    sub=`LP ${lpD} ${u} Very Low zone mein. HP normal. LP side mein serious leak hai.`;
+    steps=[
+      {label:'Step 1 — LP Side Leak Dhundo aur Fix Karo',sub:'Very low LP = definite leak on suction side',nodes:[
+        N('repair','AC Pipe Inlet Hose/Line','AC Pipe Inlet Hose/Line','','Damaged/Leakage'),
+        N('repair','Cooling Coil/Evaporator','Cooling Coil/Evaporator','','Damaged/Leakage'),
+        N('repair','Expansion Valve','Expansion Valve','','Damaged'),
+      ]},
+      {label:'Step 2 — Gas Recharge',sub:`Leak fix ke baad LP target ~${lpMdD} ${u}`,nodes:[N('repair','AC Gas','AC Gas','','Empty')]},
+    ];
+    badges=['LP VERY LOW','LEAK CHECK'];matrixId='mc-hp-ok-lp-low';
 
+  // ── HP OK, LP LOW (not very low) — simple top-up ──
+  } else if(hpOk&&lpLow){
+    diagCode='LP_LOW';diagTitle='LP Thodi Kam — Gas Top Up Karo';type='warn';
+    sub=`LP ${lpD} ${u} Low zone mein. HP normal. Gas thodi kam hai.`;
+    steps=[
+      {label:'Step 1 — Gas Top Up Karo',sub:`LP target ~${lpMdD} ${u}`,nodes:[N('repair','AC Gas','AC Gas','','Low')]},
+      {label:'Step 2 — Agar Gas Nahi Ruki',sub:'Expansion valve check karo — narrow ho sakti hai',nodes:[N('repair','Expansion Valve','Expansion Valve','','Damaged')]},
+    ];
+    badges=['GAS TOP-UP'];matrixId='mc-hp-ok-lp-low';
+
+  // ── ALL NORMAL ──
   } else if(hpOk&&lpOk){
     if(vent>12){
       diagCode='COOLING_LOW';diagTitle='Pressure Normal — AC Thanda Nahi Kar Raha';type='warn';
-      sub=`HP (${hpD} ${u}) aur LP (${lpD} ${u}) ${amb}°C ke liye theek hain. Lekin vent se ${vent}°C ki hawa aa rahi hai — AC thanda nahi kar raha.`;
-      nodes=[
-        nodeItem('repair','AC Assembly','','','AC Assembly','Cooling Mode Less Effective'),
-        nodeItem('repair','Cooling Coil/Evaporator','','','Cooling Coil/Evaporator','Damaged/Leakage'),
-        nodeItem('repair','AC Blower Assembly','Front AC Blower Motor','','Front AC Blower Motor','Damaged/Not Working'),
+      sub=`HP (${hpD} ${u}) aur LP (${lpD} ${u}) theek hain. Lekin vent se ${vent}°C aa raha hai — problem gas mein nahi, kuch aur hai.`;
+      steps=[
+        {label:'Step 1 — Cooling Coil/Evaporator Clean karo',sub:'Sabse pehle evaporator fins clean karo — sasta aur fast',nodes:[N('repair','Cooling Coil/Evaporator','Cooling Coil/Evaporator','','Damaged/Leakage')]},
+        {label:'Step 2 — Blower Motor Check karo',sub:'Agar coil clean se theek na ho',nodes:[N('repair','Front AC Blower Motor','AC Blower Assembly','Front AC Blower Motor','Damaged/Not Working')]},
+        {label:'Step 3 — AC Assembly Full Check',sub:'Agar step 1 aur 2 se theek na ho — temperature control flap, ducts check karo',nodes:[N('repair','AC Assembly','AC Assembly','','Cooling Mode Less Effective')]},
       ];
       badges=['COOLING LOW','MAINTENANCE REQUIRED'];matrixId='mc-ok';
     } else {
-      diagCode='NORMAL';diagTitle='AC System Theek Hai ✓';type='ok';
-      sub=`HP (${hpD} ${u}) aur LP (${lpD} ${u}) ${amb}°C ke liye bilkul sahi hain. Vent se ${vent}°C thandi hawa aa rahi hai. Koi dikkat nahi.`;
-      nodes=[];badges=['NO ACTION REQUIRED'];matrixId='mc-ok';
+      diagCode='NORMAL';diagTitle='AC System Bilkul Theek Hai ✓';type='ok';
+      sub=`HP (${hpD} ${u}) aur LP (${lpD} ${u}) ${amb}°C ke liye sahi hain. Vent se ${vent}°C thandi hawa — koi dikkat nahi.`;
+      steps=[];badges=['NO ACTION REQUIRED'];matrixId='mc-ok';
     }
   }
 
@@ -742,23 +797,18 @@ async function diagnose(){
     document.getElementById('retest-box').classList.add('show');
     document.getElementById('retest-title').textContent='⟳ Retest — '+esc.title;
     document.getElementById('retest-body').innerHTML=`Pehla test: <b>${esc.lastDate}</b> (Test #${esc.count})<br><br>${esc.body}`;
-  } else {
-    document.getElementById('retest-box').classList.remove('show');
-  }
+  } else { document.getElementById('retest-box').classList.remove('show'); }
 
-  showResult(type,diagTitle,sub,nodes,badges,matrixId);
+  showResult(type,diagTitle,sub,steps,badges,matrixId);
 
   const testData={
-    timestamp:new Date().toLocaleString('en-IN'),
-    carNum,fuel,
-    rpm:document.getElementById('rpm').value,
-    blower:document.getElementById('blower').value,
-    amb,hp:fmt(hpKpa),lp:fmt(lpKpa),unit:uu(),vent,
-    lpBeh,blackness,diagCode,diagTitle,
-    hpStatus:hpLow?'LOW':hpHigh?'HIGH':'NORMAL',
-    lpStatus:lpLow?'LOW':lpHigh?'HIGH':'NORMAL',
-    isRetest:prevTests.length>0,
-    testCount:prevTests.length+1
+    timestamp:new Date().toLocaleString('en-IN'),carNum,fuel,
+    rpm:document.getElementById('rpm').value,blower:document.getElementById('blower').value,
+    amb,hp:fmt(hpKpa),lp:fmt(lpKpa),unit:uu(),vent,lpBeh,blackness,
+    diagCode,diagTitle,
+    hpStatus:hpVeryLow?'VERY LOW':hpLow?'LOW':hpHigh?'HIGH':'NORMAL',
+    lpStatus:lpVeryLow?'VERY LOW':lpLow?'LOW':lpHigh?'HIGH':'NORMAL',
+    isRetest:prevTests.length>0,testCount:prevTests.length+1
   };
   await saveToSheet(testData);
   btn.disabled=false;
@@ -766,58 +816,64 @@ async function diagnose(){
 }
 
 const ICONS={ok:'✓',warn:'!',danger:'✕',critical:'☠',info:'i'};
-function showResult(type,title,sub,nodes,badges,matrixId){
+function showResult(type,title,sub,steps,badges,matrixId){
   const card=document.getElementById('result-card');
   card.className='result-card show '+type;
   document.getElementById('res-icon').textContent=ICONS[type]||'';
   document.getElementById('res-title').textContent=title;
   document.getElementById('res-sub').textContent=sub;
-  document.getElementById('spinny-actions').innerHTML=nodes.length?renderNodes(nodes):'';
+  document.getElementById('steps-container').innerHTML=steps.length?renderSteps(steps):'';
   const brow=document.getElementById('res-badges');brow.innerHTML='';
-  const bcls=['badge-red','badge-amber','badge-purple'];
-  badges.forEach((b,i)=>{const s=document.createElement('span');s.className='badge '+(bcls[i]||'badge-purple');s.textContent=b;brow.appendChild(s);});
+  ['badge-red','badge-amber','badge-purple'].forEach((cls,i)=>{ if(badges[i]){const s=document.createElement('span');s.className='badge '+cls;s.textContent=badges[i];brow.appendChild(s);}});
   card.scrollIntoView({behavior:'smooth',block:'nearest'});
   document.querySelectorAll('.mc').forEach(m=>m.classList.remove('hit'));
   document.getElementById(matrixId)?.classList.add('hit');
 }
 
-function drawBars(hpKpa,lpKpa,hpLo,hpHi,lpLo,lpHi,hpLk,lpLk){
+function drawBars(hpKpa,lpKpa,hpVLo,hpLo,hpHi,lpVLo,lpLo,lpHi){
   document.getElementById('bars-sec').style.display='block';
-  function bar(p,val,lo,hi,lk){
-    const span=hi*1.5;
-    document.getElementById(p+'-lz').style.width=(lk/span*100).toFixed(1)+'%';
+  function bar(p,val,vlo,lo,hi){
+    const span=hi*1.6;
+    // Very low zone: 0 to vlo
+    document.getElementById(p+'-vlz').style.width=(vlo/span*100).toFixed(1)+'%';
+    // Low zone: vlo to lo
+    document.getElementById(p+'-lz').style.left=(vlo/span*100).toFixed(1)+'%';
+    document.getElementById(p+'-lz').style.width=((lo-vlo)/span*100).toFixed(1)+'%';
+    // OK zone: lo to hi
     document.getElementById(p+'-oz').style.left=(lo/span*100).toFixed(1)+'%';
     document.getElementById(p+'-oz').style.width=((hi-lo)/span*100).toFixed(1)+'%';
-    const sv=val<lk,low=val<lo,high=val>hi;
-    document.getElementById(p+'-oz').style.background=sv?'rgba(108,59,219,0.1)':'rgba(108,59,219,0.4)';
+    document.getElementById(p+'-oz').style.background='rgba(108,59,219,0.35)';
     const pct=Math.max(0,Math.min(100,val/span*100)).toFixed(1);
     const pin=document.getElementById(p+'-pin');
     pin.style.left='calc('+pct+'% - 1.5px)';
-    pin.style.background=sv?'#dc2626':low?'#b45309':high?'#b45309':'#16a34a';
-    document.getElementById(p+'-lz-lbl').textContent=fmt(lk)+' '+uu();
+    const veryLow=val<vlo,low=val>=vlo&&val<lo,high=val>hi;
+    pin.style.background=veryLow?'#dc2626':low?'#b45309':high?'#b45309':'#16a34a';
+    document.getElementById(p+'-vl-lbl').textContent=fmt(vlo)+' '+uu();
     document.getElementById(p+'-mn-lbl').textContent=fmt(lo)+' '+uu();
+    document.getElementById(p+'-ok-lbl').textContent='';
     document.getElementById(p+'-mx-lbl').textContent=fmt(hi)+' '+uu();
     const el=document.getElementById(p+'-val');
-    el.textContent=fmt(val)+' '+uu()+' — '+(sv?'Bahut kam (Leak!)':low?'Kam (Low)':high?'Zyada (High)':'Theek hai ✓');
-    el.style.color=sv?'#dc2626':low?'#b45309':high?'#b45309':'#16a34a';
+    const lbl=veryLow?'🔴 Bahut Kam — Leak Check':low?'🟠 Kam — Top Up':high?'🟠 Zyada — Release':'🟢 Theek Hai ✓';
+    el.textContent=fmt(val)+' '+uu()+' — '+lbl;
+    el.style.color=veryLow?'#dc2626':low?'#b45309':high?'#b45309':'#16a34a';
   }
-  bar('hp',hpKpa,hpLo,hpHi,hpLk); bar('lp',lpKpa,lpLo,lpHi,lpLk);
+  bar('hp',hpKpa,hpVLo,hpLo,hpHi); bar('lp',lpKpa,lpVLo,lpLo,lpHi);
 }
 
 const MATRIX=[
   {id:'mc-ok',hp:'NORMAL',lp:'NORMAL',act:'Theek hai — agar vent >12°C toh cooling low maintenance.'},
-  {id:'mc-both-low',hp:'LOW',lp:'LOW',act:'Gas kam — leak check karo, phir gas daalo.'},
-  {id:'mc-compleak',hp:'LOW',lp:'HIGH',act:'Compressor andar se toot gaya — band karne pe dono barabar.'},
-  {id:'mc-both-high',hp:'HIGH',lp:'HIGH',act:'Gas zyada ya condenser jam gaya ya fan kharab.'},
-  {id:'mc-hp-high-lp-ok',hp:'HIGH',lp:'NORMAL',act:'Expansion valve theek se nahi khul rahi.'},
-  {id:'mc-hp-ok-lp-high',hp:'NORMAL',lp:'HIGH',act:'Expansion valve bahut khul rahi ya compressor problem.'},
-  {id:'mc-hp-low-lp-ok',hp:'LOW',lp:'NORMAL',act:'Compressor HP nahi bana raha — clutch ya full compressor check.'},
-  {id:'mc-hp-ok-lp-low',hp:'NORMAL',lp:'LOW',act:'LP gas kam — top up ya expansion valve check.'},
-  {id:'mc-neg',hp:'BAHUT KAM',lp:'NEGATIVE',act:'Expansion valve dust/ice se jam gayi — repair karo.'},
-  {id:'mc-fluc',hp:'UPAR-NEECHE',lp:'UPAR-NEECHE',act:'Moisture se expansion valve freeze — repair karo.'},
-  {id:'mc-frost',hp:'HIGH',lp:'HIGH + BARF',act:'Expansion valve flow control nahi kar rahi — repair.'},
-  {id:'mc-air',hp:'HIGH',lp:'HIGH (thanda nahi)',act:'Hawa ghus gayi — sahi vacuum karo aur recharge karo.'},
-  {id:'mc-black',hp:'KOI BHI',lp:'KOI BHI',act:'Black death — poora system replace karna padega.'},
+  {id:'mc-both-low',hp:'LOW / VERY LOW',lp:'LOW / VERY LOW',act:'Low → Gas top-up. Very Low → Leak check pehle, phir gas.'},
+  {id:'mc-compleak',hp:'LOW',lp:'HIGH',act:'Compressor andar se toot gaya — Clutch pehle, phir full compressor.'},
+  {id:'mc-both-high',hp:'HIGH',lp:'HIGH',act:'Gas nikalo → Condenser clean → Fan check (is order mein).'},
+  {id:'mc-hp-high-lp-ok',hp:'HIGH',lp:'NORMAL',act:'Expansion valve nahi khul rahi — Repair karo.'},
+  {id:'mc-hp-ok-lp-high',hp:'NORMAL',lp:'HIGH',act:'Expansion valve → Compressor check (is order mein).'},
+  {id:'mc-hp-low-lp-ok',hp:'LOW / VERY LOW',lp:'NORMAL',act:'Compressor clutch repair → Full compressor (is order mein).'},
+  {id:'mc-hp-ok-lp-low',hp:'NORMAL',lp:'LOW',act:'LP Low → Top-up. LP Very Low → Leak check pehle.'},
+  {id:'mc-neg',hp:'BAHUT KAM',lp:'NEGATIVE',act:'Expansion valve jam — repair karo. Condenser + gas.'},
+  {id:'mc-fluc',hp:'UPAR-NEECHE',lp:'UPAR-NEECHE',act:'Moisture — Expansion valve → Condenser → Gas (is order mein).'},
+  {id:'mc-frost',hp:'HIGH',lp:'HIGH + BARF',act:'Expansion valve repair → Gas recharge.'},
+  {id:'mc-air',hp:'HIGH',lp:'HIGH (thanda nahi)',act:'Condenser replace → Vacuum → Gas recharge.'},
+  {id:'mc-black',hp:'KOI BHI',lp:'KOI BHI',act:'Black death — poora system ek saath replace karna padega.'},
 ];
 function buildMatrix(){const g=document.getElementById('matrix');g.innerHTML='';MATRIX.forEach(item=>{const d=document.createElement('div');d.className='mc';d.id=item.id;d.innerHTML=`<div class="mc-state"><span class="hp">HP: ${item.hp}</span> · <span class="lp">LP: ${item.lp}</span></div><div class="mc-action">${item.act}</div>`;g.appendChild(d);});}
 
@@ -826,10 +882,10 @@ function refreshTable(){
   const b=BASE[fuel];
   [25,30,35,40,45].forEach(t=>{
     const hMn=scale(b.hpMin,t),hMx=scale(b.hpMax,t),lMn=scale(b.lpMin,t),lMx=scale(b.lpMax,t);
-    const hLo=lowerBound(hMn),hHi=upperBound(hMx),lLo=lowerBound(lMn),lHi=upperBound(lMx);
-    const hMd=mid(hMn,hMx),lMd=mid(lMn,lMx);
+    const hVLo=veryLoBound(hMn),hLo=loBound(hMn),hHi=hiBound(hMx),hMd=mid(hMn,hMx);
+    const lVLo=veryLoBound(lMn),lLo=loBound(lMn),lHi=hiBound(lMx),lMd=mid(lMn,lMx);
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${t}°C</td><td class="red">${fmt(hLo)}</td><td>${fmt(hMn)}–${fmt(hMx)}</td><td class="grn">${fmt(hHi)}</td><td class="hi">${fmt(hMd)}</td><td class="red">${fmt(lLo)}</td><td>${fmt(lMn)}–${fmt(lMx)}</td><td class="grn">${fmt(lHi)}</td><td class="hi">${fmt(lMd)}</td>`;
+    tr.innerHTML=`<td>${t}°C</td><td class="red">${fmt(hVLo)}</td><td class="amb">${fmt(hLo)}</td><td>${fmt(hMn)}–${fmt(hMx)}</td><td class="grn">${fmt(hHi)}</td><td class="hi">${fmt(hMd)}</td><td class="red">${fmt(lVLo)}</td><td class="amb">${fmt(lLo)}</td><td>${fmt(lMn)}–${fmt(lMx)}</td><td class="grn">${fmt(lHi)}</td><td class="hi">${fmt(lMd)}</td>`;
     body.appendChild(tr);
   });
   document.getElementById('ref-fuel-lbl').textContent=fuel.charAt(0).toUpperCase()+fuel.slice(1);

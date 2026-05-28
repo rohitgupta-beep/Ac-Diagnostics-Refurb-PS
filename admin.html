@@ -21,11 +21,9 @@
 }
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
-
-/* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:100}
 .login-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:40px 32px;width:min(380px,90vw);text-align:center;box-shadow:var(--shadow-md)}
-.login-logo{font-weight:700;font-size:15px;color:var(--purple);margin-bottom:24px;letter-spacing:-0.01em}
+.login-logo{font-weight:700;font-size:15px;color:var(--purple);margin-bottom:24px}
 .login-title{font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px}
 .login-sub{font-size:13px;color:var(--text2);margin-bottom:24px}
 .login-input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:13px 16px;font-size:20px;font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--text);outline:none;text-align:center;letter-spacing:0.3em;margin-bottom:14px;transition:all 0.2s}
@@ -34,52 +32,36 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .login-btn{width:100%;padding:13px;background:var(--purple);color:#fff;border:none;border-radius:var(--r);font-family:'Inter',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 14px rgba(108,59,219,0.3)}
 .login-btn:hover{background:var(--purple-dark)}
 .login-err{font-size:12px;color:var(--red);margin-top:8px;display:none}
-
-/* DASHBOARD */
 #dashboard{display:none}
 header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 clamp(16px,4vw,48px);height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;box-shadow:var(--shadow)}
-.logo{font-weight:700;font-size:15px;color:var(--purple);letter-spacing:-0.01em;display:flex;align-items:center;gap:10px}
-.logo-badge{background:var(--red-light);border:1.5px solid #fca5a5;color:var(--red);font-size:10px;padding:2px 8px;border-radius:4px;letter-spacing:0.06em;font-weight:700}
+.logo{font-weight:700;font-size:15px;color:var(--purple);display:flex;align-items:center;gap:10px}
+.logo-badge{background:var(--red-light);border:1.5px solid #fca5a5;color:var(--red);font-size:10px;padding:2px 8px;border-radius:4px;font-weight:700}
 .header-right{display:flex;align-items:center;gap:14px}
 .header-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)}
 .logout-btn{font-size:12px;font-weight:500;color:var(--text2);background:none;border:1.5px solid var(--border2);padding:5px 14px;border-radius:var(--r);cursor:pointer;transition:all 0.2s}
 .logout-btn:hover{color:var(--red);border-color:#fca5a5;background:var(--red-light)}
-
 main{max-width:1280px;margin:0 auto;padding:clamp(20px,4vw,36px) clamp(16px,4vw,32px) 80px}
-
 .loading-screen{text-align:center;padding:80px 20px;color:var(--text3)}
 .loading-spinner{width:32px;height:32px;border:3px solid var(--border2);border-top-color:var(--purple);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-size:14px;color:var(--text2)}
-
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:20px;box-shadow:var(--shadow)}
 .stat-val{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:600;color:var(--text);margin-bottom:4px}
 .stat-lbl{font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em}
-.stat-card.purple .stat-val{color:var(--purple)}
-.stat-card.green .stat-val{color:var(--green)}
-.stat-card.amber .stat-val{color:var(--amber)}
-.stat-card.red .stat-val{color:var(--red)}
-
-/* FILTERS */
+.stat-card.purple .stat-val{color:var(--purple)}.stat-card.green .stat-val{color:var(--green)}.stat-card.amber .stat-val{color:var(--amber)}.stat-card.red .stat-val{color:var(--red)}
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);box-shadow:var(--shadow)}
-.filter-input{background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:8px 14px;font-family:'Inter',sans-serif;font-size:12px;color:var(--text);outline:none;transition:all 0.2s;min-width:180px}
-.filter-input:focus{border-color:var(--purple);background:#fff}
-.filter-select{background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:8px 14px;font-family:'Inter',sans-serif;font-size:12px;color:var(--text);outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239090b0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;transition:all 0.2s}
-.filter-select:focus{border-color:var(--purple);background:#fff}
-.btn-export{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;background:var(--purple);color:#fff;border:none;padding:9px 18px;border-radius:var(--r);cursor:pointer;transition:all 0.2s;margin-left:auto;box-shadow:0 2px 8px rgba(108,59,219,0.25)}
+.fi{background:var(--bg2);border:1.5px solid var(--border2);border-radius:var(--r);padding:8px 14px;font-family:'Inter',sans-serif;font-size:12px;color:var(--text);outline:none;transition:all 0.2s}
+.fi:focus{border-color:var(--purple);background:#fff}
+.fi-sel{-webkit-appearance:none;appearance:none;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239090b0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer}
+.btn-export{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;background:var(--purple);color:#fff;border:none;padding:9px 18px;border-radius:var(--r);cursor:pointer;margin-left:auto;box-shadow:0 2px 8px rgba(108,59,219,0.25)}
 .btn-export:hover{background:var(--purple-dark)}
 .btn-refresh{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;background:var(--bg2);border:1.5px solid var(--border2);color:var(--text2);padding:8px 16px;border-radius:var(--r);cursor:pointer;transition:all 0.2s}
 .btn-refresh:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
-
 .slabel{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .slabel::after{content:'';flex:1;height:1px;background:var(--border)}
 .slabel .count{color:var(--purple);font-size:10px;font-weight:600}
-
-/* TABLE */
 .table-outer{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);box-shadow:var(--shadow)}
-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11px;min-width:1000px}
+table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11px;min-width:1020px}
 th{text-align:left;color:var(--text3);font-weight:500;padding:11px 12px;border-bottom:1px solid var(--border);background:var(--bg2);white-space:nowrap;cursor:pointer;user-select:none;transition:color 0.15s}
 th:hover{color:var(--purple)}
 th.sort-asc::after{content:' ↑';color:var(--purple)}
@@ -94,15 +76,13 @@ tr:hover td{background:var(--bg2)}
 .diag-danger{color:var(--red);border-color:#fca5a5;background:var(--red-light)}
 .diag-critical{color:#fff;border-color:var(--purple);background:var(--purple);font-weight:700}
 .retest-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber);margin-right:5px;vertical-align:middle}
-
-/* CAR PANEL */
 .car-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:22px;margin-top:16px;display:none;box-shadow:var(--shadow-md)}
 .car-panel.show{display:block}
 .car-panel-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
-.panel-close{background:none;border:1px solid var(--border2);color:var(--text3);cursor:pointer;font-size:14px;padding:3px 10px;border-radius:6px}
+.panel-close{background:none;border:1px solid var(--border2);color:var(--text3);cursor:pointer;font-size:13px;padding:4px 12px;border-radius:var(--r)}
 .panel-close:hover{border-color:#fca5a5;color:var(--red);background:var(--red-light)}
 .timeline{display:flex;flex-direction:column;gap:10px}
-.tl-item{border:1.5px solid var(--border);border-radius:var(--r);padding:14px 14px 14px 20px;position:relative;background:var(--surface2)}
+.tl-item{border:1.5px solid var(--border);border-radius:var(--r);padding:14px 14px 14px 22px;position:relative;background:var(--surface2)}
 .tl-dot{position:absolute;left:7px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;border:2px solid}
 .tl-item.ok .tl-dot{border-color:var(--green);background:var(--green-light)}
 .tl-item.warn .tl-dot{border-color:#d97706;background:var(--amber-light)}
@@ -111,21 +91,15 @@ tr:hover td{background:var(--bg2)}
 .tl-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px}
 .tl-details{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);display:flex;gap:14px;flex-wrap:wrap}
 .tl-details span{color:var(--text2)}
-
 .no-data{text-align:center;padding:60px 20px;font-family:'JetBrains Mono',monospace;color:var(--text3);font-size:12px}
-.no-data-icon{font-size:36px;margin-bottom:12px}
-
 .pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3)}
 .page-btn{background:var(--surface);border:1.5px solid var(--border2);color:var(--text2);padding:6px 13px;border-radius:var(--r);cursor:pointer;transition:all 0.15s}
 .page-btn:hover,.page-btn.active{background:var(--purple-light);border-color:rgba(108,59,219,0.3);color:var(--purple)}
 .page-btn:disabled{opacity:0.3;cursor:not-allowed}
-
 footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 </style>
 </head>
 <body>
-
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">⚡ AC DIAGNOSTIC · ADMIN</div>
@@ -136,8 +110,6 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
     <div class="login-err" id="login-err">Galat PIN. Dobara try karo.</div>
   </div>
 </div>
-
-<!-- DASHBOARD -->
 <div id="dashboard">
 <header>
   <div class="logo">⚡ AC DIAGNOSTIC <span class="logo-badge">ADMIN</span></div>
@@ -147,24 +119,17 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
   </div>
 </header>
 <main>
-  <div id="loading-view" class="loading-screen">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Google Sheets se data load ho raha hai...</div>
-  </div>
-
+  <div id="loading-view" class="loading-screen"><div class="loading-spinner"></div><div style="font-size:14px;color:var(--text2)">Data load ho raha hai...</div></div>
   <div id="data-view" style="display:none">
     <div class="stats-grid" id="stats-grid"></div>
-
     <div class="filters">
-      <input type="text" class="filter-input" id="f-car" placeholder="🔍 Car number search..." oninput="applyFilters()"/>
-      <select class="filter-select" id="f-fuel" onchange="applyFilters()">
-        <option value="">All Fuel</option>
-        <option value="petrol">Petrol</option>
-        <option value="diesel">Diesel</option>
+      <input type="text" class="fi" id="f-car" placeholder="🔍 Car number search..." oninput="applyFilters()" style="min-width:180px"/>
+      <select class="fi fi-sel" id="f-fuel" onchange="applyFilters()">
+        <option value="">All Fuel</option><option value="petrol">Petrol</option><option value="diesel">Diesel</option>
       </select>
-      <select class="filter-select" id="f-diag" onchange="applyFilters()">
+      <select class="fi fi-sel" id="f-diag" onchange="applyFilters()">
         <option value="">All Diagnoses</option>
-        <option value="NORMAL">Normal / Theek</option>
+        <option value="NORMAL">Normal ✓</option>
         <option value="BOTH_LOW">Gas Low — Top Up</option>
         <option value="LP_LOW">LP Low</option>
         <option value="OVERCHARGED">Overcharged</option>
@@ -177,23 +142,16 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
         <option value="AIR_IN_SYSTEM">Air in System</option>
         <option value="FULL_OVERHAUL">Black Death — Full Overhaul</option>
       </select>
-      <select class="filter-select" id="f-retest" onchange="applyFilters()">
-        <option value="">All Tests</option>
-        <option value="YES">Retests Only</option>
-        <option value="NO">First Tests Only</option>
+      <select class="fi fi-sel" id="f-retest" onchange="applyFilters()">
+        <option value="">All Tests</option><option value="YES">Retests Only</option><option value="NO">First Tests Only</option>
       </select>
-      <select class="filter-select" id="f-days" onchange="applyFilters()">
-        <option value="">All Time</option>
-        <option value="7">Last 7 Days</option>
-        <option value="30">Last 30 Days</option>
-        <option value="90">Last 90 Days</option>
+      <select class="fi fi-sel" id="f-days" onchange="applyFilters()">
+        <option value="">All Time</option><option value="7">Last 7 Days</option><option value="30">Last 30 Days</option><option value="90">Last 90 Days</option>
       </select>
       <button class="btn-refresh" onclick="loadData()">⟳ Refresh</button>
       <button class="btn-export" onclick="exportCSV()">↓ Export CSV</button>
     </div>
-
     <div class="slabel">Inspections <span class="count" id="result-count"></span></div>
-
     <div class="table-outer">
       <table>
         <thead><tr>
@@ -202,12 +160,10 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
           <th onclick="sortBy('Fuel')" id="th-Fuel">Fuel</th>
           <th onclick="sortBy('Ambient °C')" id="th-Ambient °C">Ambient</th>
           <th onclick="sortBy('High Pressure')" id="th-High Pressure">High P.</th>
+          <th onclick="sortBy('LP Status')" id="th-LP Status">LP Status</th>
           <th onclick="sortBy('Low Pressure')" id="th-Low Pressure">Low P.</th>
           <th onclick="sortBy('Vent °C')" id="th-Vent °C">Vent °C</th>
-          <th>RPM</th>
-          <th>Blower</th>
-          <th>LP Behaviour</th>
-          <th>Blackness</th>
+          <th>RPM</th><th>Blower</th><th>LP Behaviour</th><th>Blackness</th>
           <th onclick="sortBy('Diagnosis Code')" id="th-Diagnosis Code">Diagnosis</th>
           <th onclick="sortBy('Test Number')" id="th-Test Number">Test #</th>
           <th>History</th>
@@ -215,9 +171,8 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
         <tbody id="main-tbody"></tbody>
       </table>
     </div>
-    <div id="no-data" class="no-data" style="display:none"><div class="no-data-icon">📋</div>Koi inspection nahi mila filters ke saath.</div>
+    <div id="no-data" class="no-data" style="display:none"><div style="font-size:32px;margin-bottom:12px">📋</div>Koi inspection nahi mila.</div>
     <div class="pagination" id="pagination"></div>
-
     <div class="car-panel" id="car-panel">
       <div class="car-panel-title">
         <span id="car-panel-title">Vehicle History</span>
@@ -227,12 +182,8 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-
     </div>
   </div>
 </main>
-<footer>
-  <span>AC DIAGNOSTIC ADMIN · Spinny Workshop</span>
-  <span id="footer-count"></span>
-</footer>
+<footer><span>AC DIAGNOSTIC ADMIN · Spinny Workshop</span><span id="footer-count"></span></footer>
 </div>
-
 <script>
 const ADMIN_PIN='1234'; // ← Deploy se pehle yeh badlo
 const SHEET_URL='https://script.google.com/macros/s/AKfycbww_vyo8GEmais19mpgHgEfj0sHDa6U2-B-mpiCdqkkoSu5RyXixE-Yd4nLaBaEQQvzfw/exec';
@@ -247,36 +198,28 @@ function doLogin(){
 function logout(){document.getElementById('login-screen').style.display='flex';document.getElementById('dashboard').style.display='none';document.getElementById('pin-input').value='';allData=[];}
 
 async function loadData(){
-  document.getElementById('loading-view').style.display='block';
-  document.getElementById('data-view').style.display='none';
-  try{const resp=await fetch(SHEET_URL+'?t='+Date.now());const json=await resp.json();allData=json.rows||[];document.getElementById('last-refresh').textContent='Refreshed: '+new Date().toLocaleTimeString('en-IN');}
+  document.getElementById('loading-view').style.display='block';document.getElementById('data-view').style.display='none';
+  try{const r=await fetch(SHEET_URL+'?t='+Date.now());const j=await r.json();allData=j.rows||[];document.getElementById('last-refresh').textContent='Refreshed: '+new Date().toLocaleTimeString('en-IN');}
   catch(e){allData=[];document.getElementById('last-refresh').textContent='⚠ Data load nahi hua';}
-  document.getElementById('loading-view').style.display='none';
-  document.getElementById('data-view').style.display='block';
+  document.getElementById('loading-view').style.display='none';document.getElementById('data-view').style.display='block';
   buildStats();applyFilters();
 }
 
 function buildStats(){
-  const total=allData.length;
-  const unique=new Set(allData.map(r=>(r['Car Number']||'').replace(/\s/g,''))).size;
+  const total=allData.length,unique=new Set(allData.map(r=>(r['Car Number']||'').replace(/\s/g,''))).size;
   const retests=allData.filter(r=>r['Is Retest']==='YES').length;
   const critical=allData.filter(r=>['CRITICAL_LEAK','FULL_OVERHAUL','COMP_INTERNAL'].includes(r['Diagnosis Code'])).length;
   const today=allData.filter(r=>{try{return new Date(r['Timestamp']).toDateString()===new Date().toDateString();}catch(e){return false;}}).length;
   document.getElementById('stats-grid').innerHTML=[
-    {v:total,l:'Total Inspections',c:'purple'},
-    {v:unique,l:'Unique Vehicles',c:'green'},
-    {v:retests,l:'Retests',c:'amber'},
-    {v:critical,l:'Critical Cases',c:'red'},
-    {v:today,l:'Aaj / Today',c:''},
+    {v:total,l:'Total Inspections',c:'purple'},{v:unique,l:'Unique Vehicles',c:'green'},
+    {v:retests,l:'Retests',c:'amber'},{v:critical,l:'Critical Cases',c:'red'},{v:today,l:'Aaj / Today',c:''},
   ].map(s=>`<div class="stat-card ${s.c}"><div class="stat-val">${s.v}</div><div class="stat-lbl">${s.l}</div></div>`).join('');
 }
 
 function applyFilters(){
   const fC=document.getElementById('f-car').value.toUpperCase().replace(/\s/g,'');
-  const fF=document.getElementById('f-fuel').value;
-  const fD=document.getElementById('f-diag').value;
-  const fR=document.getElementById('f-retest').value;
-  const fDays=parseInt(document.getElementById('f-days').value)||0;
+  const fF=document.getElementById('f-fuel').value,fD=document.getElementById('f-diag').value;
+  const fR=document.getElementById('f-retest').value,fDays=parseInt(document.getElementById('f-days').value)||0;
   const cutoff=fDays?new Date(Date.now()-fDays*86400000):null;
   filtered=allData.filter(r=>{
     if(fC&&!(r['Car Number']||'').replace(/\s/g,'').toUpperCase().includes(fC))return false;
@@ -293,7 +236,7 @@ function applyFilters(){
   });
   currentPage=1;
   document.getElementById('result-count').textContent='('+filtered.length+')';
-  document.getElementById('footer-count').textContent=filtered.length+' records of '+allData.length+' total';
+  document.getElementById('footer-count').textContent=filtered.length+' of '+allData.length+' records';
   renderTable();
 }
 
@@ -308,32 +251,29 @@ const DLBL={'NORMAL':'Normal ✓','BOTH_LOW':'Gas Low','OVERCHARGED':'Overcharge
 const DCLS={'NORMAL':'diag-ok','BOTH_LOW':'diag-warn','OVERCHARGED':'diag-danger','COMP_INTERNAL':'diag-critical','COMP_HP_LOW':'diag-warn','EXP_VALVE':'diag-warn','CRITICAL_LEAK':'diag-critical','COOLING_LOW':'diag-warn','MOISTURE':'diag-danger','AIR_IN_SYSTEM':'diag-danger','FULL_OVERHAUL':'diag-critical','LP_LOW':'diag-warn'};
 const LPBEH={'stable':'Stable','fluctuating':'Upar-Neeche','negative':'Negative','frost-lp':'Barf/Ice','lp-not-cold':'Thandi Nahi'};
 
+function statusColor(s){return s==='VERY LOW'?'color:var(--red);font-weight:700':s==='LOW'?'color:var(--amber)':s==='HIGH'?'color:var(--amber)':'';}
+
 function renderTable(){
   const tbody=document.getElementById('main-tbody');tbody.innerHTML='';
   const page=filtered.slice((currentPage-1)*PAGE_SIZE,currentPage*PAGE_SIZE);
   document.getElementById('no-data').style.display=filtered.length===0?'block':'none';
   if(!filtered.length){document.getElementById('pagination').innerHTML='';return;}
   page.forEach(r=>{
-    const dc=r['Diagnosis Code']||'';
-    const dcls=DCLS[dc]||'diag-warn',dlbl=DLBL[dc]||dc||'—';
+    const dc=r['Diagnosis Code']||'',dcls=DCLS[dc]||'diag-warn',dlbl=DLBL[dc]||dc||'—';
     const retest=r['Is Retest']==='YES'?'<span class="retest-dot"></span>':'';
-    const black=r['Blackness']==='YES'?`<span style="color:var(--red);font-weight:700">⚠ YES</span>`:`<span style="color:var(--text3)">No</span>`;
-    const hpSt=r['HP Status']==='LOW'?`<span style="color:var(--red)">↓</span>`:r['HP Status']==='HIGH'?`<span style="color:var(--amber)">↑</span>`:'';
-    const lpSt=r['LP Status']==='LOW'?`<span style="color:var(--red)">↓</span>`:r['LP Status']==='HIGH'?`<span style="color:var(--amber)">↑</span>`:'';
+    const black=r['Blackness']==='YES'?'<span style="color:var(--red);font-weight:700">⚠ YES</span>':'<span style="color:var(--text3)">No</span>';
+    const hpSt=r['HP Status']||'';const lpSt=r['LP Status']||'';
     const ce=(r['Car Number']||'').replace(/'/g,"\\'");
     const tr=document.createElement('tr');
-    tr.innerHTML=`
-      <td>${r['Timestamp']||'—'}</td>
-      <td class="car-cell">${r['Car Number']||'—'}</td>
+    tr.innerHTML=`<td>${r['Timestamp']||'—'}</td><td class="car-cell">${r['Car Number']||'—'}</td>
       <td style="text-transform:capitalize">${r['Fuel']||'—'}</td>
       <td>${r['Ambient °C']||'—'}°C</td>
-      <td>${r['High Pressure']||'—'} ${r['Unit']||''} ${hpSt}</td>
-      <td>${r['Low Pressure']||'—'} ${r['Unit']||''} ${lpSt}</td>
+      <td><span style="${statusColor(hpSt)}">${r['High Pressure']||'—'} ${r['Unit']||''}</span></td>
+      <td><span style="${statusColor(lpSt)}">${lpSt||'—'}</span></td>
+      <td>${r['Low Pressure']||'—'} ${r['Unit']||''}</td>
       <td>${r['Vent °C']||'—'}°C</td>
-      <td>${r['RPM']||'—'}</td>
-      <td style="text-transform:capitalize">${r['Blower']||'—'}</td>
-      <td>${LPBEH[r['LP Behaviour']]||r['LP Behaviour']||'—'}</td>
-      <td>${black}</td>
+      <td>${r['RPM']||'—'}</td><td style="text-transform:capitalize">${r['Blower']||'—'}</td>
+      <td>${LPBEH[r['LP Behaviour']]||r['LP Behaviour']||'—'}</td><td>${black}</td>
       <td>${retest}<span class="diag-badge ${dcls}">${dlbl}</span></td>
       <td style="color:${r['Is Retest']==='YES'?'var(--amber)':'var(--text3)'};font-weight:${r['Is Retest']==='YES'?'700':'400'}">${r['Test Number']||1}</td>
       <td><button onclick="showCarHistory('${ce}')" style="font-family:'Inter',sans-serif;font-size:11px;font-weight:600;background:var(--purple-light);border:1.5px solid rgba(108,59,219,0.25);color:var(--purple);padding:4px 10px;border-radius:6px;cursor:pointer">View</button></td>`;
@@ -362,25 +302,22 @@ function showCarHistory(carNum){
   const tl=document.getElementById('car-timeline');
   if(!tests.length){tl.innerHTML='<div style="font-size:12px;color:var(--text3)">Is gaadi ka koi history nahi mila.</div>';panel.classList.add('show');return;}
   tl.innerHTML=[...tests].reverse().map(r=>{
-    const dc=r['Diagnosis Code']||'';
-    const type=dc==='NORMAL'?'ok':['CRITICAL_LEAK','FULL_OVERHAUL','COMP_INTERNAL'].includes(dc)?'critical':'warn';
-    const dlbl=DLBL[dc]||dc;
-    const retest=r['Is Retest']==='YES'?`<span style="color:var(--amber);font-size:9px;font-weight:700;margin-left:8px">RETEST #${r['Test Number']||''}</span>`:'';
+    const dc=r['Diagnosis Code']||'',type=dc==='NORMAL'?'ok':['CRITICAL_LEAK','FULL_OVERHAUL','COMP_INTERNAL'].includes(dc)?'critical':'warn';
+    const dlbl=DLBL[dc]||dc,retest=r['Is Retest']==='YES'?`<span style="color:var(--amber);font-size:9px;font-weight:700;margin-left:8px">RETEST #${r['Test Number']||''}</span>`:'';
     return `<div class="tl-item ${type}"><div class="tl-dot"></div>
       <div class="tl-date">${r['Timestamp']||'—'}${retest}</div>
       <div class="tl-title">${r['Diagnosis Title']||dlbl}</div>
       <div class="tl-details">
         <span>Fuel: <b>${(r['Fuel']||'').toUpperCase()}</b></span>
-        <span>HP: <b>${r['High Pressure']||'—'} ${r['Unit']||''}</b></span>
-        <span>LP: <b>${r['Low Pressure']||'—'} ${r['Unit']||''}</b></span>
+        <span>HP: <b>${r['High Pressure']||'—'} ${r['Unit']||''}</b> (${r['HP Status']||'—'})</span>
+        <span>LP: <b>${r['Low Pressure']||'—'} ${r['Unit']||''}</b> (${r['LP Status']||'—'})</span>
         <span>Vent: <b>${r['Vent °C']||'—'}°C</b></span>
         <span>Ambient: <b>${r['Ambient °C']||'—'}°C</b></span>
         ${r['Blackness']==='YES'?'<span style="color:var(--red);font-weight:700">⚠ Black Death</span>':''}
       </div>
     </div>`;
   }).join('');
-  panel.classList.add('show');
-  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  panel.classList.add('show');panel.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 function exportCSV(){
@@ -389,11 +326,10 @@ function exportCSV(){
   const rows=filtered.map(r=>headers.map(h=>'"'+String(r[h]||'').replace(/"/g,'""')+'"').join(','));
   const csv=[headers.map(h=>'"'+h+'"').join(','),...rows].join('\n');
   const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download='ac-diagnostics-'+new Date().toISOString().slice(0,10)+'.csv';
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=url;a.download='ac-diagnostics-'+new Date().toISOString().slice(0,10)+'.csv';
   a.click();URL.revokeObjectURL(url);
 }
-
 document.getElementById('pin-input').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 </script>
 </body>
